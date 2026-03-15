@@ -1,0 +1,1130 @@
+"use client";
+
+import { useState } from "react";
+import { ArrowRight, X, Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
+
+// Formats alt text as "Category Mixor ProductName" — e.g. "Parlante Mixor Caos"
+function getProductAlt(name: string): string {
+  const parts = name.trim().split(" ");
+  if (parts.length < 2) return `Mixor ${name}`;
+  return `${parts[0]} Mixor ${parts.slice(1).join(" ")}`;
+}
+
+const categories = [
+  { id: "parlantes", name: "Parlantes" },
+  { id: "auriculares", name: "Auriculares" },
+  { id: "smartwatch", name: "Smartwatch" },
+  { id: "cables", name: "Cables" },
+  { id: "cargadores", name: "Cargadores" },
+  { id: "accesorios", name: "Accesorios" },
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Parlante Impetu",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-00EH",
+    kit: "Kit x 40 unidades",
+    image: "/images/impetu-lineup.png",
+    modalImage: "/images/impetu-modal-final.png",
+    description: "Sonido estéreo 20W (10Wx2) con luces RGB y batería de 1800mAh",
+    features: [
+      {
+        icon: Volume2,
+  title: "Sonido Estéreo 20W",
+  description: "Dos bocinas de 10W (10Wx2) que entregan bajos definidos y agudos claros."
+      },
+      {
+        icon: Sparkles,
+        title: "Atmósfera Visual",
+        description: "Su panel frontal con luces RGB y controles gigantes ilumina tu entorno."
+      },
+      {
+        icon: Wifi,
+        title: "Conectividad Total",
+        description: "Bluetooth, entrada USB, tarjeta TF o Radio FM integrada."
+      },
+      {
+        icon: Battery,
+        title: "Autonomía Confiable",
+        description: "Batería de 1800mAh optimizada para uso constante."
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "Parlante Latido",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-00C5",
+    kit: "Kit x 50 unidades",
+    image: "/images/latido-card.png",
+    modalImage: "/images/latido-modal.png",
+    description: "Parlante inalámbrico portátil con Bluetooth 5.1 y batería de 800mAh",
+    features: [
+      {
+        icon: Volume2,
+  title: "Potencia de 8W",
+  description: "Altavoz de 3'' con rango de respuesta de 80Hz - 20KHz para sonido nítido."
+      },
+      {
+        icon: Wifi,
+        title: "Bluetooth 5.1",
+        description: "Conexión inalámbrica estable de última generación."
+      },
+      {
+        icon: Battery,
+        title: "Batería 800mAh",
+        description: "Modelo 18650 con placa de protección IC integrada para uso prolongado."
+      },
+      {
+        icon: Zap,
+        title: "Portátil y Compacto",
+        description: "Diseño de 3'' fácil de transportar. Lleva tu música a donde quieras."
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Parlante Curvas",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-000U",
+    kit: "Kit x 50 unidades",
+    image: "/images/curvas-card.png",
+    modalImage: "/images/curvas-modal.png",
+    description: "Parlante portátil con luces LED RGB y diseño triangular compacto",
+    features: [
+      {
+        icon: Volume2,
+  title: "Potencia de 8W",
+  description: "Altavoz de 3'' para sonido claro y portabilidad. Medidas: 14.6x14.6x6.9cm."
+      },
+      {
+        icon: Lightbulb,
+        title: "Luces LED RGB",
+        description: "Iluminación LED multicolor que crea ambiente visual único."
+      },
+      {
+        icon: Usb,
+        title: "Conectividad Versátil",
+        description: "USB, tarjeta TF, entrada AUX y puerto Tipo C con cable incluido."
+      },
+      {
+        icon: Battery,
+        title: "Batería 500mAh",
+        description: "Autonomía confiable para uso portátil con carga Tipo C."
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: "Parlante Mio",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-000S",
+    kit: "Kit x 100 unidades",
+    image: "/images/mio-card.png",
+    modalImage: "/images/mio-modal.png",
+    description: "Parlante portátil 3'' con Bluetooth, luces LED y múltiples funciones",
+    features: [
+      {
+        icon: Volume2,
+        title: "Potencia de 5W",
+        description: "Parlante de 3'' con sonido claro. Alcance Bluetooth: 10m. Medidas: 8.6x8.6x9cm."
+      },
+      {
+        icon: Lightbulb,
+        title: "Luz LED Multicolor",
+        description: "Iluminación LED que acompaña tu música con ambiente visual."
+      },
+      {
+        icon: Radio,
+        title: "Funciones Múltiples",
+        description: "Radio FM, tarjeta TF, USB y TWS para conectar dos parlantes."
+      },
+      {
+        icon: Battery,
+        title: "Batería 800mAh",
+        description: "Hasta 3 horas de duración. Carga Tipo C con cable incluido."
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Parlante Leal",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-007",
+    kit: "Kit x 50 unidades",
+    image: "/images/leal-card.png",
+    modalImage: "/images/leal-modal.png",
+    description: "Parlante portátil con Bluetooth 2.0, control de voz y iluminación LED",
+    features: [
+      {
+        icon: Volume2,
+  title: "Potencia de 8W",
+  description: "Respuesta de frecuencia 20Hz-20kHz para sonido nítido. Diseño compacto 10x10x20cm."
+      },
+      {
+        icon: Mic,
+        title: "Control de Voz",
+        description: "Micrófono incorporado para llamadas manos libres y comandos de voz."
+      },
+      {
+        icon: Lightbulb,
+        title: "Iluminación LED",
+        description: "Luz LED en un solo color que crea atmósfera perfecta en cualquier ambiente."
+      },
+      {
+        icon: Battery,
+        title: "Batería 800mAh",
+        description: "2-3 horas de reproducción continua. Soporte para tarjeta TF."
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: "Parlante Mito",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-000T",
+    kit: "Kit x 50 unidades",
+    image: "/images/mito-card.png",
+    modalImage: "/images/mito-modal.png",
+    description: "Parlante portátil 3'' de 8W con perilla de control, Bluetooth y tecnología TWS",
+    features: [
+      {
+        icon: Settings,
+  title: "Potencia de 8W",
+  description: "Control ágil de volumen con rueda física. Diseño 11x11x6cm con terminación suave."
+      },
+      {
+        icon: Wifi,
+        title: "Bluetooth + TWS",
+        description: "Conexión inalámbrica y tecnología TWS para conectar dos parlantes sin cables."
+      },
+      {
+        icon: Usb,
+        title: "Múltiples Entradas",
+        description: "Puerto SD/TF y USB para reproducir música desde diversos dispositivos."
+      },
+      {
+        icon: Zap,
+        title: "Diseño Premium",
+        description: "Terminación suave al tacto con gomas antideslizantes. Cable USB A - USB C incluido."
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: "Parlante Noche",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-0029",
+    kit: "Kit x 1 unidad",
+    image: "/images/noche-card.png",
+    modalImage: "/images/noche-modal.png",
+    description: "Parlante de fiesta 12'' con 30W, micrófono incluido y luces LED para karaoke",
+    features: [
+      {
+        icon: Volume2,
+        title: "Potencia de 30W",
+        description: "Parlante de 12'' con 220V. Ideal para fiestas, karaoke, interior y aire libre."
+      },
+      {
+        icon: Mic,
+        title: "Micrófono Incluido",
+        description: "Viene con micrófono de accesorio para karaoke y presentaciones."
+      },
+      {
+        icon: Lightbulb,
+        title: "Luces LED",
+        description: "Iluminación LED integrada que crea ambiente perfecto para fiestas."
+      },
+      {
+        icon: Radio,
+        title: "Radio FM + Batería",
+        description: "Sintonizador de radio y batería recargable de 2h de carga para portabilidad."
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: "Parlante Caos",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-0028",
+    kit: "Kit x 1 unidad",
+    image: "/images/caos-card.png",
+    modalImage: "/images/caos-modal.png",
+    description: "Parlante de fiesta 15'' con 30W, karaoke incorporado y luces LED RGB",
+    features: [
+      {
+        icon: Volume2,
+        title: "Potencia de 30W",
+        description: "Parlante de 15'' con 12V. Perfecto para karaoke, fiestas y eventos."
+      },
+      {
+        icon: Mic,
+        title: "Karaoke + Micrófono",
+        description: "Función de karaoke incorporada con micrófono incluido."
+      },
+      {
+        icon: Lightbulb,
+        title: "Luces LED RGB",
+        description: "Iluminación LED multicolor en los laterales para ambiente de fiesta."
+      },
+      {
+        icon: Radio,
+        title: "Radio FM + Carga Rápida",
+        description: "Sintonizador de radio y batería recargable de 2h de carga."
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: "Parlante Alma",
+    category: "parlantes",
+    price: "Consultar",
+    code: "MODM-0027",
+    kit: "Kit x 8 unidades",
+    image: "/images/alma-card.png",
+    modalImage: "/images/alma-modal.png",
+    description: "Parlante de fiesta 8'' con 20W, karaoke y doble micrófono para eventos",
+    features: [
+      {
+        icon: Volume2,
+        title: "Potencia de 20W",
+        description: "Parlante de 8'' con 5V. Ideal para karaoke, fiestas interiores y exteriores."
+      },
+      {
+        icon: Mic,
+        title: "Doble Micrófono",
+        description: "Incluye micrófono externo y cuenta con micrófono interno para karaoke."
+      },
+      {
+        icon: Lightbulb,
+        title: "Luces LED",
+        description: "Iluminación LED integrada con efecto de fiesta para crear ambiente."
+      },
+      {
+        icon: Radio,
+        title: "Radio FM + Batería",
+        description: "Sintonizador de radio y batería recargable con carga rápida de 2h."
+      }
+    ]
+  },
+  {
+    id: 10,
+    name: "Smartwatch Pulso",
+    category: "smartwatch",
+    price: "Consultar",
+    code: "MODM-00GP",
+    kit: "Kit x 100 unidades",
+    image: "/images/pulso-card.png",
+    modalImage: "/images/pulso-modal.png",
+    description: "Smartwatch redondo con pantalla LED 1.52'', dos mallas y batería eficiente",
+    features: [
+      {
+        icon: Watch,
+        title: "Pantalla LED 1.52''",
+        description: "Interfaz 2.5D con efectos 3D y múltiples estilos de carátulas para imágenes nítidas."
+      },
+      {
+        icon: Activity,
+        title: "Tres Anillos de Salud",
+        description: "Monitoreo de frecuencia cardíaca, presión arterial y nivel de oxígeno en sangre en tiempo real."
+      },
+      {
+        icon: Battery,
+        title: "Batería Eficiente",
+        description: "200 mAh de bajo consumo con carga inalámbrica rápida y tecnología de carga a cero voltios."
+      },
+      {
+        icon: Sparkles,
+        title: "Diseño Premium",
+        description: "Acabado metalizado al vacío. Incluye dos mallas de silicona para mayor versatilidad."
+      }
+    ]
+  },
+  {
+    id: 11,
+    name: "Smartwatch Momentos",
+    category: "smartwatch",
+    price: "Consultar",
+    code: "MODM-00ED",
+    kit: "Kit x 100 unidades",
+    image: "/images/momentos-card.png",
+    modalImage: "/images/momentos-modal.png",
+    description: "Smartwatch cuadrado con monitoreo ECG, llamadas Bluetooth y modos deportivos",
+    features: [
+      {
+        icon: Heart,
+        title: "Monitoreo ECG + Salud",
+        description: "Tres anillos de salud con monitoreo ECG, frecuencia cardíaca, presión arterial y oxígeno en sangre."
+      },
+      {
+        icon: Phone,
+        title: "Llamadas y Música",
+        description: "Atendé llamadas desde tu muñeca y escuchá tu música favorita por Bluetooth."
+      },
+      {
+        icon: Activity,
+        title: "Múltiples Modos Deportivos",
+        description: "Seguimiento del sueño, modos deportivos, giro de muñeca y control remoto de cámara."
+      },
+      {
+        icon: Sparkles,
+        title: "Notificaciones Inteligentes",
+        description: "Recordatorios de llamadas, SMS, redes sociales, alarma, sedentarismo y eventos importantes."
+      }
+    ]
+  },
+  {
+    id: 12,
+    name: "TWS Claridad",
+    category: "auriculares",
+    price: "Consultar",
+    code: "MODM-009E",
+    kit: "Kit x 100 unidades",
+    image: "/images/claridad-card.png",
+    modalImage: "/images/claridad-modal.png",
+    description: "Auriculares TWS con estuche inteligente de pantalla táctil a color y Bluetooth avanzado",
+    features: [
+      {
+        icon: Sparkles,
+        title: "Pantalla Táctil a Color",
+        description: "Estuche inteligente con pantalla táctil para interacción, control y visualización de batería."
+      },
+      {
+        icon: Volume2,
+        title: "Audio Inmersivo",
+        description: "Sonido nítido con graves definidos y micrófono integrado para llamadas cristalinas."
+      },
+      {
+        icon: Wifi,
+        title: "Bluetooth Avanzado",
+        description: "Conectividad sin cables ágil y estable con control táctil para gestionar reproducción."
+      },
+      {
+        icon: Battery,
+        title: "Diseño Ergonómico",
+        description: "Livianos y cómodos para uso prolongado. Larga duración con estuche de carga incluido."
+      }
+    ]
+  },
+  {
+    id: 13,
+    name: "Auriculares Fusión",
+    category: "auriculares",
+    price: "Consultar",
+    code: "MODM-008N",
+    kit: "Kit x 100 unidades",
+    image: "/images/fusion-card.png",
+    modalImage: "/images/fusion-modal.png",
+    description: "Auriculares inalámbricos over-ear con 6 horas de autonomía y carga rápida en 1 hora",
+    features: [
+      {
+        icon: Battery,
+        title: "Autonomía Real 6 Horas",
+        description: "Hasta 6 horas de reproducción continua sin interrupciones y carga flash completa en 1 hora."
+      },
+      {
+        icon: Volume2,
+        title: "Diseño Ergonómico",
+        description: "Estructura ligera y cómoda, ideal para usar durante horas sin fatiga."
+      },
+      {
+        icon: Phone,
+        title: "Control Manos Libres",
+        description: "Función integrada para contestar llamadas con un solo toque, sin sacar el celular."
+      },
+      {
+        icon: Wifi,
+        title: "Conexión Estable BT",
+        description: "Tecnología inalámbrica Bluetooth de largo alcance para conexión estable."
+      }
+    ]
+  },
+  {
+    id: 14,
+    name: "Auriculares Sensación",
+    category: "auriculares",
+    price: "Consultar",
+    code: "MODM-00B6",
+    kit: "Kit x 80 unidades",
+    image: "/images/sensacion-card.png",
+    modalImage: "/images/sensacion-modal.png",
+    description: "Auriculares inalámbricos over-ear con 6 horas de autonomía y carga rápida en 1 hora",
+    features: [
+      {
+        icon: Battery,
+        title: "Autonomía Real 6 Horas",
+        description: "Hasta 6 horas de reproducción continua sin interrupciones y carga flash completa en 1 hora."
+      },
+      {
+        icon: Volume2,
+        title: "Diseño Ergonómico",
+        description: "Estructura ligera y cómoda, ideal para usar durante horas sin fatiga."
+      },
+      {
+        icon: Phone,
+        title: "Control Manos Libres",
+        description: "Función integrada para contestar llamadas con un solo toque, sin sacar el celular."
+      },
+      {
+        icon: Wifi,
+        title: "Conexión Estable BT",
+        description: "Tecnología inalámbrica Bluetooth de largo alcance para conexión estable."
+      }
+    ]
+  },
+  {
+    id: 15,
+    name: "Cable Vinculo",
+    category: "cables",
+    price: "Consultar",
+    code: "MODM-137",
+    kit: "Kit x 200 unidades",
+    image: "/images/vinculo-card.png",
+    modalImage: "/images/vinculo-modal.png",
+    description: "Cable USB 7.1A de 1 metro con carga y datos rápidos, disponible en variantes TC-TC y TC-IP",
+    features: [
+      {
+        icon: Zap,
+        title: "Carga Ultrarrápida 7.1A",
+        description: "Potente capacidad de 7.1A para carga rápida sin comprometer la seguridad."
+      },
+      {
+        icon: Usb,
+        title: "Tipo-C Universal",
+        description: "Disponible en variantes TC-TC y TC-IP para máxima compatibilidad con todos tus dispositivos."
+      },
+      {
+        icon: Sparkles,
+        title: "Datos + Carga",
+        description: "Transferencia eficiente de datos mientras cargas smartphones, tablets y equipos electrónicos."
+      },
+      {
+        icon: Shield,
+        title: "Diseño Resistente",
+        description: "Cable de 1 metro con diseño elegante negro, resistente al desgaste diario."
+      }
+    ]
+  },
+  {
+    id: 17,
+    name: "Cable Impulso",
+    category: "cables",
+    price: "Consultar",
+    code: "MODM-601",
+    kit: "Kit x 200 unidades",
+    image: "/images/impulso-card.png",
+    modalImage: "/images/impulso-modal.png",
+    description: "Cable USB a Tipo-C de 7.1A para carga rápida, maximiza el potencial de tu cargador",
+    features: [
+      {
+        icon: Zap,
+        title: "Carga Rápida 7.1A",
+        description: "Capacidad de 7.1A que maximiza el potencial de cargadores rápidos y super rápidos."
+      },
+      {
+        icon: Usb,
+        title: "USB a Tipo-C",
+        description: "Conexión USB estándar a Tipo-C para máxima compatibilidad con dispositivos modernos."
+      },
+      {
+        icon: Sparkles,
+        title: "Optimiza tu Cargador",
+        description: "Permite que tu cargador de pared alcance su máxima velocidad de carga sin limitaciones."
+      },
+      {
+        icon: Battery,
+        title: "Disponible en 2 Colores",
+        description: "Diseño moderno disponible en negro y blanco/beige con detalles en rojo."
+      }
+    ]
+  },
+  {
+    id: 19,
+    name: "Cable Vital",
+    category: "cables",
+    price: "Consultar",
+    code: "MODM-136",
+    kit: "Kit x 200 unidades",
+    image: "/images/vital-card.png",
+    modalImage: "/images/vital-modal.png",
+    description: "Cable USB reforzado de 5.4A con doble inyección y hilos de cobre puro, disponible en TC y V8",
+    features: [
+      {
+        icon: Shield,
+        title: "Doble Inyección Reforzada",
+        description: "Construcción ultra resistente que evita quiebres y prolonga la vida útil del cable."
+      },
+      {
+        icon: Zap,
+        title: "Carga Estable 5.4A",
+        description: "Compatible con cargadores de alta potencia para carga rápida y eficiente."
+      },
+      {
+        icon: Sparkles,
+        title: "Hilos de Cobre Puro",
+        description: "Mejor conductividad y transferencia de energía para rendimiento óptimo."
+      },
+      {
+        icon: Settings,
+        title: "Resistente a Uso Intenso",
+        description: "USB-Tipo C y USB a V8 universal. Resistente a tirones y dobleces, 1 metro ideal."
+      }
+    ]
+  },
+  {
+    id: 12,
+    name: "Cargador Leyenda",
+    category: "cargadores",
+    price: "Consultar",
+    code: "MODM-510",
+    kit: "Kit x 200 unidades",
+    image: "/images/leyenda-card.png",
+    modalImage: "/images/leyenda-modal.png",
+    description: "Cargador PD de 65W con carga rápida y puerto USB-C",
+    features: [
+      {
+        icon: Zap,
+        title: "Carga Rápida 65W",
+        description: "Potencia de 65W máxima con salida de 9VDC y 5.1A para carga ultrarrápida."
+      },
+      {
+        icon: Sparkles,
+        title: "Entrada Universal",
+        description: "Tensión de entrada AC 100-220V - 50/60Hz compatible con todo el mundo."
+      },
+      {
+        icon: Battery,
+        title: "Puerto USB-C PD",
+        description: "Tecnología Power Delivery para cargar notebooks, tablets y smartphones."
+      },
+      {
+        icon: Settings,
+        title: "Material Resistente",
+        description: "Construcción en ABS de alta calidad para mayor durabilidad y seguridad."
+      }
+    ]
+  },
+  {
+    id: 17,
+    name: "Cargador Somos",
+    category: "cargadores",
+    price: "Consultar",
+    code: "MODM-017",
+    kit: "Kit x 200 unidades",
+    image: "/images/somos-card.png",
+    modalImage: "/images/somos-modal.png",
+    description: "Cargador rápido 19W con cable USB a V8 de 1 metro incluido",
+    features: [
+      {
+        icon: Shield,
+        title: "Protección Integrada",
+        description: "Protección contra sobrecarga para seguridad de tus dispositivos."
+      },
+      {
+        icon: Zap,
+        title: "Carga Rápida 3.8A",
+        description: "Salida de 5Vcc, 3.8A para 19W de potencia de carga rápida."
+      },
+      {
+        icon: Sparkles,
+        title: "Plug Tipo I Argentina",
+        description: "Cabezal AU / Tipo I compatible con enchufes argentinos. Entrada universal 100-220V."
+      },
+      {
+        icon: Usb,
+        title: "Cable USB a V8",
+        description: "Incluye cable USB a V8 de 1 metro para mayor comodidad."
+      }
+    ]
+  },
+  {
+    id: 22,
+    name: "Cargador Proton",
+    category: "cargadores",
+    price: "Consultar",
+    code: "MODM-043",
+    kit: "Kit x 200 unidades",
+    image: "/images/proton-card.png",
+    modalImage: "/images/proton-modal.png",
+    description: "Cargador para auto 12V con doble USB y cable V8 incluido",
+    features: [
+      {
+        icon: Car,
+        title: "Cargador para Auto",
+        description: "Diseñado específicamente para vehículos con entrada 12V."
+      },
+      {
+        icon: Usb,
+        title: "Doble Puerto USB",
+        description: "Dos puertos USB para cargar múltiples dispositivos simultáneamente."
+      },
+      {
+        icon: Zap,
+        title: "Carga Rápida",
+        description: "Tecnología de carga rápida para dispositivos móviles."
+      },
+      {
+        icon: Sparkles,
+        title: "Cable V8 Incluido",
+        description: "Viene con cable V8 para comenzar a cargar de inmediato."
+      }
+    ]
+  },
+  {
+    id: 23,
+    name: "Cargador Quiero",
+    category: "cargadores",
+    price: "Consultar",
+    code: "MODM-012",
+    kit: "Kit x 200 unidades",
+    image: "/images/quiero-card.png",
+    modalImage: "/images/quiero-modal.png",
+    description: "Cargador de pared 5.1A con 2 puertos USB y cable Tipo-C incluido",
+    features: [
+      {
+        icon: Usb,
+        title: "Doble Puerto USB",
+        description: "2 puertos USB con 4.8A para cargar múltiples dispositivos simultáneamente."
+      },
+      {
+        icon: Zap,
+        title: "Carga Rápida 5.1A",
+        description: "Potente salida de 5.1A para carga rápida y eficiente."
+      },
+      {
+        icon: Sparkles,
+        title: "Entrada Universal",
+        description: "AC 100-220V / 50-60Hz compatible con cualquier enchufe del mundo."
+      },
+      {
+        icon: Battery,
+        title: "Cable Tipo-C Incluido",
+        description: "Incluye cable Tipo-C de 1 metro aproximadamente. Compatible con V8 e IP."
+      }
+    ]
+  },
+  {
+    id: 24,
+    name: "Cargador Realidad",
+    category: "cargadores",
+    price: "Consultar",
+    code: "MIXOR MOD09",
+    kit: "Kit x 200 unidades",
+    image: "/images/realidad-card.png",
+    modalImage: "/images/realidad-modal.png",
+    description: "Cargador 220V de 4.4A con 2 USB y cable incluido, disponible en 3 variantes",
+    features: [
+      {
+        icon: Usb,
+        title: "Doble Puerto USB",
+        description: "2 puertos USB de 220V para cargar dos dispositivos simultáneamente."
+      },
+      {
+        icon: Zap,
+        title: "Carga Rápida 4.4A",
+        description: "Potente salida de 4.4A para carga rápida y eficiente de tus dispositivos."
+      },
+      {
+        icon: Shield,
+        title: "Triple Protección",
+        description: "Protección contra sobrecarga, recalentamiento y cortocircuito para máxima seguridad."
+      },
+      {
+        icon: Sparkles,
+        title: "3 Variantes de Cable",
+        description: "Disponible con cable Tipo-C, V8 o IP según tus necesidades."
+      }
+    ]
+  },
+  {
+    id: 25,
+    name: "Inflador Ruta",
+    category: "accesorios",
+    price: "Consultar",
+    code: "MODM-00EI",
+    kit: "Kit x 24 unidades",
+    image: "/images/ruta-card.png",
+    modalImage: "/images/ruta-modal.png",
+    description: "Inflador portátil con medidor de presión digital, batería 4000mAh y 4 picos",
+    features: [
+      {
+        icon: Gauge,
+        title: "Inflador + Medidor",
+        description: "Función dual de inflado y medición de presión con pantalla digital PSI 150."
+      },
+      {
+        icon: Battery,
+        title: "Batería 4000mAh",
+        description: "Gran autonomía con carga Tipo C de 2-3hs. Tiempo de uso completo: 15 min."
+      },
+      {
+        icon: Sparkles,
+        title: "4 Picos Incluidos",
+        description: "Incluye 4 picos diferentes para válvulas, manguera de salida y cable USB."
+      },
+      {
+        icon: Lightbulb,
+        title: "Funciones Extra",
+        description: "Iluminación, Flash, S.O.S, banco de carga y presión preestablecida."
+      }
+    ]
+  },
+  {
+    id: 26,
+    name: "Holder Atrae",
+    category: "accesorios",
+    price: "Consultar",
+    code: "MODM-00B5",
+    kit: "Kit x 200 unidades",
+    image: "/images/atrae-card.png",
+    modalImage: "/images/atrae-modal.png",
+    description: "Soporte magnético versátil con rotación 360° para celulares de 4.7'' a 6.9''",
+    features: [
+      {
+        icon: Sparkles,
+        title: "Sujeción Magnética",
+        description: "Sujeción ultra potente que mantiene tu celular firme y seguro."
+      },
+      {
+        icon: Settings,
+        title: "Rotación 360°",
+        description: "Ajusta el ángulo cómodamente para grabar o usar GPS sin vibraciones."
+      },
+      {
+        icon: Phone,
+        title: "Compatibilidad Universal",
+        description: "Funciona con celulares de 4.7'' a 6.9'' para máxima versatilidad."
+      },
+      {
+        icon: Car,
+        title: "Uso Versátil",
+        description: "Ideal para auto, oficina, escritorios y creación de contenido. Instagram +1."
+      }
+    ]
+  },
+  {
+    id: 27,
+    name: "Cargador Nexo",
+    category: "accesorios",
+    price: "Consultar",
+    code: "MODM-300",
+    kit: "Kit x 50 unidades",
+    image: "/images/nexo-card.png",
+    modalImage: "/images/nexo-modal.png",
+    description: "Cargador universal de notebook con 9 pines intercambiables y selector de voltaje",
+    features: [
+      {
+        icon: Laptop,
+        title: "Universal para Notebooks",
+        description: "Cargador universal compatible con la mayoría de marcas de notebooks."
+      },
+      {
+        icon: Sparkles,
+        title: "9 Pines Intercambiables",
+        description: "Incluye 9 conectores diferentes para adaptarse a cualquier modelo de notebook."
+      },
+      {
+        icon: Usb,
+        title: "Incluye Tipo-C",
+        description: "Nuevo pico Tipo-C incluido para notebooks y dispositivos modernos."
+      },
+      {
+        icon: Settings,
+        title: "Selector de Voltaje",
+        description: "Con selector de voltaje ajustable para máxima compatibilidad y seguridad."
+      }
+    ]
+  },
+  {
+    id: 29,
+    name: "Smartwatch Activo",
+    category: "smartwatch",
+    price: "Próximamente",
+    code: "MODM-009F",
+    kit: "Kit x 100 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 30,
+    name: "Cable Eternidad",
+    category: "cables",
+    price: "Próximamente",
+    code: "MODM-00PL",
+    kit: "Kit x 500 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 31,
+    name: "Cable Pleno",
+    category: "cables",
+    price: "Próximamente",
+    code: "MODM-00PM",
+    kit: "Kit x 500 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 32,
+    name: "Cargador Sinergia",
+    category: "cargadores",
+    price: "Próximamente",
+    code: "MODM-00SN",
+    kit: "Kit x 80 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 33,
+    name: "Micrófono Voz",
+    category: "accesorios",
+    price: "Próximamente",
+    code: "MODM-00VO",
+    kit: "Kit x 50 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 34,
+    name: "TWS Sincronia",
+    category: "auriculares",
+    price: "Próximamente",
+    code: "MODM-00SY",
+    kit: "Kit x 100 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 35,
+    name: "Parlante Recuerdo",
+    category: "parlantes",
+    price: "Próximamente",
+    code: "MODM-00RC",
+    kit: "Kit x 50 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 36,
+    name: "Lámpara Motivos",
+    category: "accesorios",
+    price: "Próximamente",
+    code: "MODM-00MO",
+    kit: "Kit x 80 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+  {
+    id: 37,
+    name: "Reloj Sueño",
+    category: "accesorios",
+    price: "Próximamente",
+    code: "MODM-00SU",
+    kit: "Kit x 100 unidades",
+    image: "/images/proximamente-mixor.png",
+    description: "Próximamente disponible",
+  },
+];
+
+export function ProductShowcase() {
+  const [selectedCategory, setSelectedCategory] = useState("parlantes");
+  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+
+  const filteredProducts = products.filter(
+    (product) => product.category === selectedCategory
+  );
+
+  return (
+    <>
+    <section id="productos" className="py-16 lg:py-32 px-4 sm:px-6 relative border-b border-border">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16 lg:mb-20">
+          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">
+            Nuestra Colección
+          </p>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground text-balance">
+            Diseñados para la <span className="text-gradient-red">Excelencia</span>
+          </h2>
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto mt-5 leading-relaxed">
+            Cada mes renovamos nuestro catálogo de <strong className="text-foreground">accesorios tecnológicos mayoristas</strong>: parlantes Bluetooth, auriculares inalámbricos, smartwatches, cargadores rápidos y cables. Importados directamente, listos para abastecer distribuidores y mayoristas con los mejores precios de Argentina.
+          </p>
+        </div>
+
+        {/* Category Buttons */}
+        <div className="flex flex-wrap justify-center gap-2 sm:grid sm:grid-cols-3 lg:grid-cols-6 lg:gap-4 mb-10 lg:mb-20">
+          {categories.map((category, index) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`px-4 py-2.5 sm:px-6 sm:py-4 text-sm sm:text-base rounded-xl font-medium text-center transition-all duration-300 ${
+                selectedCategory === category.id
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105"
+                  : "bg-card border border-border text-foreground hover:border-primary/50 hover:bg-primary/5"
+              }`}
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Products Grid */}
+        <div
+          key={selectedCategory}
+          className="animate-scale-in"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+            {filteredProducts.map((product, index) => (
+              <div
+                key={product.id}
+                onClick={() => product.features && setSelectedProduct(product)}
+                className="group relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/50 hover-lift cursor-pointer"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="relative aspect-square">
+                  <img
+                    src={product.image || "/placeholder.svg"}
+                    alt={getProductAlt(product.name)}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  {/* Overlay with red tint on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-card/15 to-transparent" />
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500" />
+                </div>
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-6">
+                  <div className="flex items-end justify-between gap-1">
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight truncate">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">{product.price}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="flex-shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary text-primary-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg shadow-primary/25"
+                      aria-label={`View ${product.name}`}
+                    >
+                      <ArrowRight size={14} className="sm:hidden" />
+                      <ArrowRight size={18} className="hidden sm:block" />
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    {/* Product Modal */}
+    {selectedProduct && (
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md animate-fade-in"
+        onClick={() => setSelectedProduct(null)}
+      >
+        <div 
+          className="relative w-full max-w-4xl bg-card rounded-3xl border border-border shadow-2xl overflow-hidden animate-scale-in max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close Button */}
+          <button
+            onClick={() => setSelectedProduct(null)}
+            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            aria-label="Cerrar"
+          >
+            <X size={20} />
+          </button>
+
+          <div className="grid md:grid-cols-2 gap-6 p-5 sm:p-8 lg:p-12">
+            {/* Image Section */}
+            <div className="relative aspect-[4/3] md:aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-background to-secondary/20">
+              <img
+                src={selectedProduct.modalImage || selectedProduct.image || "/placeholder.svg"}
+                alt={getProductAlt(selectedProduct.name)}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Content Section */}
+            <div className="flex flex-col justify-center">
+              <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">
+                {categories.find(c => c.id === selectedProduct.category)?.name}
+              </p>
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                {selectedProduct.name}
+              </h2>
+              
+              {/* Product Code and Kit */}
+              <div className="flex flex-wrap gap-3 mb-4">
+                {selectedProduct.code && (
+                  <span className="px-3 py-1.5 bg-secondary rounded-lg text-xs font-medium text-foreground border border-border">
+                    {selectedProduct.code}
+                  </span>
+                )}
+                {selectedProduct.kit && (
+                  <span className="px-3 py-1.5 bg-primary/10 rounded-lg text-xs font-medium text-primary border border-primary/20">
+                    {selectedProduct.kit}
+                  </span>
+                )}
+              </div>
+              
+              <p className="text-2xl font-semibold text-primary mb-8">
+                {selectedProduct.price}
+              </p>
+
+              {/* Features */}
+              {selectedProduct.features && (
+                <div className="space-y-6 mb-8">
+                  {selectedProduct.features.map((feature, idx) => (
+                    <div key={idx} className="flex gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <feature.icon size={20} className="text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-1">
+                          {feature.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* CTA */}
+              <a
+                href="#contacto"
+                onClick={() => setSelectedProduct(null)}
+                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+              >
+                Consultar Precio
+                <ArrowRight size={18} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
+  );
+}
