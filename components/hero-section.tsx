@@ -71,7 +71,7 @@ export function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero-bg-speakers.png"
+          src="/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp"
           alt="Parlantes Bluetooth Mixor con luces RGB - Accesorios tecnológicos mayoristas"
           className="w-full h-full object-cover object-center"
         />
@@ -94,7 +94,7 @@ export function HeroSection() {
       {/* Speaker overlay — mobile only, behind particles */}
       <div className="sm:hidden absolute inset-0 z-[0] pointer-events-none overflow-hidden flex items-end justify-center">
         <img
-          src="/images/hero-speaker-overlay.png"
+          src="/images/mixor-parlante-hero-overlay.webp"
           alt=""
           aria-hidden="true"
           className="w-[75%] object-contain opacity-30 mix-blend-luminosity"

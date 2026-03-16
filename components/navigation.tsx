@@ -79,7 +79,7 @@ export function Navigation() {
               isScrolled ? "pr-3 border-r-0 mr-0" : "pr-4 border-r border-white/20 mr-1"
             )}
           >
-            <img src="/images/logo-mixor.png" alt="Mixor Logo" className="h-8 w-auto" />
+            <img src="/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp" alt="Mixor - Importador mayorista de tecnología Argentina" className="h-8 w-auto" />
           </a>
 
           {/* Nav links — collapse when scrolled */}
@@ -124,7 +124,7 @@ export function Navigation() {
           style={{ WebkitBackdropFilter: "blur(24px) saturate(150%)" }}
         >
           <a href="#">
-            <img src="/images/logo-mixor.png" alt="Mixor Logo" className="h-9 w-auto" />
+            <img src="/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp" alt="Mixor - Importador mayorista de tecnología Argentina" className="h-9 w-auto" />
           </a>
 
           <div className="flex items-center gap-2">

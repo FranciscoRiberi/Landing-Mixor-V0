@@ -14,7 +14,7 @@ const jsonLdOrg = {
   '@type': 'Organization',
   name: 'Mixor',
   url: BASE_URL,
-  logo: `${BASE_URL}/images/logo-mixor.png`,
+  logo: `${BASE_URL}/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp`,
   description: 'Importadores directos de accesorios tecnológicos en Argentina. Más de 8 años distribuyendo parlantes Bluetooth, auriculares, smartwatches, cargadores y cables al por mayor para distribuidores y mayoristas de todo el país.',
   foundingDate: '2016',
   areaServed: { '@type': 'Country', name: 'Argentina' },
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
     description: 'Más de 8 años importando directamente parlantes, auriculares, smartwatches y cargadores. Precios mayoristas para distribuidores de todo Argentina.',
     images: [
       {
-        url: `${BASE_URL}/images/logo-mixor.png`,
+        url: `${BASE_URL}/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp`,
         width: 1200,
         height: 630,
         alt: 'Mixor - Accesorios Tecnológicos Mayoristas Argentina',
@@ -125,7 +125,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Mixor | Importador Directo de Accesorios Tecnológicos',
     description: 'Parlantes, auriculares, smartwatches y cargadores al por mayor. Importador directo en Argentina para distribuidores y mayoristas.',
-    images: [`${BASE_URL}/images/logo-mixor.png`],
+    images: [`${BASE_URL}/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp`],
     site: '@mixoroficial',
     creator: '@mixoroficial',
   },
@@ -137,12 +137,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/logo-mixor.png', type: 'image/png', sizes: 'any' },
+      { url: '/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp', type: 'image/png', sizes: 'any' },
     ],
     apple: [
-      { url: '/images/logo-mixor.png', type: 'image/png', sizes: '180x180' },
+      { url: '/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp', type: 'image/png', sizes: '180x180' },
     ],
-    shortcut: '/images/logo-mixor.png',
+    shortcut: '/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp',
   },
   verification: {
     google: '',
