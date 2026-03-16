@@ -3,6 +3,8 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import type { Metadata } from "next"
+import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
 
 function toSlug(name: string) {
   return name
@@ -68,81 +70,110 @@ export default async function ProductPage({
     categories.find((c) => c.id === product.category)?.name ?? product.category
 
   return (
-    <main className="min-h-screen bg-background py-16 px-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-background flex flex-col">
+      <Navigation />
 
-        {/* Back link */}
-        <Link
-          href="/#productos"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-10"
-        >
-          <ArrowLeft size={16} />
-          Volver a productos
-        </Link>
+      <main className="flex-1 pt-24 pb-16 px-4 sm:px-6 md:px-8">
+        <div className="max-w-5xl mx-auto">
 
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* Image */}
-          <div className="rounded-2xl overflow-hidden bg-card border border-border aspect-square">
-            <img
-              src={product.modalImage ?? product.image}
-              alt={getProductAlt(product.name)}
-              className="w-full h-full object-cover"
-            />
+          {/* Back button */}
+          <div className="mb-6 md:mb-10">
+            <Link
+              href="/#productos"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              <ArrowLeft size={16} />
+              Volver a productos
+            </Link>
           </div>
 
-          {/* Info */}
-          <div className="flex flex-col justify-center">
-            <p className="text-xs uppercase tracking-widest text-primary mb-2">
-              {categoryName}
-            </p>
-            <h1 className="text-4xl font-bold text-foreground mb-4">
-              {product.name}
-            </h1>
+          {/* Main card — mirrors the modal exactly */}
+          <div className="bg-card rounded-3xl border border-border shadow-2xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
 
-            <div className="flex flex-wrap gap-3 mb-4">
-              {product.code && (
-                <span className="px-3 py-1.5 bg-secondary rounded-lg text-xs font-medium border border-border">
-                  {product.code}
-                </span>
-              )}
-              {product.kit && (
-                <span className="px-3 py-1.5 bg-primary/10 rounded-lg text-xs font-medium text-primary border border-primary/20">
-                  {product.kit}
-                </span>
-              )}
-            </div>
-
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              {product.description}
-            </p>
-
-            {/* Features */}
-            {"features" in product && product.features && (
-              <div className="space-y-5 mb-8">
-                {(product.features as { icon: React.ElementType; title: string; description: string }[]).map((feature, idx) => (
-                  <div key={idx} className="flex gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <feature.icon size={20} className="text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">{feature.title}</h3>
-                      <p className="text-sm text-muted-foreground">{feature.description}</p>
-                    </div>
-                  </div>
-                ))}
+              {/* Image */}
+              <div className="relative aspect-square md:aspect-[3/4] bg-gradient-to-br from-background to-secondary/20">
+                <img
+                  src={product.modalImage ?? product.image}
+                  alt={getProductAlt(product.name)}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            )}
 
-            <a
-              href="/#contacto"
-              className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium hover:bg-primary/90 transition-all"
-            >
-              Consultar Precio Mayorista
-              <ArrowRight size={18} />
-            </a>
+              {/* Info */}
+              <div className="flex flex-col justify-center gap-4 p-6 sm:p-8 lg:p-12">
+
+                {/* Category */}
+                <p className="text-xs uppercase tracking-[0.3em] text-primary font-semibold">
+                  {categoryName}
+                </p>
+
+                {/* Title */}
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+                  {product.name}
+                </h1>
+
+                {/* Badges */}
+                <div className="flex flex-wrap gap-3">
+                  {product.code && (
+                    <span className="px-3 py-1.5 bg-secondary rounded-lg text-xs font-medium text-foreground border border-border whitespace-nowrap">
+                      {product.code}
+                    </span>
+                  )}
+                  {product.kit && (
+                    <span className="px-3 py-1.5 bg-primary/10 rounded-lg text-xs font-medium text-primary border border-primary/20 whitespace-nowrap">
+                      {product.kit}
+                    </span>
+                  )}
+                </div>
+
+                {/* Description */}
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                  {product.description}
+                </p>
+
+                {/* Features */}
+                {"features" in product && product.features && (
+                  <div className="space-y-5">
+                    {(
+                      product.features as {
+                        icon: React.ElementType
+                        title: string
+                        description: string
+                      }[]
+                    ).map((feature, idx) => (
+                      <div key={idx} className="flex gap-4">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                          <feature.icon size={20} className="text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-foreground text-sm md:text-base mb-0.5">
+                            {feature.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* CTA */}
+                <a
+                  href="/#contacto"
+                  className="inline-flex w-full md:w-auto items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium text-base hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 mt-2"
+                >
+                  Consultar Precio Mayorista
+                  <ArrowRight size={18} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+      <Footer />
+    </div>
   )
 }
