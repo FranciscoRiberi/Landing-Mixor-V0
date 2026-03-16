@@ -2,6 +2,7 @@ import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -156,6 +157,60 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         {children}
         <Analytics />
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": `${BASE_URL}/#organization`,
+                  "name": "Mixor",
+                  "url": BASE_URL,
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": `${BASE_URL}/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp`,
+                  },
+                  "description": "Importador directo de accesorios tecnológicos mayoristas en Argentina.",
+                  "foundingDate": "2016",
+                  "areaServed": "AR",
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "sales",
+                    "availableLanguage": "Spanish",
+                  },
+                  "sameAs": [
+                    "https://www.instagram.com/mixoroficial/",
+                    "https://www.tiktok.com/@mixoroficial",
+                    "https://www.facebook.com/p/Mixor-61558422137441/",
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${BASE_URL}/#website`,
+                  "url": BASE_URL,
+                  "name": "Mixor",
+                  "publisher": { "@id": `${BASE_URL}/#organization` },
+                },
+                {
+                  "@type": "ItemList",
+                  "name": "Productos Mixor - Accesorios Tecnológicos Mayoristas",
+                  "description": "Catálogo mayorista de accesorios tecnológicos importados directamente.",
+                  "numberOfItems": 37,
+                  "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Parlante Bluetooth Mixor Ímpetu 20W", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 2, "name": "Parlante Bluetooth Mixor Latido", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 3, "name": "Smartwatch Mixor Pulso", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 4, "name": "Auriculares TWS Mixor Claridad", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 5, "name": "Cargador PD 65W Mixor Leyenda", "url": `${BASE_URL}/#productos` },
+                  ],
+                },
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   )
