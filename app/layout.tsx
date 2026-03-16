@@ -2,6 +2,7 @@ import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -14,7 +15,7 @@ const jsonLdOrg = {
   '@type': 'Organization',
   name: 'Mixor',
   url: BASE_URL,
-  logo: `${BASE_URL}/images/logo-mixor.png`,
+  logo: `${BASE_URL}/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp`,
   description: 'Importadores directos de accesorios tecnológicos en Argentina. Más de 8 años distribuyendo parlantes Bluetooth, auriculares, smartwatches, cargadores y cables al por mayor para distribuidores y mayoristas de todo el país.',
   foundingDate: '2016',
   areaServed: { '@type': 'Country', name: 'Argentina' },
@@ -77,21 +78,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'Mixor | Accesorios Tecnológicos Mayoristas — Importador Directo Argentina',
-    template: '%s | Mixor Argentina',
+    default: 'Mixor | Importador Directo de Accesorios Tecnológicos Mayoristas Argentina',
+    template: '%s | Mixor - Mayorista Argentina',
   },
-  description: 'Mixor es importador directo de accesorios tecnológicos en Argentina. Parlantes Bluetooth, auriculares, smartwatches, cargadores y cables al por mayor. Precios mayoristas, alta rotación y envíos a todo el país. Programa exclusivo para distribuidores.',
+  description: 'Importador directo de accesorios tecnológicos mayoristas en Argentina. Parlantes Bluetooth, auriculares, smartwatches, cargadores y cables al por mayor. Envíos a todo el país.',
   keywords: [
-    'accesorios tecnológicos mayorista', 'importador directo tecnología Argentina',
-    'parlantes bluetooth mayorista', 'auriculares mayorista Argentina',
-    'smartwatch mayorista', 'cargadores mayorista', 'cables USB mayorista',
-    'distribuidor accesorios celular', 'productos alta rotación',
-    'proveedor tecnología Argentina', 'Mixor', 'Mixor Argentina',
+    'accesorios tecnológicos mayoristas', 'importador directo argentina',
+    'parlantes bluetooth mayorista', 'auriculares mayorista',
+    'smartwatch mayorista', 'cargadores mayorista',
+    'distribuidores tecnología argentina',
   ],
-  authors: [{ name: 'Mixor', url: BASE_URL }],
+  authors: [{ name: 'Mixor' }],
   creator: 'Mixor',
-  publisher: 'Mixor Argentina',
-  category: 'technology',
   robots: {
     index: true,
     follow: true,
@@ -99,7 +97,6 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
       'max-image-preview': 'large',
-      'max-snippet': -1,
     },
   },
   alternates: {
@@ -111,10 +108,10 @@ export const metadata: Metadata = {
     url: BASE_URL,
     siteName: 'Mixor',
     title: 'Mixor | Importador Directo de Accesorios Tecnológicos Mayoristas',
-    description: 'Más de 8 años importando directamente parlantes, auriculares, smartwatches y cargadores. Precios mayoristas para distribuidores de todo Argentina.',
+    description: 'Importador directo de accesorios tecnológicos mayoristas en Argentina. Parlantes, auriculares, smartwatches, cargadores y cables al por mayor.',
     images: [
       {
-        url: `${BASE_URL}/images/logo-mixor.png`,
+        url: `${BASE_URL}/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp`,
         width: 1200,
         height: 630,
         alt: 'Mixor - Accesorios Tecnológicos Mayoristas Argentina',
@@ -123,11 +120,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mixor | Importador Directo de Accesorios Tecnológicos',
-    description: 'Parlantes, auriculares, smartwatches y cargadores al por mayor. Importador directo en Argentina para distribuidores y mayoristas.',
-    images: [`${BASE_URL}/images/logo-mixor.png`],
+    title: 'Mixor | Importador Directo Mayorista Argentina',
+    description: 'Accesorios tecnológicos mayoristas importados directamente. Parlantes, auriculares, smartwatches y más.',
+    images: [`${BASE_URL}/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp`],
     site: '@mixoroficial',
-    creator: '@mixoroficial',
+    creator: '@mixorificial',
   },
   other: {
     'application/ld+json:org': JSON.stringify(jsonLdOrg),
@@ -137,12 +134,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/logo-mixor.png', type: 'image/png', sizes: 'any' },
+      { url: '/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp', type: 'image/png', sizes: 'any' },
     ],
     apple: [
-      { url: '/images/logo-mixor.png', type: 'image/png', sizes: '180x180' },
+      { url: '/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp', type: 'image/png', sizes: '180x180' },
     ],
-    shortcut: '/images/logo-mixor.png',
+    shortcut: '/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp',
   },
   verification: {
     google: '',
@@ -160,6 +157,60 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         {children}
         <Analytics />
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": `${BASE_URL}/#organization`,
+                  "name": "Mixor",
+                  "url": BASE_URL,
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": `${BASE_URL}/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp`,
+                  },
+                  "description": "Importador directo de accesorios tecnológicos mayoristas en Argentina.",
+                  "foundingDate": "2016",
+                  "areaServed": "AR",
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "sales",
+                    "availableLanguage": "Spanish",
+                  },
+                  "sameAs": [
+                    "https://www.instagram.com/mixoroficial/",
+                    "https://www.tiktok.com/@mixoroficial",
+                    "https://www.facebook.com/p/Mixor-61558422137441/",
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${BASE_URL}/#website`,
+                  "url": BASE_URL,
+                  "name": "Mixor",
+                  "publisher": { "@id": `${BASE_URL}/#organization` },
+                },
+                {
+                  "@type": "ItemList",
+                  "name": "Productos Mixor - Accesorios Tecnológicos Mayoristas",
+                  "description": "Catálogo mayorista de accesorios tecnológicos importados directamente.",
+                  "numberOfItems": 37,
+                  "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Parlante Bluetooth Mixor Ímpetu 20W", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 2, "name": "Parlante Bluetooth Mixor Latido", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 3, "name": "Smartwatch Mixor Pulso", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 4, "name": "Auriculares TWS Mixor Claridad", "url": `${BASE_URL}/#productos` },
+                    { "@type": "ListItem", "position": 5, "name": "Cargador PD 65W Mixor Leyenda", "url": `${BASE_URL}/#productos` },
+                  ],
+                },
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   )

@@ -3,11 +3,45 @@
 import { useState } from "react";
 import { ArrowRight, X, Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
-// Formats alt text as "Category Mixor ProductName" — e.g. "Parlante Mixor Caos"
+const altMap: Record<string, string> = {
+  "Parlante Impetu":    "Parlante Bluetooth Mixor Ímpetu 20W RGB - Mayorista Argentina",
+  "Parlante Latido":   "Parlante Portátil Mixor Latido Bluetooth 5.1 - Importador directo",
+  "Parlante Curvas":   "Parlante Portátil Mixor Curvas LED RGB - Accesorios mayoristas Argentina",
+  "Parlante Mio":      "Parlante Bluetooth Mixor Mío 5W con LED - Precio mayorista Argentina",
+  "Parlante Leal":     "Parlante Bluetooth Mixor Leal 8W con Micrófono - Distribuidor mayorista",
+  "Parlante Mito":     "Parlante Mixor Mito 8W con Perilla TWS - Mayorista tecnología Argentina",
+  "Parlante Noche":    "Parlante de Fiesta Mixor Noche 30W Karaoke LED - Importador directo",
+  "Parlante Caos":     "Parlante de Fiesta Mixor Caos 30W Karaoke RGB - Mayorista Argentina",
+  "Parlante Alma":     "Parlante de Fiesta Mixor Alma 20W Doble Micrófono - Mayorista Argentina",
+  "Parlante Recuerdo": "Próximo Parlante Bluetooth Mixor Recuerdo - Mayorista Argentina",
+  "Smartwatch Pulso":    "Smartwatch Mixor Pulso Pantalla LED 1.52'' - Mayorista Argentina",
+  "Smartwatch Momentos": "Smartwatch Mixor Momentos ECG Llamadas Bluetooth - Importador directo",
+  "Smartwatch Activo":   "Próximo Smartwatch Mixor Activo - Accesorios tecnológicos mayoristas",
+  "TWS Claridad":         "Auriculares TWS Mixor Claridad Pantalla Táctil - Mayorista Argentina",
+  "Auriculares Fusión":   "Auriculares Inalámbricos Mixor Fusión 6hs - Importador directo Argentina",
+  "Auriculares Sensación":"Auriculares Inalámbricos Mixor Sensación 6hs - Distribuidor mayorista",
+  "TWS Sincronia":        "Próximos Auriculares TWS Mixor Sincronía - Mayorista Argentina",
+  "Cable Vinculo":    "Cable USB Tipo-C Mixor Vínculo 7.1A 1m - Mayorista Argentina",
+  "Cable Impulso":    "Cable USB a Tipo-C Mixor Impulso 7.1A Carga Rápida - Importador directo",
+  "Cable Vital":      "Cable USB Reforzado Mixor Vital 5.4A Cobre Puro - Mayorista Argentina",
+  "Cable Eternidad":  "Próximo Cable Mixor Eternidad - Accesorios tecnológicos mayoristas",
+  "Cable Pleno":      "Próximo Cable Mixor Pleno - Importador directo Argentina",
+  "Cargador Leyenda":  "Cargador PD 65W Mixor Leyenda USB-C - Mayorista Argentina",
+  "Cargador Somos":    "Cargador Rápido Mixor Somos 19W con Cable V8 - Importador directo",
+  "Cargador Proton":   "Cargador Auto 12V Mixor Proton Doble USB - Mayorista Argentina",
+  "Cargador Quiero":   "Cargador Pared Mixor Quiero 5.1A 2 USB con Cable Tipo-C - Mayorista",
+  "Cargador Realidad": "Cargador 220V Mixor Realidad 4.4A Triple Protección - Mayorista Argentina",
+  "Cargador Sinergia": "Próximo Cargador Mixor Sinergia - Accesorios tecnológicos mayoristas",
+  "Inflador Ruta":   "Inflador Portátil Mixor Ruta 4000mAh Digital - Mayorista Argentina",
+  "Holder Atrae":    "Soporte Magnético Mixor Atrae 360° Universal - Importador directo Argentina",
+  "Cargador Nexo":   "Cargador Universal Notebook Mixor Nexo 9 Pines - Mayorista Argentina",
+  "Micrófono Voz":   "Próximo Micrófono Mixor Voz - Accesorios tecnológicos mayoristas",
+  "Lámpara Motivos": "Próxima Lámpara Mixor Motivos - Accesorios tecnológicos mayoristas",
+  "Reloj Sueño":     "Próximo Reloj Mixor Sueño - Accesorios tecnológicos mayoristas",
+};
+
 function getProductAlt(name: string): string {
-  const parts = name.trim().split(" ");
-  if (parts.length < 2) return `Mixor ${name}`;
-  return `${parts[0]} Mixor ${parts.slice(1).join(" ")}`;
+  return altMap[name] ?? `Accesorios tecnológicos Mixor ${name} - Mayorista Argentina`;
 }
 
 const categories = [
@@ -27,8 +61,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00EH",
     kit: "Kit x 40 unidades",
-    image: "/images/impetu-lineup.png",
-    modalImage: "/images/impetu-modal-final.png",
+    image: "/images/parlante-bluetooth-mixor-impetu-20w-rgb-mayorista.webp",
+    modalImage: "/images/parlante-bluetooth-mixor-impetu-modal-20w-rgb.webp",
     description: "Sonido estéreo 20W (10Wx2) con luces RGB y batería de 1800mAh",
     features: [
       {
@@ -60,8 +94,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00C5",
     kit: "Kit x 50 unidades",
-    image: "/images/latido-card.png",
-    modalImage: "/images/latido-modal.png",
+    image: "/images/parlante-portatil-mixor-latido-bluetooth-mayorista.webp",
+    modalImage: "/images/parlante-portatil-mixor-latido-modal-bluetooth.webp",
     description: "Parlante inalámbrico portátil con Bluetooth 5.1 y batería de 800mAh",
     features: [
       {
@@ -93,8 +127,8 @@ const products = [
     price: "Consultar",
     code: "MODM-000U",
     kit: "Kit x 50 unidades",
-    image: "/images/curvas-card.png",
-    modalImage: "/images/curvas-modal.png",
+    image: "/images/parlante-portatil-mixor-curvas-led-rgb-mayorista.webp",
+    modalImage: "/images/parlante-portatil-mixor-curvas-modal-led-rgb.webp",
     description: "Parlante portátil con luces LED RGB y diseño triangular compacto",
     features: [
       {
@@ -126,8 +160,8 @@ const products = [
     price: "Consultar",
     code: "MODM-000S",
     kit: "Kit x 100 unidades",
-    image: "/images/mio-card.png",
-    modalImage: "/images/mio-modal.png",
+    image: "/images/parlante-bluetooth-mixor-mio-5w-led-mayorista.webp",
+    modalImage: "/images/parlante-bluetooth-mixor-mio-modal-5w-led.webp",
     description: "Parlante portátil 3'' con Bluetooth, luces LED y múltiples funciones",
     features: [
       {
@@ -159,8 +193,8 @@ const products = [
     price: "Consultar",
     code: "MODM-007",
     kit: "Kit x 50 unidades",
-    image: "/images/leal-card.png",
-    modalImage: "/images/leal-modal.png",
+    image: "/images/parlante-bluetooth-mixor-leal-8w-microfono-mayorista.webp",
+    modalImage: "/images/parlante-bluetooth-mixor-leal-modal-8w-microfono.webp",
     description: "Parlante portátil con Bluetooth 2.0, control de voz y iluminación LED",
     features: [
       {
@@ -192,8 +226,8 @@ const products = [
     price: "Consultar",
     code: "MODM-000T",
     kit: "Kit x 50 unidades",
-    image: "/images/mito-card.png",
-    modalImage: "/images/mito-modal.png",
+    image: "/images/parlante-bluetooth-mixor-mito-8w-tws-mayorista.webp",
+    modalImage: "/images/parlante-bluetooth-mixor-mito-modal-8w-tws.webp",
     description: "Parlante portátil 3'' de 8W con perilla de control, Bluetooth y tecnología TWS",
     features: [
       {
@@ -225,8 +259,8 @@ const products = [
     price: "Consultar",
     code: "MODM-0029",
     kit: "Kit x 1 unidad",
-    image: "/images/noche-card.png",
-    modalImage: "/images/noche-modal.png",
+    image: "/images/parlante-fiesta-mixor-noche-30w-karaoke-mayorista.webp",
+    modalImage: "/images/parlante-fiesta-mixor-noche-modal-30w-karaoke.webp",
     description: "Parlante de fiesta 12'' con 30W, micrófono incluido y luces LED para karaoke",
     features: [
       {
@@ -258,8 +292,8 @@ const products = [
     price: "Consultar",
     code: "MODM-0028",
     kit: "Kit x 1 unidad",
-    image: "/images/caos-card.png",
-    modalImage: "/images/caos-modal.png",
+    image: "/images/parlante-fiesta-mixor-caos-30w-rgb-mayorista.webp",
+    modalImage: "/images/parlante-fiesta-mixor-caos-modal-30w-rgb.webp",
     description: "Parlante de fiesta 15'' con 30W, karaoke incorporado y luces LED RGB",
     features: [
       {
@@ -291,8 +325,8 @@ const products = [
     price: "Consultar",
     code: "MODM-0027",
     kit: "Kit x 8 unidades",
-    image: "/images/alma-card.png",
-    modalImage: "/images/alma-modal.png",
+    image: "/images/parlante-fiesta-mixor-alma-20w-doble-microfono-mayorista.webp",
+    modalImage: "/images/parlante-fiesta-mixor-alma-modal-20w-doble-microfono.webp",
     description: "Parlante de fiesta 8'' con 20W, karaoke y doble micrófono para eventos",
     features: [
       {
@@ -324,8 +358,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00GP",
     kit: "Kit x 100 unidades",
-    image: "/images/pulso-card.png",
-    modalImage: "/images/pulso-modal.png",
+    image: "/images/smartwatch-mixor-pulso-pantalla-led-mayorista-argentina.webp",
+    modalImage: "/images/smartwatch-mixor-pulso-modal-pantalla-led.webp",
     description: "Smartwatch redondo con pantalla LED 1.52'', dos mallas y batería eficiente",
     features: [
       {
@@ -357,8 +391,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00ED",
     kit: "Kit x 100 unidades",
-    image: "/images/momentos-card.png",
-    modalImage: "/images/momentos-modal.png",
+    image: "/images/smartwatch-mixor-momentos-ecg-bluetooth-mayorista.webp",
+    modalImage: "/images/smartwatch-mixor-momentos-modal-ecg-bluetooth.webp",
     description: "Smartwatch cuadrado con monitoreo ECG, llamadas Bluetooth y modos deportivos",
     features: [
       {
@@ -390,8 +424,8 @@ const products = [
     price: "Consultar",
     code: "MODM-009E",
     kit: "Kit x 100 unidades",
-    image: "/images/claridad-card.png",
-    modalImage: "/images/claridad-modal.png",
+    image: "/images/auriculares-tws-mixor-claridad-pantalla-tactil-mayorista.webp",
+    modalImage: "/images/auriculares-tws-mixor-claridad-modal-pantalla-tactil.webp",
     description: "Auriculares TWS con estuche inteligente de pantalla táctil a color y Bluetooth avanzado",
     features: [
       {
@@ -423,8 +457,8 @@ const products = [
     price: "Consultar",
     code: "MODM-008N",
     kit: "Kit x 100 unidades",
-    image: "/images/fusion-card.png",
-    modalImage: "/images/fusion-modal.png",
+    image: "/images/auriculares-inalambricos-mixor-fusion-6hs-mayorista.webp",
+    modalImage: "/images/auriculares-inalambricos-mixor-fusion-modal-6hs.webp",
     description: "Auriculares inalámbricos over-ear con 6 horas de autonomía y carga rápida en 1 hora",
     features: [
       {
@@ -456,8 +490,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00B6",
     kit: "Kit x 80 unidades",
-    image: "/images/sensacion-card.png",
-    modalImage: "/images/sensacion-modal.png",
+    image: "/images/auriculares-inalambricos-mixor-sensacion-6hs-mayorista.webp",
+    modalImage: "/images/auriculares-inalambricos-mixor-sensacion-modal-6hs.webp",
     description: "Auriculares inalámbricos over-ear con 6 horas de autonomía y carga rápida en 1 hora",
     features: [
       {
@@ -489,8 +523,8 @@ const products = [
     price: "Consultar",
     code: "MODM-137",
     kit: "Kit x 200 unidades",
-    image: "/images/vinculo-card.png",
-    modalImage: "/images/vinculo-modal.png",
+    image: "/images/cable-usb-tipo-c-mixor-vinculo-71a-mayorista-argentina.webp",
+    modalImage: "/images/cable-usb-tipo-c-mixor-vinculo-modal-71a.webp",
     description: "Cable USB 7.1A de 1 metro con carga y datos rápidos, disponible en variantes TC-TC y TC-IP",
     features: [
       {
@@ -522,8 +556,8 @@ const products = [
     price: "Consultar",
     code: "MODM-601",
     kit: "Kit x 200 unidades",
-    image: "/images/impulso-card.png",
-    modalImage: "/images/impulso-modal.png",
+    image: "/images/cable-usb-tipo-c-mixor-impulso-carga-rapida-mayorista.webp",
+    modalImage: "/images/cable-usb-tipo-c-mixor-impulso-modal-carga-rapida.webp",
     description: "Cable USB a Tipo-C de 7.1A para carga rápida, maximiza el potencial de tu cargador",
     features: [
       {
@@ -555,8 +589,8 @@ const products = [
     price: "Consultar",
     code: "MODM-136",
     kit: "Kit x 200 unidades",
-    image: "/images/vital-card.png",
-    modalImage: "/images/vital-modal.png",
+    image: "/images/cable-usb-reforzado-mixor-vital-54a-cobre-mayorista.webp",
+    modalImage: "/images/cable-usb-reforzado-mixor-vital-modal-54a-cobre.webp",
     description: "Cable USB reforzado de 5.4A con doble inyección y hilos de cobre puro, disponible en TC y V8",
     features: [
       {
@@ -588,8 +622,8 @@ const products = [
     price: "Consultar",
     code: "MODM-510",
     kit: "Kit x 200 unidades",
-    image: "/images/leyenda-card.png",
-    modalImage: "/images/leyenda-modal.png",
+    image: "/images/cargador-pd-65w-mixor-leyenda-usb-c-mayorista.webp",
+    modalImage: "/images/cargador-pd-65w-mixor-leyenda-modal-usb-c.webp",
     description: "Cargador PD de 65W con carga rápida y puerto USB-C",
     features: [
       {
@@ -621,8 +655,8 @@ const products = [
     price: "Consultar",
     code: "MODM-017",
     kit: "Kit x 200 unidades",
-    image: "/images/somos-card.png",
-    modalImage: "/images/somos-modal.png",
+    image: "/images/cargador-rapido-mixor-somos-19w-cable-v8-mayorista.webp",
+    modalImage: "/images/cargador-rapido-mixor-somos-modal-19w-cable-v8.webp",
     description: "Cargador rápido 19W con cable USB a V8 de 1 metro incluido",
     features: [
       {
@@ -654,8 +688,8 @@ const products = [
     price: "Consultar",
     code: "MODM-043",
     kit: "Kit x 200 unidades",
-    image: "/images/proton-card.png",
-    modalImage: "/images/proton-modal.png",
+    image: "/images/cargador-auto-mixor-proton-12v-doble-usb-mayorista.webp",
+    modalImage: "/images/cargador-auto-mixor-proton-modal-12v-doble-usb.webp",
     description: "Cargador para auto 12V con doble USB y cable V8 incluido",
     features: [
       {
@@ -687,8 +721,8 @@ const products = [
     price: "Consultar",
     code: "MODM-012",
     kit: "Kit x 200 unidades",
-    image: "/images/quiero-card.png",
-    modalImage: "/images/quiero-modal.png",
+    image: "/images/cargador-pared-mixor-quiero-51a-2usb-tipo-c-mayorista.webp",
+    modalImage: "/images/cargador-pared-mixor-quiero-modal-51a-2usb-tipo-c.webp",
     description: "Cargador de pared 5.1A con 2 puertos USB y cable Tipo-C incluido",
     features: [
       {
@@ -720,8 +754,8 @@ const products = [
     price: "Consultar",
     code: "MIXOR MOD09",
     kit: "Kit x 200 unidades",
-    image: "/images/realidad-card.png",
-    modalImage: "/images/realidad-modal.png",
+    image: "/images/cargador-220v-mixor-realidad-44a-triple-proteccion-mayorista.webp",
+    modalImage: "/images/cargador-220v-mixor-realidad-modal-44a-triple-proteccion.webp",
     description: "Cargador 220V de 4.4A con 2 USB y cable incluido, disponible en 3 variantes",
     features: [
       {
@@ -753,8 +787,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00EI",
     kit: "Kit x 24 unidades",
-    image: "/images/ruta-card.png",
-    modalImage: "/images/ruta-modal.png",
+    image: "/images/inflador-portatil-mixor-ruta-4000mah-digital-mayorista.webp",
+    modalImage: "/images/inflador-portatil-mixor-ruta-modal-4000mah-digital.webp",
     description: "Inflador portátil con medidor de presión digital, batería 4000mAh y 4 picos",
     features: [
       {
@@ -786,8 +820,8 @@ const products = [
     price: "Consultar",
     code: "MODM-00B5",
     kit: "Kit x 200 unidades",
-    image: "/images/atrae-card.png",
-    modalImage: "/images/atrae-modal.png",
+    image: "/images/soporte-magnetico-mixor-atrae-360-universal-mayorista.webp",
+    modalImage: "/images/soporte-magnetico-mixor-atrae-modal-360-universal.webp",
     description: "Soporte magnético versátil con rotación 360° para celulares de 4.7'' a 6.9''",
     features: [
       {
@@ -819,8 +853,8 @@ const products = [
     price: "Consultar",
     code: "MODM-300",
     kit: "Kit x 50 unidades",
-    image: "/images/nexo-card.png",
-    modalImage: "/images/nexo-modal.png",
+    image: "/images/cargador-notebook-mixor-nexo-9-pines-mayorista.webp",
+    modalImage: "/images/cargador-notebook-mixor-nexo-modal-9-pines.webp",
     description: "Cargador universal de notebook con 9 pines intercambiables y selector de voltaje",
     features: [
       {
@@ -852,7 +886,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-009F",
     kit: "Kit x 100 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -862,7 +896,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00PL",
     kit: "Kit x 500 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -872,7 +906,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00PM",
     kit: "Kit x 500 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -882,7 +916,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00SN",
     kit: "Kit x 80 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -892,7 +926,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00VO",
     kit: "Kit x 50 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -902,7 +936,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00SY",
     kit: "Kit x 100 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -912,7 +946,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00RC",
     kit: "Kit x 50 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -922,7 +956,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00MO",
     kit: "Kit x 80 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
   {
@@ -932,7 +966,7 @@ const products = [
     price: "Próximamente",
     code: "MODM-00SU",
     kit: "Kit x 100 unidades",
-    image: "/images/proximamente-mixor.png",
+    image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp",
     description: "Próximamente disponible",
   },
 ];
