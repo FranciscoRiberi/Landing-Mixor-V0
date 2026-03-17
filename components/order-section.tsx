@@ -37,9 +37,30 @@ const provinces = [
 ];
 
 // ---------------------------------------------------------------------------
-// Lava drip effect — slow thick drops falling from the top edge
+// Lightning bolt effect — bolts strike down from the top edge
 // ---------------------------------------------------------------------------
-function LavaDrips() {
+
+// Build a jagged lightning path from (x, y0) down to (x, y1)
+function buildBolt(
+  x: number,
+  y0: number,
+  y1: number,
+  segments: number,
+  spread: number
+): { x: number; y: number }[] {
+  const pts: { x: number; y: number }[] = [{ x, y: y0 }];
+  for (let i = 1; i < segments; i++) {
+    const t = i / segments;
+    pts.push({
+      x: x + (Math.random() - 0.5) * spread,
+      y: y0 + t * (y1 - y0),
+    });
+  }
+  pts.push({ x, y: y1 });
+  return pts;
+}
+
+function LightningCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -57,35 +78,75 @@ function LavaDrips() {
     resize();
     window.addEventListener("resize", resize);
 
-    // A drip is a slow elongated blob that stretches as it falls
-    type Drip = {
-      x: number;       // fixed horizontal position
-      y: number;       // current tip y
-      vy: number;      // fall speed (slow)
-      r: number;       // blob radius
-      tail: number;    // how long the tail streaks back up
-      alpha: number;   // opacity
-      decay: number;   // fade rate
-      phase: number;   // wobble phase
+    type Bolt = {
+      pts: { x: number; y: number }[];
+      alpha: number;       // current opacity
+      decay: number;       // fade speed
+      width: number;       // stroke width
+      branches: { pts: { x: number; y: number }[]; alpha: number }[];
+      life: number;        // frames alive (for flicker)
     };
 
-    const drips: Drip[] = [];
+    const bolts: Bolt[] = [];
     let frame = 0;
-    // Spawn roughly every 40-80 frames — sparse, like real lava
-    let nextSpawn = 40 + Math.random() * 40;
+    let nextSpawn = 20 + Math.random() * 50;
 
-    const spawn = () => {
-      const r = 3 + Math.random() * 5;
-      drips.push({
-        x: 30 + Math.random() * (canvas.width - 60),
-        y: 0,
-        vy: 0.25 + Math.random() * 0.35,   // very slow
-        r,
-        tail: r * (2.5 + Math.random() * 2),
-        alpha: 0.18 + Math.random() * 0.14,
-        decay: 0.00025 + Math.random() * 0.0003,
-        phase: Math.random() * Math.PI * 2,
+    const spawnBolt = () => {
+      const x = 20 + Math.random() * (canvas.width - 40);
+      const height = 60 + Math.random() * 120;
+      const segs = 8 + Math.floor(Math.random() * 6);
+      const pts = buildBolt(x, 0, height, segs, 18);
+
+      // 1-2 small branches off a random mid-segment
+      const branches: Bolt["branches"] = [];
+      const branchCount = Math.random() < 0.6 ? 1 : 2;
+      for (let b = 0; b < branchCount; b++) {
+        const srcIdx = 2 + Math.floor(Math.random() * (pts.length - 3));
+        const src = pts[srcIdx];
+        const bLen = 20 + Math.random() * 40;
+        const bPts = buildBolt(src.x, src.y, src.y + bLen, 4, 10);
+        branches.push({ pts: bPts, alpha: 1 });
+      }
+
+      bolts.push({
+        pts,
+        alpha: 0.25 + Math.random() * 0.2,
+        decay: 0.018 + Math.random() * 0.02,
+        width: 1 + Math.random() * 1.2,
+        branches,
+        life: 0,
       });
+    };
+
+    const drawBoltPath = (
+      pts: { x: number; y: number }[],
+      alpha: number,
+      width: number
+    ) => {
+      if (pts.length < 2) return;
+      // Glow pass
+      ctx.save();
+      ctx.strokeStyle = `rgba(255, 80, 80, ${alpha * 0.25})`;
+      ctx.lineWidth = width * 4;
+      ctx.lineJoin = "round";
+      ctx.shadowColor = "rgba(220, 40, 40, 0.8)";
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+      ctx.restore();
+
+      // Core line
+      ctx.save();
+      ctx.strokeStyle = `rgba(255, 140, 140, ${alpha})`;
+      ctx.lineWidth = width;
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+      ctx.restore();
     };
 
     const loop = () => {
@@ -93,57 +154,26 @@ function LavaDrips() {
       frame++;
 
       if (frame >= nextSpawn) {
-        spawn();
-        nextSpawn = frame + 40 + Math.random() * 60;
+        spawnBolt();
+        nextSpawn = frame + 30 + Math.random() * 70;
       }
 
-      for (let i = drips.length - 1; i >= 0; i--) {
-        const d = drips[i];
-        d.y += d.vy;
-        d.alpha -= d.decay;
+      for (let i = bolts.length - 1; i >= 0; i--) {
+        const b = bolts[i];
+        b.life++;
 
-        if (d.alpha <= 0 || d.y > canvas.height + d.tail) {
-          drips.splice(i, 1);
-          continue;
+        // Flicker: skip drawing on some frames for electric feel
+        const flicker = b.life < 3 ? (Math.random() > 0.3) : true;
+
+        if (flicker) {
+          drawBoltPath(b.pts, b.alpha, b.width);
+          for (const br of b.branches) {
+            drawBoltPath(br.pts, b.alpha * 0.6, b.width * 0.6);
+          }
         }
 
-        // Slight side-wobble — very subtle
-        const wobbleX = Math.sin(frame * 0.03 + d.phase) * 0.6;
-
-        // Draw the tail (streak going upward from the blob)
-        const tailLen = d.tail;
-        const grad = ctx.createLinearGradient(
-          d.x + wobbleX, d.y - tailLen,
-          d.x + wobbleX, d.y
-        );
-        grad.addColorStop(0, `rgba(200, 30, 30, 0)`);
-        grad.addColorStop(1, `rgba(210, 35, 35, ${d.alpha * 0.6})`);
-
-        ctx.beginPath();
-        ctx.moveTo(d.x + wobbleX - d.r * 0.4, d.y - tailLen);
-        ctx.quadraticCurveTo(
-          d.x + wobbleX + d.r * 0.5, d.y - tailLen * 0.5,
-          d.x + wobbleX, d.y - d.r * 0.5
-        );
-        ctx.quadraticCurveTo(
-          d.x + wobbleX - d.r * 0.5, d.y - tailLen * 0.5,
-          d.x + wobbleX - d.r * 0.4, d.y - tailLen
-        );
-        ctx.fillStyle = grad;
-        ctx.fill();
-
-        // Draw the rounded blob tip
-        const blobGrad = ctx.createRadialGradient(
-          d.x + wobbleX, d.y, 0,
-          d.x + wobbleX, d.y, d.r
-        );
-        blobGrad.addColorStop(0, `rgba(240, 60, 60, ${d.alpha})`);
-        blobGrad.addColorStop(1, `rgba(180, 20, 20, ${d.alpha * 0.4})`);
-
-        ctx.beginPath();
-        ctx.arc(d.x + wobbleX, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = blobGrad;
-        ctx.fill();
+        b.alpha -= b.decay;
+        if (b.alpha <= 0) bolts.splice(i, 1);
       }
 
       animId = requestAnimationFrame(loop);
@@ -161,7 +191,7 @@ function LavaDrips() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-x-0 top-0 w-full h-48 pointer-events-none z-0"
+      className="absolute inset-x-0 top-0 w-full h-64 pointer-events-none z-0"
     />
   );
 }
@@ -193,7 +223,7 @@ export function OrderSection() {
       id="pedido"
       className="relative py-16 lg:py-28 px-4 sm:px-6 border-b border-border overflow-hidden"
     >
-      <LavaDrips />
+      <LightningCanvas />
       <div className="relative z-10 max-w-xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
