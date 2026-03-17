@@ -108,8 +108,14 @@ export function Navigation() {
           />
 
           <a
+            href="#pedido"
+            className="whitespace-nowrap text-sm font-semibold border border-primary text-primary rounded-full px-5 py-2 ml-1 hover:bg-primary/10 transition-all duration-300 hover:-translate-y-0.5"
+          >
+            Hace tu pedido
+          </a>
+          <a
             href="#contacto"
-            className="whitespace-nowrap text-sm font-semibold bg-primary text-primary-foreground rounded-full px-5 py-2 ml-2 hover:bg-primary/90 transition-all duration-300 shadow-[0_2px_12px_rgba(255,49,49,0.4)] hover:shadow-[0_4px_20px_rgba(255,49,49,0.5)] hover:-translate-y-0.5"
+            className="whitespace-nowrap text-sm font-semibold bg-primary text-primary-foreground rounded-full px-5 py-2 ml-1 hover:bg-primary/90 transition-all duration-300 shadow-[0_2px_12px_rgba(255,49,49,0.4)] hover:shadow-[0_4px_20px_rgba(255,49,49,0.5)] hover:-translate-y-0.5"
           >
             Contactanos
           </a>
@@ -179,8 +185,15 @@ export function Navigation() {
           ))}
         </nav>
 
-        {/* CTA at bottom */}
-        <div className="px-8 pb-14 pt-4">
+        {/* CTAs at bottom */}
+        <div className="px-8 pb-14 pt-4 flex flex-col gap-3">
+          <a
+            href="#pedido"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block w-full text-center min-h-[56px] flex items-center justify-center text-base font-bold bg-white/15 border border-white/40 text-white rounded-full hover:bg-white/25 transition-all"
+          >
+            Hace tu pedido
+          </a>
           <a
             href="#contacto"
             onClick={() => setIsMobileMenuOpen(false)}
