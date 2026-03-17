@@ -109,7 +109,12 @@ export function Navigation() {
 
           <a
             href="#pedido"
-            className="whitespace-nowrap text-sm font-semibold border border-white/70 text-white rounded-full px-5 py-2 ml-1 hover:bg-white/15 hover:border-white transition-all duration-300 hover:-translate-y-0.5"
+            className={cn(
+              "whitespace-nowrap text-sm font-semibold rounded-full px-5 py-2 ml-1 transition-all duration-300 hover:-translate-y-0.5",
+              isScrolled
+                ? "border border-primary text-primary hover:bg-primary/10"
+                : "bg-white text-primary hover:bg-white/90 shadow-sm"
+            )}
           >
             Hace tu pedido
           </a>
