@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, ShoppingBag, MessageCircle } from "lucide-react";
 
 const salesAdvisors = [
@@ -36,6 +36,95 @@ const provinces = [
   "Ciudad Autónoma de Buenos Aires",
 ];
 
+// ---------------------------------------------------------------------------
+// Falling particles (drip from red section above)
+// ---------------------------------------------------------------------------
+function FallingParticles() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    // Particles — spawn near top edge, drift downward
+    type Particle = {
+      x: number;
+      y: number;
+      vy: number;
+      vx: number;
+      r: number;
+      alpha: number;
+      decay: number;
+    };
+
+    const particles: Particle[] = [];
+    const SPAWN_RATE = 0.35; // avg per frame
+
+    const spawn = () => {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -4,
+        vy: 0.4 + Math.random() * 0.9,
+        vx: (Math.random() - 0.5) * 0.3,
+        r: 1.2 + Math.random() * 1.8,
+        alpha: 0.08 + Math.random() * 0.12,
+        decay: 0.0004 + Math.random() * 0.0006,
+      });
+    };
+
+    const loop = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (Math.random() < SPAWN_RATE) spawn();
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.y += p.vy;
+        p.x += p.vx;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0 || p.y > canvas.height) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220, 40, 40, ${p.alpha})`;
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    loop();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+    />
+  );
+}
+
 const inputClass =
   "w-full px-4 py-3.5 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300 text-sm";
 
@@ -61,9 +150,10 @@ export function OrderSection() {
   return (
     <section
       id="pedido"
-      className="py-16 lg:py-28 px-4 sm:px-6 border-b border-border"
+      className="relative py-16 lg:py-28 px-4 sm:px-6 border-b border-border overflow-hidden"
     >
-      <div className="max-w-xl mx-auto">
+      <FallingParticles />
+      <div className="relative z-10 max-w-xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-5">
