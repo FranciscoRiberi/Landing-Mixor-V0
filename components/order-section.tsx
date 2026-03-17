@@ -37,9 +37,9 @@ const provinces = [
 ];
 
 // ---------------------------------------------------------------------------
-// Falling particles (drip from red section above)
+// Lava drip effect — slow thick drops falling from the top edge
 // ---------------------------------------------------------------------------
-function FallingParticles() {
+function LavaDrips() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -57,51 +57,92 @@ function FallingParticles() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Particles — spawn near top edge, drift downward
-    type Particle = {
-      x: number;
-      y: number;
-      vy: number;
-      vx: number;
-      r: number;
-      alpha: number;
-      decay: number;
+    // A drip is a slow elongated blob that stretches as it falls
+    type Drip = {
+      x: number;       // fixed horizontal position
+      y: number;       // current tip y
+      vy: number;      // fall speed (slow)
+      r: number;       // blob radius
+      tail: number;    // how long the tail streaks back up
+      alpha: number;   // opacity
+      decay: number;   // fade rate
+      phase: number;   // wobble phase
     };
 
-    const particles: Particle[] = [];
-    const SPAWN_RATE = 0.35; // avg per frame
+    const drips: Drip[] = [];
+    let frame = 0;
+    // Spawn roughly every 40-80 frames — sparse, like real lava
+    let nextSpawn = 40 + Math.random() * 40;
 
     const spawn = () => {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: -4,
-        vy: 0.4 + Math.random() * 0.9,
-        vx: (Math.random() - 0.5) * 0.3,
-        r: 1.2 + Math.random() * 1.8,
-        alpha: 0.08 + Math.random() * 0.12,
-        decay: 0.0004 + Math.random() * 0.0006,
+      const r = 3 + Math.random() * 5;
+      drips.push({
+        x: 30 + Math.random() * (canvas.width - 60),
+        y: 0,
+        vy: 0.25 + Math.random() * 0.35,   // very slow
+        r,
+        tail: r * (2.5 + Math.random() * 2),
+        alpha: 0.18 + Math.random() * 0.14,
+        decay: 0.00025 + Math.random() * 0.0003,
+        phase: Math.random() * Math.PI * 2,
       });
     };
 
     const loop = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      frame++;
 
-      if (Math.random() < SPAWN_RATE) spawn();
+      if (frame >= nextSpawn) {
+        spawn();
+        nextSpawn = frame + 40 + Math.random() * 60;
+      }
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.y += p.vy;
-        p.x += p.vx;
-        p.alpha -= p.decay;
+      for (let i = drips.length - 1; i >= 0; i--) {
+        const d = drips[i];
+        d.y += d.vy;
+        d.alpha -= d.decay;
 
-        if (p.alpha <= 0 || p.y > canvas.height) {
-          particles.splice(i, 1);
+        if (d.alpha <= 0 || d.y > canvas.height + d.tail) {
+          drips.splice(i, 1);
           continue;
         }
 
+        // Slight side-wobble — very subtle
+        const wobbleX = Math.sin(frame * 0.03 + d.phase) * 0.6;
+
+        // Draw the tail (streak going upward from the blob)
+        const tailLen = d.tail;
+        const grad = ctx.createLinearGradient(
+          d.x + wobbleX, d.y - tailLen,
+          d.x + wobbleX, d.y
+        );
+        grad.addColorStop(0, `rgba(200, 30, 30, 0)`);
+        grad.addColorStop(1, `rgba(210, 35, 35, ${d.alpha * 0.6})`);
+
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(220, 40, 40, ${p.alpha})`;
+        ctx.moveTo(d.x + wobbleX - d.r * 0.4, d.y - tailLen);
+        ctx.quadraticCurveTo(
+          d.x + wobbleX + d.r * 0.5, d.y - tailLen * 0.5,
+          d.x + wobbleX, d.y - d.r * 0.5
+        );
+        ctx.quadraticCurveTo(
+          d.x + wobbleX - d.r * 0.5, d.y - tailLen * 0.5,
+          d.x + wobbleX - d.r * 0.4, d.y - tailLen
+        );
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Draw the rounded blob tip
+        const blobGrad = ctx.createRadialGradient(
+          d.x + wobbleX, d.y, 0,
+          d.x + wobbleX, d.y, d.r
+        );
+        blobGrad.addColorStop(0, `rgba(240, 60, 60, ${d.alpha})`);
+        blobGrad.addColorStop(1, `rgba(180, 20, 20, ${d.alpha * 0.4})`);
+
+        ctx.beginPath();
+        ctx.arc(d.x + wobbleX, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = blobGrad;
         ctx.fill();
       }
 
@@ -120,7 +161,7 @@ function FallingParticles() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      className="absolute inset-x-0 top-0 w-full h-48 pointer-events-none z-0"
     />
   );
 }
@@ -152,7 +193,7 @@ export function OrderSection() {
       id="pedido"
       className="relative py-16 lg:py-28 px-4 sm:px-6 border-b border-border overflow-hidden"
     >
-      <FallingParticles />
+      <LavaDrips />
       <div className="relative z-10 max-w-xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
