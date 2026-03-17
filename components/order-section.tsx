@@ -37,28 +37,44 @@ const provinces = [
 ];
 
 // ---------------------------------------------------------------------------
-// Lightning bolt effect — bolts strike down from the top edge
+// Lightning — three-phase: STRIKE → FLASH → FADE
 // ---------------------------------------------------------------------------
 
-// Build a jagged lightning path from (x, y0) down to (x, y1)
 function buildBolt(
-  x: number,
-  y0: number,
-  y1: number,
-  segments: number,
-  spread: number
+  x: number, y0: number, y1: number,
+  segments: number, spread: number
 ): { x: number; y: number }[] {
   const pts: { x: number; y: number }[] = [{ x, y: y0 }];
   for (let i = 1; i < segments; i++) {
     const t = i / segments;
+    // Mid-displacement: largest jag in the middle, smaller near ends
+    const envelope = Math.sin(t * Math.PI);
     pts.push({
-      x: x + (Math.random() - 0.5) * spread,
+      x: x + (Math.random() - 0.5) * spread * envelope,
       y: y0 + t * (y1 - y0),
     });
   }
   pts.push({ x, y: y1 });
   return pts;
 }
+
+type Phase = "strike" | "flash" | "fade";
+
+type Bolt = {
+  pts: { x: number; y: number }[];
+  branches: { pts: { x: number; y: number }[] }[];
+  phase: Phase;
+  // STRIKE: how many segments are currently visible (grows each frame)
+  visibleSegs: number;
+  strikeSpeed: number;   // segments revealed per frame
+  // FLASH: bright hold for N frames
+  flashFrames: number;
+  flashLife: number;
+  // FADE: opacity decays from 1 → 0
+  alpha: number;
+  decay: number;
+  width: number;
+};
 
 function LightningCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -70,7 +86,6 @@ function LightningCanvas() {
     if (!ctx) return;
 
     let animId: number;
-
     const resize = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -78,73 +93,89 @@ function LightningCanvas() {
     resize();
     window.addEventListener("resize", resize);
 
-    type Bolt = {
-      pts: { x: number; y: number }[];
-      alpha: number;       // current opacity
-      decay: number;       // fade speed
-      width: number;       // stroke width
-      branches: { pts: { x: number; y: number }[]; alpha: number }[];
-      life: number;        // frames alive (for flicker)
-    };
-
     const bolts: Bolt[] = [];
     let frame = 0;
-    let nextSpawn = 20 + Math.random() * 50;
+    let nextSpawn = 30 + Math.random() * 80;
 
     const spawnBolt = () => {
       const x = 20 + Math.random() * (canvas.width - 40);
-      const height = 60 + Math.random() * 120;
-      const segs = 8 + Math.floor(Math.random() * 6);
-      const pts = buildBolt(x, 0, height, segs, 18);
+      const height = 80 + Math.random() * 140;
+      const segs = 10 + Math.floor(Math.random() * 6);
+      const pts = buildBolt(x, 0, height, segs, 22);
 
-      // 1-2 small branches off a random mid-segment
+      // 1–2 branches off mid-points
       const branches: Bolt["branches"] = [];
-      const branchCount = Math.random() < 0.6 ? 1 : 2;
+      const branchCount = Math.random() < 0.5 ? 1 : 2;
       for (let b = 0; b < branchCount; b++) {
-        const srcIdx = 2 + Math.floor(Math.random() * (pts.length - 3));
+        const srcIdx = 3 + Math.floor(Math.random() * (pts.length - 4));
         const src = pts[srcIdx];
-        const bLen = 20 + Math.random() * 40;
-        const bPts = buildBolt(src.x, src.y, src.y + bLen, 4, 10);
-        branches.push({ pts: bPts, alpha: 1 });
+        const bLen = 25 + Math.random() * 50;
+        const angle = (Math.random() - 0.5) * 1.2; // slight diagonal
+        const ex = src.x + Math.sin(angle) * bLen;
+        const ey = src.y + Math.cos(angle) * bLen;
+        branches.push({ pts: buildBolt(src.x, src.y, ey, 5, 8) });
+        void ex; // used via buildBolt spread
       }
 
       bolts.push({
         pts,
-        alpha: 0.25 + Math.random() * 0.2,
-        decay: 0.018 + Math.random() * 0.02,
-        width: 1 + Math.random() * 1.2,
         branches,
-        life: 0,
+        phase: "strike",
+        visibleSegs: 1,
+        strikeSpeed: 1.8 + Math.random() * 1.4, // segments/frame — fast but visible
+        flashFrames: 6 + Math.floor(Math.random() * 6), // hold for 6-12 frames
+        flashLife: 0,
+        alpha: 1,
+        decay: 0.028 + Math.random() * 0.018, // fade over ~1.5-2s
+        width: 1.2 + Math.random() * 1.4,
       });
     };
 
-    const drawBoltPath = (
+    const drawSegments = (
       pts: { x: number; y: number }[],
+      visibleCount: number,
       alpha: number,
-      width: number
+      width: number,
+      glowMult: number
     ) => {
-      if (pts.length < 2) return;
-      // Glow pass
+      const end = Math.min(Math.ceil(visibleCount), pts.length - 1);
+      if (end < 1) return;
+
+      // Wide glow pass
       ctx.save();
-      ctx.strokeStyle = `rgba(255, 80, 80, ${alpha * 0.25})`;
-      ctx.lineWidth = width * 4;
+      ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.shadowColor = "rgba(220, 40, 40, 0.8)";
-      ctx.shadowBlur = 12;
+      ctx.strokeStyle = `rgba(255, 60, 60, ${alpha * 0.22 * glowMult})`;
+      ctx.lineWidth = width * 6;
+      ctx.shadowColor = "rgba(220, 30, 30, 0.9)";
+      ctx.shadowBlur = 18;
       ctx.beginPath();
       ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      for (let i = 1; i <= end; i++) ctx.lineTo(pts[i].x, pts[i].y);
       ctx.stroke();
       ctx.restore();
 
-      // Core line
+      // Mid glow
       ctx.save();
-      ctx.strokeStyle = `rgba(255, 140, 140, ${alpha})`;
-      ctx.lineWidth = width;
+      ctx.lineCap = "round";
       ctx.lineJoin = "round";
+      ctx.strokeStyle = `rgba(255, 100, 100, ${alpha * 0.45 * glowMult})`;
+      ctx.lineWidth = width * 2.5;
       ctx.beginPath();
       ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      for (let i = 1; i <= end; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+      ctx.restore();
+
+      // Bright white-pink core
+      ctx.save();
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = `rgba(255, 200, 200, ${alpha * glowMult})`;
+      ctx.lineWidth = width * 0.6;
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i <= end; i++) ctx.lineTo(pts[i].x, pts[i].y);
       ctx.stroke();
       ctx.restore();
     };
@@ -155,25 +186,47 @@ function LightningCanvas() {
 
       if (frame >= nextSpawn) {
         spawnBolt();
-        nextSpawn = frame + 30 + Math.random() * 70;
+        nextSpawn = frame + 50 + Math.random() * 100;
       }
 
       for (let i = bolts.length - 1; i >= 0; i--) {
         const b = bolts[i];
-        b.life++;
 
-        // Flicker: skip drawing on some frames for electric feel
-        const flicker = b.life < 3 ? (Math.random() > 0.3) : true;
-
-        if (flicker) {
-          drawBoltPath(b.pts, b.alpha, b.width);
+        if (b.phase === "strike") {
+          b.visibleSegs += b.strikeSpeed;
+          const glowMult = 0.7 + Math.random() * 0.5; // slight flicker during strike
+          drawSegments(b.pts, b.visibleSegs, 0.9, b.width, glowMult);
           for (const br of b.branches) {
-            drawBoltPath(br.pts, b.alpha * 0.6, b.width * 0.6);
+            const brVis = Math.max(0, b.visibleSegs - (b.pts.length * 0.4));
+            drawSegments(br.pts, brVis, 0.6, b.width * 0.65, glowMult);
+          }
+          if (b.visibleSegs >= b.pts.length - 1) {
+            b.phase = "flash";
+            b.visibleSegs = b.pts.length;
+          }
+
+        } else if (b.phase === "flash") {
+          b.flashLife++;
+          // Full bolt, bright, slight random flicker intensity
+          const flicker = 0.8 + Math.random() * 0.4;
+          drawSegments(b.pts, b.pts.length, 1.0, b.width, flicker);
+          for (const br of b.branches) {
+            drawSegments(br.pts, br.pts.length, 0.7, b.width * 0.65, flicker);
+          }
+          if (b.flashLife >= b.flashFrames) {
+            b.phase = "fade";
+            b.alpha = 1;
+          }
+
+        } else {
+          // FADE
+          b.alpha -= b.decay;
+          if (b.alpha <= 0) { bolts.splice(i, 1); continue; }
+          drawSegments(b.pts, b.pts.length, b.alpha, b.width, 1);
+          for (const br of b.branches) {
+            drawSegments(br.pts, br.pts.length, b.alpha * 0.6, b.width * 0.65, 1);
           }
         }
-
-        b.alpha -= b.decay;
-        if (b.alpha <= 0) bolts.splice(i, 1);
       }
 
       animId = requestAnimationFrame(loop);
@@ -191,7 +244,7 @@ function LightningCanvas() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-x-0 top-0 w-full h-64 pointer-events-none z-0"
+      className="absolute inset-x-0 top-0 w-full h-72 pointer-events-none z-0"
     />
   );
 }
