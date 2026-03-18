@@ -18,20 +18,9 @@ const provinces = [
 ];
 
 // ---------------------------------------------------------------------------
-// Lightning — 3-phase: STRIKE (reveal top→bottom) → HOLD (flicker) → FADE
+// Minimal floating particles — very small, grey/white, slow drift
 // ---------------------------------------------------------------------------
-
-function buildBolt(x: number, y0: number, y1: number, segs: number, spread: number) {
-  const pts: { x: number; y: number }[] = [{ x, y: y0 }];
-  for (let i = 1; i < segs; i++) {
-    const t = i / segs;
-    pts.push({ x: x + (Math.random() - 0.5) * spread, y: y0 + t * (y1 - y0) });
-  }
-  pts.push({ x, y: y1 });
-  return pts;
-}
-
-function LightningCanvas() {
+function FloatingParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -48,132 +37,61 @@ function LightningCanvas() {
     resize();
     window.addEventListener("resize", resize);
 
-    type Pt = { x: number; y: number };
-    type Bolt = {
-      pts: Pt[];
-      branches: { pts: Pt[] }[];
-      width: number;
-      strikeF: number; // frames to reveal (fast, feels instant)
-      holdF: number;   // frames to stay bright with flicker
-      fadeF: number;   // frames for slow quadratic fade
-      life: number;
-      peakAlpha: number;
+    const COLORS = ["#cccccc", "#dddddd", "#eeeeee", "#ffffff"];
+
+    type Particle = {
+      x: number;
+      y: number;
+      r: number;         // 1–3px
+      vx: number;        // very slow horizontal drift
+      vy: number;        // very slow vertical float
+      alpha: number;     // 0.3–0.5
+      phase: number;     // for sinusoidal wobble
     };
 
-    const bolts: Bolt[] = [];
-    let frame = 0;
-    let nextSpawn = 45 + Math.random() * 65;
+    // Build 25 static particles distributed across the canvas
+    const COUNT = 25;
+    const particles: Particle[] = [];
 
-    const spawn = () => {
-      const x = 20 + Math.random() * (canvas.width - 40);
-      const h = 90 + Math.random() * 160;
-      const pts = buildBolt(x, 0, h, 10 + Math.floor(Math.random() * 7), 24);
-      const branches: { pts: Pt[] }[] = [];
-      for (let b = 0; b < (Math.random() < 0.5 ? 1 : 2); b++) {
-        const idx = 3 + Math.floor(Math.random() * Math.max(1, pts.length - 5));
-        const src = pts[idx];
-        branches.push({
-          pts: buildBolt(src.x, src.y, src.y + 30 + Math.random() * 55, 5, 14),
+    const init = () => {
+      particles.length = 0;
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * (canvas.width || 800),
+          y: Math.random() * (canvas.height || 400),
+          r: 0.8 + Math.random() * 2,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: -0.06 - Math.random() * 0.1, // float upward gently
+          alpha: 0.3 + Math.random() * 0.2,
+          phase: Math.random() * Math.PI * 2,
         });
       }
-      bolts.push({
-        pts,
-        branches,
-        width: 1.5 + Math.random() * 1.8,
-        strikeF: 5 + Math.floor(Math.random() * 4),
-        holdF: 22 + Math.floor(Math.random() * 28),
-        fadeF: 50 + Math.floor(Math.random() * 35),
-        life: 0,
-        peakAlpha: 0.48 + Math.random() * 0.27,
-      });
     };
+    init();
 
-    const drawPath = (pts: Pt[], vis: number, alpha: number, w: number) => {
-      const n = Math.min(Math.ceil(vis), pts.length);
-      if (n < 2 || alpha <= 0) return;
-
-      // Outer glow
-      ctx.save();
-      ctx.strokeStyle = `rgba(200,20,20,${alpha * 0.18})`;
-      ctx.lineWidth = w * 10;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.shadowColor = "rgba(255,40,40,1)";
-      ctx.shadowBlur = 28;
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < n; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.stroke();
-      ctx.restore();
-
-      // Mid glow
-      ctx.save();
-      ctx.strokeStyle = `rgba(255,65,65,${alpha * 0.45})`;
-      ctx.lineWidth = w * 3.5;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < n; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.stroke();
-      ctx.restore();
-
-      // Hot white-pink core
-      ctx.save();
-      ctx.strokeStyle = `rgba(255,210,210,${alpha})`;
-      ctx.lineWidth = w * 0.6;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < n; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.stroke();
-      ctx.restore();
-    };
+    let frame = 0;
 
     const loop = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       frame++;
 
-      if (frame >= nextSpawn) {
-        spawn();
-        nextSpawn = frame + 55 + Math.random() * 90;
-      }
+      for (const p of particles) {
+        // Gentle sinusoidal side-sway
+        p.x += p.vx + Math.sin(frame * 0.008 + p.phase) * 0.08;
+        p.y += p.vy;
 
-      for (let i = bolts.length - 1; i >= 0; i--) {
-        const b = bolts[i];
-        b.life++;
-        const { strikeF, holdF, fadeF, peakAlpha, pts, branches, width } = b;
-        if (b.life > strikeF + holdF + fadeF) { bolts.splice(i, 1); continue; }
+        // Wrap around edges
+        if (p.y < -4) p.y = canvas.height + 4;
+        if (p.x < -4) p.x = canvas.width + 4;
+        if (p.x > canvas.width + 4) p.x = -4;
 
-        let alpha: number;
-        let vf: number;
-
-        if (b.life <= strikeF) {
-          // STRIKE: bolt shoots downward segment by segment
-          vf = b.life / strikeF;
-          alpha = vf * peakAlpha;
-        } else if (b.life <= strikeF + holdF) {
-          // HOLD: full bolt, electric flicker
-          vf = 1;
-          const r = Math.random();
-          alpha = r < 0.10 ? peakAlpha * 0.10
-                : r < 0.20 ? peakAlpha * 0.55
-                : peakAlpha;
-        } else {
-          // FADE: quadratic ease-out, no flicker
-          vf = 1;
-          const t = (b.life - strikeF - holdF) / fadeF;
-          alpha = peakAlpha * (1 - t) * (1 - t);
-        }
-
-        drawPath(pts, vf * pts.length, alpha, width);
-        for (const br of branches) {
-          const brVis = b.life <= strikeF
-            ? Math.max(0, (vf - 0.25) * br.pts.length)
-            : br.pts.length;
-          drawPath(br.pts, brVis, alpha * 0.58, width * 0.5);
-        }
+        const color = COLORS[Math.floor(Math.random() * COLORS.length) % COLORS.length];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1;
       }
 
       animId = requestAnimationFrame(loop);
@@ -191,7 +109,7 @@ function LightningCanvas() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-x-0 top-0 w-full h-72 pointer-events-none z-0"
+      className="absolute inset-0 w-full h-full pointer-events-none z-10"
     />
   );
 }
@@ -222,9 +140,19 @@ export function OrderSection() {
     <section
       id="pedido"
       className="relative py-16 lg:py-28 px-4 sm:px-6 border-b border-border overflow-hidden"
+      style={{
+        backgroundImage: "url('/images/pedido-bg-auriculares-smartwatch-mixor.webp')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <LightningCanvas />
-      <div className="relative z-10 max-w-xl mx-auto">
+      {/* z-0: bg image is the section itself */}
+
+      {/* Minimal particles — z-10 */}
+      <FloatingParticles />
+
+      {/* Content — z-20 */}
+      <div className="relative z-20 max-w-xl mx-auto">
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-5">
             <ShoppingBag size={13} />
