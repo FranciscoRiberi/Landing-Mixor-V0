@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       'auriculares-fusion', 'auriculares-sensacion', 'cable-vinculo', 'cable-impulso',
       'cable-vital', 'cargador-leyenda', 'cargador-somos', 'cargador-proton',
       'cargador-quiero', 'cargador-realidad', 'inflador-ruta', 'holder-atrae',
-      'cargador-nexo', 'parlante-recuerdo',
+      'cargador-nexo', 'parlante-recuerdo', 'smartwatch-activo',
     ].map((slug) => ({
       url: `${BASE_URL}/productos/${slug}`,
       lastModified: new Date(),
