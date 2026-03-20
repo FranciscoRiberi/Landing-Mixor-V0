@@ -69,9 +69,7 @@ export function NewArrivalsSection() {
           </p>
         </div>
 
-        <p className="text-xs text-muted-foreground/40 max-w-[160px] text-right hidden md:block">
-          Agregá isNew: true en products.ts y aparece acá
-        </p>
+
       </div>
 
       {/* Scroll track */}
