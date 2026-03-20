@@ -25,9 +25,11 @@ const TICKER_ITEMS = [
 ];
 
 export function NewArrivalsSection() {
-  // Duplicate cards for infinite scroll loop
-  const loopedProducts = [...newProducts, ...newProducts];
-  const loopedTicker = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  // Triple the cards so the CSS animation resets on the 1/3 mark seamlessly.
+  // With 5 products × 3 = 15 cards, the track is wide enough that the loop
+  // reset (translateX -33.333%) is never visible at any screen width.
+  const loopedProducts = [...newProducts, ...newProducts, ...newProducts];
+  const loopedTicker = [...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
     <section
