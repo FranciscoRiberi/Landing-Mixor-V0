@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/hero-section";
+import { NewArrivalsSection } from "@/components/new-arrivals-section";
 import { ProductShowcase } from "@/components/product-showcase";
 import { AboutSection } from "@/components/about-section";
 import { DistributorInfo } from "@/components/distributor-info";
@@ -13,6 +14,7 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       <Navigation />
       <HeroSection />
+      <NewArrivalsSection />
       <ProductShowcase />
       <AboutSection />
       <DistributorInfo />
