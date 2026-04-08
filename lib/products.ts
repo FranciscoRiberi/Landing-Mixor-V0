@@ -17,7 +17,6 @@ export const altMap: Record<string, string> = {
   "TWS Claridad":         "Auriculares TWS Mixor Claridad Pantalla Táctil - Mayorista Argentina",
   "Auriculares Fusión":   "Auriculares Inalámbricos Mixor Fusión 6hs - Importador directo Argentina",
   "Auriculares Sensación":"Auriculares Inalámbricos Mixor Sensación 6hs - Distribuidor mayorista",
-  "TWS Sincronia":        "Próximos Auriculares TWS Mixor Sincronía - Mayorista Argentina",
   "Cable Vinculo":    "Cable USB Tipo-C Mixor Vínculo 7.1A 1m - Mayorista Argentina",
   "Cable Impulso":    "Cable USB a Tipo-C Mixor Impulso 7.1A Carga Rápida - Importador directo",
   "Cable Vital":      "Cable USB Reforzado Mixor Vital 5.4A Cobre Puro - Mayorista Argentina",
@@ -524,7 +523,6 @@ export const products = [
   { id: 31, name: "Cable Pleno", category: "cables", price: "Próximamente", code: "MODM-00PM", kit: "Kit x 500 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
   { id: 32, name: "Cargador Sinergia", category: "cargadores", price: "Próximamente", code: "MODM-00SN", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
   { id: 33, name: "Micrófono Voz", category: "accesorios", price: "Próximamente", code: "MODM-00VO", kit: "Kit x 50 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
-  { id: 34, name: "TWS Sincronia", category: "auriculares", price: "Próximamente", code: "MODM-00SY", kit: "Kit x 100 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
   {
     id: 35,
     name: "Parlante Recuerdo",
