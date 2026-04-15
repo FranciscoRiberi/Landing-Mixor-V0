@@ -63,6 +63,15 @@ export function ContactSection() {
 
     // Capture lead — fire and forget, WhatsApp opens regardless
     try {
+      const recaptchaToken: string = await new Promise((resolve, reject) => {
+        (window as any).grecaptcha.ready(() => {
+          (window as any).grecaptcha
+            .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "contact_form" })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -73,6 +82,7 @@ export function ContactSection() {
           asesor: formData.advisor,
           mensaje: formData.message,
           formulario: "Formulario de Contacto",
+          recaptchaToken,
         }),
       });
     } catch (err) {

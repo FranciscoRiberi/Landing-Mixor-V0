@@ -133,6 +133,15 @@ export function OrderSection() {
 
     // Capture lead — fire and forget
     try {
+      const recaptchaToken: string = await new Promise((resolve, reject) => {
+        (window as any).grecaptcha.ready(() => {
+          (window as any).grecaptcha
+            .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "order_form" })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -143,6 +152,7 @@ export function OrderSection() {
           asesor: formData.advisor,
           mensaje: formData.note,
           formulario: "Formulario Hace tu Pedido",
+          recaptchaToken,
         }),
       });
     } catch (err) {
