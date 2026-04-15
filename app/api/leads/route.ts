@@ -31,27 +31,13 @@ async function appendToSheet(values: string[]) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { nombre, celular, provincia, asesor, mensaje, formulario, recaptchaToken } = body;
+    const { nombre, celular, provincia, asesor, mensaje, formulario } = body;
 
     if (!nombre || !provincia || !asesor) {
       return NextResponse.json(
         { error: "Faltan datos obligatorios" },
         { status: 400 }
       );
-    }
-
-    // Verify reCAPTCHA v3 token — log only, never block a lead
-    try {
-      const recaptchaResponse = await fetch(
-        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-        { method: "POST" }
-      );
-      const recaptchaData = await recaptchaResponse.json();
-      if (!recaptchaData.success || recaptchaData.score < 0.5) {
-        console.warn("reCAPTCHA score bajo o fallido:", recaptchaData);
-      }
-    } catch (recaptchaError) {
-      console.error("Error verificando reCAPTCHA (continuando):", recaptchaError);
     }
 
     const fecha = new Date().toLocaleDateString("es-AR", {

@@ -145,25 +145,13 @@ export function OrderSection() {
       formulario: "Formulario Hace tu Pedido",
     };
 
-    (async () => {
-      try {
-        const recaptchaToken: string = await new Promise((resolve, reject) => {
-          (window as any).grecaptcha.ready(() => {
-            (window as any).grecaptcha
-              .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "order_form" })
-              .then(resolve)
-              .catch(reject);
-          });
-        });
-        await fetch("/api/leads", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...payload, recaptchaToken }),
-        });
-      } catch {
-        // Silently ignore — lead capture is best-effort
-      }
-    })();
+    fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).catch(() => {
+      // Silently ignore — lead capture is best-effort
+    });
   };
 
   return (
