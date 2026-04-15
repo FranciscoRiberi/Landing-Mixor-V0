@@ -125,10 +125,28 @@ export function OrderSection() {
     note: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const advisor = salesAdvisors.find((a) => a.name === formData.advisor);
     if (!advisor) return;
+
+    // Capture lead — fire and forget
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre: formData.name,
+          provincia: formData.province,
+          asesor: formData.advisor,
+          mensaje: formData.note,
+          fuente: "Formulario Hace tu Pedido",
+        }),
+      });
+    } catch (err) {
+      // Silently ignore — WhatsApp redirect must always happen
+    }
+
     const text = `Hola ${formData.advisor}, soy ${formData.name} de ${formData.province} y quiero hacer un pedido.${formData.note ? ` ${formData.note}` : ""}`;
     window.open(
       `https://wa.me/${advisor.phone}?text=${encodeURIComponent(text)}`,

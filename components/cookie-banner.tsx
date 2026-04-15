@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 export function CookieBanner() {
   const [visible, setVisible] = useState(false)
   const [marketing, setMarketing] = useState(true)
+  const [feedback, setFeedback] = useState<"accepted" | "rejected" | null>(null)
 
   useEffect(() => {
     const consent = localStorage.getItem("mixor-cookies")
@@ -33,19 +34,22 @@ export function CookieBanner() {
 
   function acceptAll() {
     localStorage.setItem("mixor-cookies", "all")
-    setVisible(false)
+    setFeedback("accepted")
     loadMetaPixel()
+    setTimeout(() => setVisible(false), 3500)
   }
 
   function rejectAll() {
     localStorage.setItem("mixor-cookies", "essential")
-    setVisible(false)
+    setFeedback("rejected")
+    setTimeout(() => setVisible(false), 3500)
   }
 
   function acceptCustom() {
     localStorage.setItem("mixor-cookies", marketing ? "all" : "essential")
-    setVisible(false)
+    setFeedback(marketing ? "accepted" : "rejected")
     if (marketing) loadMetaPixel()
+    setTimeout(() => setVisible(false), 3500)
   }
 
   if (!visible) return null
@@ -70,52 +74,64 @@ export function CookieBanner() {
             </svg>
           </div>
 
-          {/* Text */}
-          <div className="flex-1 min-w-0">
-            <p className="text-[15px] font-bold text-foreground mb-1">
-              Usamos cookies.{" "}
-              <span className="text-primary">Las buenas, no las de galletita.</span>
-            </p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Nos ayudan a saber qué productos te interesan y mejorar tu experiencia. Nada raro, prometido.
-            </p>
-
-            {/* Toggles */}
-            <div className="flex flex-wrap gap-5 mt-3">
-              <label className="flex items-center gap-2 text-xs text-muted-foreground/50 cursor-not-allowed select-none">
-                <div className="w-7 h-4 rounded-full bg-primary/40 border border-white/10 relative opacity-40">
-                  <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-white" />
-                </div>
-                Esenciales
-              </label>
-              <label
-                className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer select-none"
-                onClick={() => setMarketing(!marketing)}
-              >
-                <div className={`w-7 h-4 rounded-full border relative transition-all duration-200 ${marketing ? "bg-primary/70 border-primary/30" : "bg-white/10 border-white/10"}`}>
-                  <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all duration-200 ${marketing ? "right-0.5" : "left-0.5"}`} />
-                </div>
-                Marketing
-              </label>
+          {feedback ? (
+            /* Feedback message after decision */
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-muted-foreground leading-relaxed">
+                {feedback === "accepted"
+                  ? "🎉 ¡Gracias! Prometemos usarlas bien. Igual no vienen con chispas de chocolate."
+                  : "🙏 Entendemos. Igual te esperamos cuando quieras hacer un pedido."}
+              </p>
             </div>
-          </div>
+          ) : (
+            <>
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-bold text-primary mb-1">
+                  Sí, usamos cookies. Pero no las de chocolate.
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Nos ayudan a entender qué productos interesan más, desde dónde nos visitan y cómo mejorar tu experiencia en el sitio cada vez que entrás.
+                </p>
 
-          {/* Buttons */}
-          <div className="flex items-center gap-3 flex-shrink-0 w-full md:w-auto">
-            <button
-              onClick={rejectAll}
-              className="flex-1 md:flex-none px-4 py-2.5 rounded-full text-xs font-medium text-muted-foreground bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
-            >
-              Solo esenciales
-            </button>
-            <button
-              onClick={acceptAll}
-              className="flex-1 md:flex-none px-5 py-2.5 rounded-full text-xs font-bold text-white bg-primary hover:bg-primary/90 transition-all hover:scale-105 active:scale-95 border border-white/15 relative overflow-hidden"
-            >
-              <span className="absolute top-0 left-0 right-0 h-px bg-white/25" />
-              Acepto todo
-            </button>
-          </div>
+                {/* Toggles */}
+                <div className="flex flex-wrap gap-5 mt-3">
+                  <label className="flex items-center gap-2 text-xs text-muted-foreground/50 cursor-not-allowed select-none">
+                    <div className="w-7 h-4 rounded-full bg-primary/40 border border-white/10 relative opacity-40">
+                      <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-white" />
+                    </div>
+                    Esenciales
+                  </label>
+                  <label
+                    className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer select-none"
+                    onClick={() => setMarketing(!marketing)}
+                  >
+                    <div className={`w-7 h-4 rounded-full border relative transition-all duration-200 ${marketing ? "bg-primary/70 border-primary/30" : "bg-white/10 border-white/10"}`}>
+                      <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all duration-200 ${marketing ? "right-0.5" : "left-0.5"}`} />
+                    </div>
+                    Marketing
+                  </label>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex items-center gap-3 flex-shrink-0 w-full md:w-auto">
+                <button
+                  onClick={rejectAll}
+                  className="flex-1 md:flex-none px-4 py-2.5 rounded-full text-xs font-medium text-muted-foreground bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+                >
+                  Prefiero no
+                </button>
+                <button
+                  onClick={acceptAll}
+                  className="flex-1 md:flex-none px-5 py-2.5 rounded-full text-xs font-bold text-white bg-primary hover:bg-primary/90 transition-all hover:scale-105 active:scale-95 border border-white/15 relative overflow-hidden"
+                >
+                  <span className="absolute top-0 left-0 right-0 h-px bg-white/25" />
+                  ¡Va, acepto! 🤝
+                </button>
+              </div>
+            </>
+          )}
 
         </div>
       </div>
