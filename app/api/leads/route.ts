@@ -31,11 +31,25 @@ async function appendToSheet(values: string[]) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { nombre, celular, provincia, asesor, mensaje, formulario } = body;
+    const { nombre, celular, provincia, asesor, mensaje, formulario, recaptchaToken } = body;
 
     if (!nombre || !provincia || !asesor) {
       return NextResponse.json(
         { error: "Faltan datos obligatorios" },
+        { status: 400 }
+      );
+    }
+
+    // Verify reCAPTCHA v3 token
+    const recaptchaResponse = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+      { method: "POST" }
+    );
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+      return NextResponse.json(
+        { error: "Verificación de seguridad fallida" },
         { status: 400 }
       );
     }
