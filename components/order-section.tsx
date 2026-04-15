@@ -126,44 +126,44 @@ export function OrderSection() {
     note: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const advisor = salesAdvisors.find((a) => a.name === formData.advisor);
     if (!advisor) return;
 
-    // Capture lead — fire and forget
-    try {
-      const recaptchaToken: string = await new Promise((resolve, reject) => {
-        (window as any).grecaptcha.ready(() => {
-          (window as any).grecaptcha
-            .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "order_form" })
-            .then(resolve)
-            .catch(reject);
-        });
-      });
-
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre: formData.name,
-          celular: formData.celular,
-          provincia: formData.province,
-          asesor: formData.advisor,
-          mensaje: formData.note,
-          formulario: "Formulario Hace tu Pedido",
-          recaptchaToken,
-        }),
-      });
-    } catch (err) {
-      // Silently ignore — WhatsApp redirect must always happen
-    }
-
+    // Open WhatsApp immediately — must be synchronous to avoid popup blockers
     const text = `Hola ${formData.advisor}, soy ${formData.name} de ${formData.province} y quiero hacer un pedido.${formData.note ? ` ${formData.note}` : ""}`;
-    window.open(
-      `https://wa.me/${advisor.phone}?text=${encodeURIComponent(text)}`,
-      "_blank"
-    );
+    window.open(`https://wa.me/${advisor.phone}?text=${encodeURIComponent(text)}`, "_blank");
+
+    // Capture lead in background — never blocks the user
+    const payload = {
+      nombre: formData.name,
+      celular: formData.celular,
+      provincia: formData.province,
+      asesor: formData.advisor,
+      mensaje: formData.note,
+      formulario: "Formulario Hace tu Pedido",
+    };
+
+    (async () => {
+      try {
+        const recaptchaToken: string = await new Promise((resolve, reject) => {
+          (window as any).grecaptcha.ready(() => {
+            (window as any).grecaptcha
+              .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "order_form" })
+              .then(resolve)
+              .catch(reject);
+          });
+        });
+        await fetch("/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...payload, recaptchaToken }),
+        });
+      } catch {
+        // Silently ignore — lead capture is best-effort
+      }
+    })();
   };
 
   return (

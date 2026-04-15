@@ -55,44 +55,46 @@ export function ContactSection() {
     message: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const selectedAdvisor = salesAdvisors.find(a => a.name === formData.advisor);
     if (!selectedAdvisor) return;
 
-    // Capture lead — fire and forget, WhatsApp opens regardless
-    try {
-      const recaptchaToken: string = await new Promise((resolve, reject) => {
-        (window as any).grecaptcha.ready(() => {
-          (window as any).grecaptcha
-            .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "contact_form" })
-            .then(resolve)
-            .catch(reject);
-        });
-      });
-
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre: formData.name,
-          celular: formData.celular,
-          provincia: formData.province,
-          asesor: formData.advisor,
-          mensaje: formData.message,
-          formulario: "Formulario de Contacto",
-          recaptchaToken,
-        }),
-      });
-    } catch (err) {
-      // Silently ignore — WhatsApp redirect must always happen
-    }
-
+    // Open WhatsApp immediately — must be synchronous to avoid popup blockers
     const whatsappMessage = `Hola, soy ${formData.name} de ${formData.province}. ${formData.message}`;
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    const whatsappURL = `https://wa.me/${selectedAdvisor.phone}?text=${encodedMessage}`;
+    const whatsappURL = `https://wa.me/${selectedAdvisor.phone}?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappURL, "_blank");
+
+    // Capture lead in background — never blocks the user
+    const payload = {
+      nombre: formData.name,
+      celular: formData.celular,
+      provincia: formData.province,
+      asesor: formData.advisor,
+      mensaje: formData.message,
+      formulario: "Formulario de Contacto",
+    };
+
+    (async () => {
+      try {
+        const recaptchaToken: string = await new Promise((resolve, reject) => {
+          (window as any).grecaptcha.ready(() => {
+            (window as any).grecaptcha
+              .execute("6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo", { action: "contact_form" })
+              .then(resolve)
+              .catch(reject);
+          });
+        });
+        await fetch("/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...payload, recaptchaToken }),
+        });
+      } catch {
+        // Silently ignore — lead capture is best-effort
+      }
+    })();
   };
 
   return (
