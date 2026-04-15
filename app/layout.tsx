@@ -213,10 +213,6 @@ export default function RootLayout({
             }),
           }}
         />
-        <Script
-          src="https://www.google.com/recaptcha/api.js?render=6LcERrksAAAAAL3iEOmDXVYbilWHfRaeDvnE7Jvo"
-          strategy="afterInteractive"
-        />
         <ScrollToTop />
         <CookieBanner />
         <Script id="meta-pixel-init" strategy="afterInteractive">
