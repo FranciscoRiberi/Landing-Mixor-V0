@@ -49,6 +49,7 @@ const provinces = [
 export function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
+    celular: "",
     advisor: "Alejandra",
     province: "Buenos Aires",
     message: "",
@@ -67,6 +68,7 @@ export function ContactSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nombre: formData.name,
+          celular: formData.celular,
           provincia: formData.province,
           asesor: formData.advisor,
           mensaje: formData.message,
@@ -123,6 +125,25 @@ export function ContactSection() {
                 className="w-full px-4 py-3.5 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300"
                 placeholder="Tu nombre"
                 required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="celular"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
+                Número de celular{" "}
+                <span className="text-muted-foreground font-normal">(opcional)</span>
+              </label>
+              <input
+                type="tel"
+                id="celular"
+                value={formData.celular}
+                onChange={(e) =>
+                  setFormData({ ...formData, celular: e.target.value })
+                }
+                className="w-full px-4 py-3.5 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300"
+                placeholder="Ej: 3515551234"
               />
             </div>
             <div>

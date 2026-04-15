@@ -120,6 +120,7 @@ const inputClass =
 export function OrderSection() {
   const [formData, setFormData] = useState({
     name: "",
+    celular: "",
     province: "Buenos Aires",
     advisor: "Alejandra",
     note: "",
@@ -137,6 +138,7 @@ export function OrderSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nombre: formData.name,
+          celular: formData.celular,
           provincia: formData.province,
           asesor: formData.advisor,
           mensaje: formData.note,
@@ -197,6 +199,21 @@ export function OrderSection() {
                 placeholder="Tu nombre o el de tu negocio"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="order-celular" className="block text-sm font-medium text-foreground mb-1.5">
+                Número de celular{" "}
+                <span className="text-muted-foreground font-normal">(opcional)</span>
+              </label>
+              <input
+                id="order-celular"
+                type="tel"
+                placeholder="Ej: 3515551234"
+                value={formData.celular}
+                onChange={(e) => setFormData({ ...formData, celular: e.target.value })}
                 className={inputClass}
               />
             </div>

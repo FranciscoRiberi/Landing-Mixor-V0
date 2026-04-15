@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { nombre, provincia, asesor, mensaje, fuente } = body;
+    const { nombre, celular, provincia, asesor, mensaje, fuente } = body;
 
     if (!nombre || !provincia || !asesor) {
       return NextResponse.json(
@@ -31,6 +31,10 @@ export async function POST(req: Request) {
               <tr style="border-bottom: 1px solid #f0f0f0;">
                 <td style="padding: 12px 0; color: #888; font-size: 13px; width: 140px;">Nombre</td>
                 <td style="padding: 12px 0; font-weight: 600; color: #111;">${nombre}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 12px 0; color: #888; font-size: 13px; width: 140px;">Celular</td>
+                <td style="padding: 12px 0; font-weight: 600; color: #111;">${celular || "No proporcionado"}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f0f0f0;">
                 <td style="padding: 12px 0; color: #888; font-size: 13px;">Provincia</td>
