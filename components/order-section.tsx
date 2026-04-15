@@ -142,7 +142,7 @@ export function OrderSection() {
           provincia: formData.province,
           asesor: formData.advisor,
           mensaje: formData.note,
-          fuente: "Formulario Hace tu Pedido",
+          formulario: "Formulario Hace tu Pedido",
         }),
       });
     } catch (err) {

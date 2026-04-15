@@ -72,7 +72,7 @@ export function ContactSection() {
           provincia: formData.province,
           asesor: formData.advisor,
           mensaje: formData.message,
-          fuente: "Formulario de Contacto",
+          formulario: "Formulario de Contacto",
         }),
       });
     } catch (err) {
