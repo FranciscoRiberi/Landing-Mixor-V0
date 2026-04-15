@@ -40,18 +40,18 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify reCAPTCHA v3 token
-    const recaptchaResponse = await fetch(
-      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-      { method: "POST" }
-    );
-    const recaptchaData = await recaptchaResponse.json();
-
-    if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      return NextResponse.json(
-        { error: "Verificación de seguridad fallida" },
-        { status: 400 }
+    // Verify reCAPTCHA v3 token — log only, never block a lead
+    try {
+      const recaptchaResponse = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+        { method: "POST" }
       );
+      const recaptchaData = await recaptchaResponse.json();
+      if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        console.warn("reCAPTCHA score bajo o fallido:", recaptchaData);
+      }
+    } catch (recaptchaError) {
+      console.error("Error verificando reCAPTCHA (continuando):", recaptchaError);
     }
 
     const fecha = new Date().toLocaleDateString("es-AR", {
@@ -77,7 +77,8 @@ export async function POST(req: Request) {
       console.error("Error guardando en Sheet:", sheetError);
     }
 
-    // Enviar email con Resend
+    // Enviar email con Resend (falla silenciosamente si hay error)
+    try {
     await resend.emails.send({
       from: "Mixor Leads <onboarding@resend.dev>",
       to: "mkt@mixor.com.ar",
@@ -122,9 +123,13 @@ export async function POST(req: Request) {
       `,
     });
 
+    } catch (emailError) {
+      console.error("Error enviando email (continuando):", emailError);
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error enviando lead:", error);
+    console.error("Error procesando lead:", error);
     return NextResponse.json({ error: "Error interno" }, { status: 500 });
   }
 }
