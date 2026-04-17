@@ -47,13 +47,17 @@ const provinces = [
 ];
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
+  const [asesoresAleatorios] = useState(() =>
+    [...salesAdvisors].sort(() => Math.random() - 0.5)
+  );
+
+  const [formData, setFormData] = useState(() => ({
     name: "",
     celular: "",
-    advisor: "Alejandra",
+    advisor: [...salesAdvisors].sort(() => Math.random() - 0.5)[0].name,
     province: "Buenos Aires",
     message: "",
-  });
+  }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -162,7 +166,7 @@ export function ContactSection() {
                 className="w-full px-4 py-3.5 bg-card border border-border rounded-xl text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300"
                 required
               >
-                {salesAdvisors.map((advisor) => (
+                {asesoresAleatorios.map((advisor) => (
                   <option key={advisor.name} value={advisor.name}>
                     {advisor.name}
                   </option>

@@ -118,13 +118,17 @@ const inputClass =
   "w-full px-4 py-3.5 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300 text-sm";
 
 export function OrderSection() {
-  const [formData, setFormData] = useState({
+  const [asesoresAleatorios] = useState(() =>
+    [...salesAdvisors].sort(() => Math.random() - 0.5)
+  );
+
+  const [formData, setFormData] = useState(() => ({
     name: "",
     celular: "",
     province: "Buenos Aires",
-    advisor: "Alejandra",
+    advisor: [...salesAdvisors].sort(() => Math.random() - 0.5)[0].name,
     note: "",
-  });
+  }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -244,7 +248,7 @@ export function OrderSection() {
                   className={inputClass}
                   required
                 >
-                  {salesAdvisors.map((a) => (
+                  {asesoresAleatorios.map((a) => (
                     <option key={a.name} value={a.name}>{a.name}</option>
                   ))}
                 </select>
