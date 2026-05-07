@@ -33,7 +33,7 @@ export const altMap: Record<string, string> = {
   "Cargador Nexo":   "Cargador Universal Notebook Mixor Nexo 9 Pines - Mayorista Argentina",
   "Micrófono Voz":   "Próximo Micrófono Mixor Voz - Accesorios tecnológicos mayoristas",
   "Lámpara Motivos": "Próxima Lámpara Mixor Motivos - Accesorios tecnológicos mayoristas",
-  "Reloj Sueño":     "Próximo Reloj Mixor Sueño - Accesorios tecnológicos mayoristas",
+  "Reloj Sueño":     "Reloj Despertador Mixor Sueño Bluetooth LED Luz Ambiental - Mayorista Argentina",
 };
 
 export function getProductAlt(name: string): string {
@@ -544,7 +544,24 @@ export const products = [
     ],
   },
   { id: 36, name: "Lámpara Motivos", category: "accesorios", price: "Próximamente", code: "MODM-00MO", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
-  { id: 37, name: "Reloj Sueño", category: "accesorios", price: "Próximamente", code: "MODM-00SU", kit: "Kit x 100 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  {
+    id: 37,
+    name: "Reloj Sueño",
+    category: "accesorios",
+    price: "Consultar",
+    code: "MODM-00HJ",
+    kit: "Kit x 40 unidades",
+    image: "/images/reloj-mixor-sueno-despertador-bluetooth-led-mayorista.webp",
+    modalImage: "/images/reloj-mixor-sueno-lifestyle-modal.webp",
+    description: "Reloj despertador digital con parlante Bluetooth integrado y luz ambiental de tres intensidades.",
+    features: [
+      { icon: Watch, title: "Reloj Despertador Digital", description: "Alarma y temporizador integrados. Pantalla LED de fácil lectura para despertar y dormir sin complicaciones. Dimensiones: 10.5 x 10.5 x 8.5 cm." },
+      { icon: Volume2, title: "Parlante Bluetooth Integrado", description: "Conexión inalámbrica para reproducir música y recibir llamadas en modo manos libres. Sonido claro y potente desde tu celular." },
+      { icon: Lightbulb, title: "Luz Ambiental", description: "Tres intensidades de iluminación LED para crear el ambiente perfecto. Ideal para dormir relajado o leer antes de descansar." },
+      { icon: Radio, title: "Múltiples Modos de Sonido", description: "Selecciona entre distintos modos de sonido diseñados especialmente para descanso y relajación nocturna." },
+      { icon: Battery, title: "Batería Recargable", description: "Autonomía confiable con carga por USB-C. Ideal para uso portátil en tu mesita de noche." },
+    ],
+  },
 ];
 
 export type Product = typeof products[number];
