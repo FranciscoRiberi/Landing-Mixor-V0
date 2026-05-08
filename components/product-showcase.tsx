@@ -151,7 +151,7 @@ export function ProductShowcase() {
               <img
                 src={"modalImage" in selectedProduct ? (selectedProduct.modalImage ?? selectedProduct.image) : selectedProduct.image}
                 alt={getProductAlt(selectedProduct.name)}
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className="absolute inset-0 w-full h-full object-cover object-center"
               />
             </div>
 
