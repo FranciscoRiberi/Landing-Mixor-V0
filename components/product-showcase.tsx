@@ -143,11 +143,11 @@ export function ProductShowcase() {
             </button>
 
             <div className="grid md:grid-cols-2 gap-6 p-5 sm:p-8 lg:p-12">
-              <div className="relative aspect-[4/3] md:aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-background to-secondary/20">
+              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-background to-secondary/20 flex items-center justify-center min-h-[260px] md:min-h-[380px]">
                 <img
                   src={"modalImage" in selectedProduct ? (selectedProduct.modalImage ?? selectedProduct.image) : selectedProduct.image}
                   alt={getProductAlt(selectedProduct.name)}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain max-h-[420px]"
                 />
               </div>
 
