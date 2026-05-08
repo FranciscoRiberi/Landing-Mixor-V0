@@ -131,7 +131,8 @@ export function ProductShowcase() {
           onClick={() => setSelectedProduct(null)}
         >
           <div
-            className="relative w-full max-w-5xl bg-card rounded-3xl border border-border shadow-2xl overflow-hidden animate-scale-in max-h-[92vh] flex flex-col md:flex-row"
+            className="relative w-full max-w-5xl bg-card rounded-3xl border border-border shadow-2xl animate-scale-in flex flex-col md:flex-row"
+            style={{ maxHeight: "92vh" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -142,17 +143,20 @@ export function ProductShowcase() {
               <X size={20} />
             </button>
 
-            {/* Image column — fixed 9:16 width on desktop, full-width capped on mobile */}
-            <div className="relative flex-shrink-0 w-full md:w-[260px] lg:w-[300px]" style={{ aspectRatio: "9/16" }}>
+            {/* Image column — strict 9:16, never clipped */}
+            <div
+              className="relative flex-shrink-0 w-full md:w-[240px] lg:w-[280px] rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
+              style={{ aspectRatio: "9/16" }}
+            >
               <img
                 src={"modalImage" in selectedProduct ? (selectedProduct.modalImage ?? selectedProduct.image) : selectedProduct.image}
                 alt={getProductAlt(selectedProduct.name)}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-top"
               />
             </div>
 
             {/* Content column — scrollable */}
-            <div className="flex-1 overflow-y-auto p-5 sm:p-8 lg:p-10">
+            <div className="flex-1 overflow-y-auto p-5 sm:p-8 lg:p-10 rounded-b-3xl md:rounded-r-3xl md:rounded-bl-none">
               <div className="flex flex-col justify-center h-full">
                 <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">
                   {categories.find((c) => c.id === selectedProduct.category)?.name}
