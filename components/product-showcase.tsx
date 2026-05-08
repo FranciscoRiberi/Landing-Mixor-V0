@@ -203,7 +203,6 @@ export function ProductShowcase() {
               </div>
             </div>
           </div>
-          </div>
         </div>
       )}
     </>
