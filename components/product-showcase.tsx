@@ -131,7 +131,8 @@ export function ProductShowcase() {
           onClick={() => setSelectedProduct(null)}
         >
           <div
-            className="relative w-full max-w-4xl bg-card rounded-3xl border border-border shadow-2xl overflow-hidden animate-scale-in max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-5xl bg-card rounded-3xl border border-border shadow-2xl animate-scale-in flex flex-col md:flex-row"
+            style={{ maxHeight: "92vh" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -142,16 +143,21 @@ export function ProductShowcase() {
               <X size={20} />
             </button>
 
-            <div className="grid md:grid-cols-2 gap-6 p-5 sm:p-8 lg:p-12">
-              <div className="relative aspect-[4/3] md:aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-background to-secondary/20">
-                <img
-                  src={"modalImage" in selectedProduct ? (selectedProduct.modalImage ?? selectedProduct.image) : selectedProduct.image}
-                  alt={getProductAlt(selectedProduct.name)}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            {/* Image column — strict 9:16, never clipped */}
+            <div
+              className="relative flex-shrink-0 w-full md:w-[240px] lg:w-[280px] rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
+              style={{ aspectRatio: "9/16" }}
+            >
+              <img
+                src={"modalImage" in selectedProduct ? (selectedProduct.modalImage ?? selectedProduct.image) : selectedProduct.image}
+                alt={getProductAlt(selectedProduct.name)}
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+            </div>
 
-              <div className="flex flex-col justify-center">
+            {/* Content column — scrollable */}
+            <div className="flex-1 overflow-y-auto p-5 sm:p-8 lg:p-10 rounded-b-3xl md:rounded-r-3xl md:rounded-bl-none">
+              <div className="flex flex-col justify-center h-full">
                 <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">
                   {categories.find((c) => c.id === selectedProduct.category)?.name}
                 </p>
@@ -195,7 +201,7 @@ export function ProductShowcase() {
                   onClick={() => setSelectedProduct(null)}
                   className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
                 >
-                  Consultar Precio
+                  Consultar Precio Mayorista
                   <ArrowRight size={18} />
                 </a>
               </div>

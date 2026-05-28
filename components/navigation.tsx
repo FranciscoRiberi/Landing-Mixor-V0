@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 const navLinks = [
   { href: "#novedades", label: "Novedades" },
@@ -40,9 +41,10 @@ function HamburgerIcon({ open }: { open: boolean }) {
   );
 }
 
-export function Navigation() {
+export function Navigation({ isMundial = false }: { isMundial?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMundialPopupOpen, setIsMundialPopupOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 80);
@@ -82,6 +84,24 @@ export function Navigation() {
           >
             <img src="/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp" alt="Mixor - Importador mayorista de tecnología Argentina" className="h-8 w-auto" />
           </a>
+
+          {/* Mundial Logo Button */}
+          {isMundial && (
+            <button
+              onClick={() => setIsMundialPopupOpen(true)}
+              className={cn(
+                "flex items-center justify-center hover:scale-110 transition-all duration-300 drop-shadow-lg",
+                isScrolled ? "mr-1" : "mr-2"
+              )}
+              aria-label="Mixor Mundial 2026"
+            >
+              <img
+                src="/images/mixor-mundial-2026-logo.webp"
+                alt="Mixor Argentina Mundial 2026"
+                className="h-12 w-auto"
+              />
+            </button>
+          )}
 
           {/* Nav links — collapse when scrolled */}
           <div
@@ -140,6 +160,20 @@ export function Navigation() {
           </a>
 
           <div className="flex items-center gap-2">
+            {/* Mundial Logo Button - Mobile */}
+            {isMundial && (
+              <button
+                onClick={() => setIsMundialPopupOpen(true)}
+                className="flex items-center justify-center hover:scale-110 transition-all duration-300 drop-shadow-lg"
+                aria-label="Mixor Mundial 2026"
+              >
+                <img
+                  src="/images/mixor-mundial-2026-logo.webp"
+                  alt="Mixor Argentina Mundial 2026"
+                  className="h-12 w-auto"
+                />
+              </button>
+            )}
             {isScrolled && (
               <a
                 href="#contacto"
@@ -209,6 +243,47 @@ export function Navigation() {
           </a>
         </div>
       </div>
+
+      {/* Mundial Popup Modal */}
+      {isMundialPopupOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
+          onClick={() => setIsMundialPopupOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl bg-card rounded-3xl overflow-hidden shadow-2xl animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setIsMundialPopupOpen(false)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              aria-label="Cerrar"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="relative">
+              <img
+                src="/images/mixor-mundial-muy-pronto.webp"
+                alt="Mixor Mundial 2026 - Muy pronto"
+                className="w-full h-auto"
+              />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                <div className="text-center">
+                  <img
+                    src="/images/mixor-mundial-2026-logo.webp"
+                    alt="Mixor Argentina Mundial 2026"
+                    className="h-28 w-auto mx-auto mb-4 drop-shadow-2xl"
+                  />
+                  <h2 className="text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">
+                    Muy pronto!
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { ArgentinaFlag, MundialConfetti } from "./mundial-confetti";
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -62,34 +63,81 @@ function ParticleCanvas() {
   );
 }
 
-export function HeroSection() {
+export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
   const [showMessage, setShowMessage] = useState(false);
+
+  // Theme-specific content
+  const heroTitle = isMundial ? (
+    <>
+      <span className="text-gradient-red">Vamos Argentina,</span>
+      <br />
+      vamos a ganar.
+    </>
+  ) : (
+    <>
+      <span className="text-gradient-red">Nuevas tendencias,</span>
+      <br />
+      la mejor rotación.
+    </>
+  );
+
+  const heroSubtitle = isMundial
+    ? "Este mundial, equipate con Mixor. Parlantes, auriculares y accesorios para vivir cada partido al máximo. Precios mayoristas para distribuidores de todo el país."
+    : "En Mixor, contamos con:\nParlantes Bluetooth, auriculares, smartwatches, cargadores y muchos mas productos de alta rotación. Precios mayoristas directos del importador para distribuidores de todo el país.";
+
+  const heroImage = isMundial
+    ? "/images/mixor-mundial-argentina-hero.webp"
+    : "/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp";
+
+  const heroImageAlt = isMundial
+    ? "Mixor - Accesorios tecnológicos para el Mundial Argentina"
+    : "Parlantes Bluetooth Mixor con luces RGB - Accesorios tecnológicos mayoristas";
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-24 sm:pt-32">
 
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp"
-          alt="Parlantes Bluetooth Mixor con luces RGB - Accesorios tecnológicos mayoristas"
-          className="w-full h-full object-cover object-center"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.35) 0%, transparent 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, hsl(var(--background)/0.55) 0%, transparent 18%, transparent 80%, hsl(var(--background)/0.65) 100%)",
-          }}
-        />
+        {isMundial ? (
+          <>
+            {/* Mundial: panoramic image at top, gradient fill below */}
+            <div className="absolute inset-x-0 top-0 h-[45vh] sm:h-[55vh] lg:h-[65vh]">
+              <img
+                src={heroImage}
+                alt={heroImageAlt}
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a5c]/30 via-background/80 to-background" />
+          </>
+        ) : (
+          <>
+            <img
+              src={heroImage}
+              alt={heroImageAlt}
+              className="w-full h-full object-cover object-center"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.35) 0%, transparent 100%)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, hsl(var(--background)/0.55) 0%, transparent 18%, transparent 80%, hsl(var(--background)/0.65) 100%)",
+              }}
+            />
+          </>
+        )}
       </div>
+
+      {/* Mundial confetti - white and gold */}
+      {isMundial && <MundialConfetti />}
 
       {/* Speaker overlay — mobile only, behind particles */}
       <div className="sm:hidden absolute inset-0 z-[0] pointer-events-none overflow-hidden flex items-end justify-center">
@@ -111,15 +159,18 @@ export function HeroSection() {
           className="bg-background/88 backdrop-blur-xl rounded-3xl px-5 py-8 sm:px-8 sm:py-10 shadow-2xl border border-border/60 animate-fade-in-up opacity-0"
           style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
         >
+          {/* Argentina flag for mundial */}
+          {isMundial && (
+            <ArgentinaFlag className="w-20 h-12 mx-auto mb-5 rounded-lg shadow-lg" />
+          )}
+
           {/* Mobile: slightly larger title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-foreground text-balance leading-[1.1] font-sans font-bold mb-4">
-            <span className="text-gradient-red">Nuevas tendencias,</span>
-            <br />
-            la mejor rotación.
+            {heroTitle}
           </h1>
 
-          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
-            {"En Mixor, contamos con:\nParlantes Bluetooth, auriculares, smartwatches, cargadores y muchos mas productos de alta rotación. Precios mayoristas directos del importador para distribuidores de todo el país."}
+          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed whitespace-pre-line">
+            {heroSubtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
