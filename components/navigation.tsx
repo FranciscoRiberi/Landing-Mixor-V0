@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { X, Trophy } from "lucide-react";
+import { X } from "lucide-react";
 
 const navLinks = [
   { href: "#novedades", label: "Novedades" },
@@ -85,17 +85,21 @@ export function Navigation({ isMundial = false }: { isMundial?: boolean }) {
             <img src="/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp" alt="Mixor - Importador mayorista de tecnología Argentina" className="h-8 w-auto" />
           </a>
 
-          {/* Mundial Trophy Button */}
+          {/* Mundial Logo Button */}
           {isMundial && (
             <button
               onClick={() => setIsMundialPopupOpen(true)}
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg hover:scale-110 transition-all duration-300 animate-pulse",
+                "flex items-center justify-center hover:scale-110 transition-all duration-300 drop-shadow-lg",
                 isScrolled ? "mr-1" : "mr-2"
               )}
-              aria-label="Mundial 2026"
+              aria-label="Mixor Mundial 2026"
             >
-              <Trophy size={20} />
+              <img
+                src="/images/mixor-mundial-2026-logo.webp"
+                alt="Mixor Argentina Mundial 2026"
+                className="h-12 w-auto"
+              />
             </button>
           )}
 
@@ -156,14 +160,18 @@ export function Navigation({ isMundial = false }: { isMundial?: boolean }) {
           </a>
 
           <div className="flex items-center gap-2">
-            {/* Mundial Trophy Button - Mobile */}
+            {/* Mundial Logo Button - Mobile */}
             {isMundial && (
               <button
                 onClick={() => setIsMundialPopupOpen(true)}
-                className="min-h-[48px] min-w-[48px] flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg hover:scale-110 transition-all duration-300 animate-pulse"
-                aria-label="Mundial 2026"
+                className="flex items-center justify-center hover:scale-110 transition-all duration-300 drop-shadow-lg"
+                aria-label="Mixor Mundial 2026"
               >
-                <Trophy size={22} />
+                <img
+                  src="/images/mixor-mundial-2026-logo.webp"
+                  alt="Mixor Argentina Mundial 2026"
+                  className="h-12 w-auto"
+                />
               </button>
             )}
             {isScrolled && (
@@ -260,9 +268,13 @@ export function Navigation({ isMundial = false }: { isMundial?: boolean }) {
                 alt="Mixor Mundial 2026 - Muy pronto"
                 className="w-full h-auto"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                 <div className="text-center">
-                  <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-400 drop-shadow-lg" />
+                  <img
+                    src="/images/mixor-mundial-2026-logo.webp"
+                    alt="Mixor Argentina Mundial 2026"
+                    className="h-28 w-auto mx-auto mb-4 drop-shadow-2xl"
+                  />
                   <h2 className="text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">
                     Muy pronto!
                   </h2>
