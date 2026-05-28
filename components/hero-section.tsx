@@ -2,7 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { ArgentinaFlag } from "./mundial-confetti";
+import { ArgentinaFlag, MundialConfetti } from "./mundial-confetti";
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -107,9 +107,9 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
                 alt={heroImageAlt}
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#75AADB]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a5c]/30 via-[#75AADB]/80 to-[#75AADB]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a5c]/30 via-background/80 to-background" />
           </>
         ) : (
           <>
@@ -135,6 +135,9 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
           </>
         )}
       </div>
+
+      {/* Mundial confetti - white and gold */}
+      {isMundial && <MundialConfetti />}
 
       {/* Speaker overlay — mobile only, behind particles */}
       <div className="sm:hidden absolute inset-0 z-[0] pointer-events-none overflow-hidden flex items-end justify-center">
