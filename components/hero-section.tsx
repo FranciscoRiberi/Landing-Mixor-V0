@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { ArgentinaFlag } from "./mundial-confetti";
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -138,6 +139,11 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
           className="bg-background/88 backdrop-blur-xl rounded-3xl px-5 py-8 sm:px-8 sm:py-10 shadow-2xl border border-border/60 animate-fade-in-up opacity-0"
           style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
         >
+          {/* Argentina flag for mundial */}
+          {isMundial && (
+            <ArgentinaFlag className="w-20 h-12 mx-auto mb-5 rounded-lg shadow-lg" />
+          )}
+
           {/* Mobile: slightly larger title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-foreground text-balance leading-[1.1] font-sans font-bold mb-4">
             {heroTitle}

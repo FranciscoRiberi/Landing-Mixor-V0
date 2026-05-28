@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, ArrowRight, TrendingUp, Shield, Truck, BookOpen, Package } from "lucide-react";
+import { MundialConfetti, ArgentinaFlag } from "./mundial-confetti";
 
 const benefits = [
   { icon: TrendingUp, text: "Precios especiales por volumen" },
@@ -10,12 +11,15 @@ const benefits = [
   { icon: Truck, text: "Envíos a todo el país" },
 ];
 
-export function DistributorInfo() {
+export function DistributorInfo({ isMundial = false }: { isMundial?: boolean }) {
   return (
     <section
       id="distribuidor"
       className="relative py-28 lg:py-40 px-4 sm:px-6 border-b border-border overflow-hidden bg-primary"
     >
+      {/* Mundial confetti */}
+      {isMundial && <MundialConfetti />}
+
       {/* Subtle dot pattern */}
       <div
         className="absolute inset-0 opacity-10"
@@ -31,8 +35,11 @@ export function DistributorInfo() {
       <div className="relative max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 lg:mb-20">
+          {isMundial && (
+            <ArgentinaFlag className="w-16 h-10 mx-auto mb-4 rounded shadow-lg" />
+          )}
           <p className="text-xs uppercase tracking-[0.3em] text-primary-foreground/70 font-medium mb-4">
-            ACCESORIOS TECNOLOGICOS 
+            {isMundial ? "VAMOS ARGENTINA" : "ACCESORIOS TECNOLOGICOS"}
           </p>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground text-balance leading-none mb-6">
             Programa de Distribuidores Mayoristas 

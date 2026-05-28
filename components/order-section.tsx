@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, ShoppingBag, MessageCircle } from "lucide-react";
+import { MundialConfetti, ArgentinaFlag } from "./mundial-confetti";
 
 const salesAdvisors = [
   { name: "Alejandra", phone: "+5491137994825" },
@@ -117,7 +118,7 @@ function FloatingParticles() {
 const inputClass =
   "w-full px-4 py-3.5 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300 text-sm";
 
-export function OrderSection() {
+export function OrderSection({ isMundial = false }: { isMundial?: boolean }) {
   const [asesoresAleatorios] = useState(() =>
     [...salesAdvisors].sort(() => Math.random() - 0.5)
   );
@@ -170,12 +171,18 @@ export function OrderSection() {
     >
       {/* z-0: bg image is the section itself */}
 
+      {/* Mundial confetti — behind particles */}
+      {isMundial && <MundialConfetti />}
+
       {/* Minimal particles — z-10 */}
       <FloatingParticles />
 
       {/* Content — z-20 */}
       <div className="relative z-20 max-w-xl mx-auto">
         <div className="text-center mb-10">
+          {isMundial && (
+            <ArgentinaFlag className="w-12 h-8 mx-auto mb-3 rounded shadow" />
+          )}
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-5">
             <ShoppingBag size={13} />
             Pedidos mayoristas

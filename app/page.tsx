@@ -18,8 +18,8 @@ export default function Home() {
       <NewArrivalsSection />
       <ProductShowcase />
       <AboutSection />
-      <DistributorInfo />
-      <OrderSection />
+      <DistributorInfo isMundial={isMundialTheme} />
+      <OrderSection isMundial={isMundialTheme} />
       <ContactSection />
       <SocialSection />
       <Footer />
