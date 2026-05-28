@@ -98,25 +98,42 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
 
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt={heroImageAlt}
-          className="w-full h-full object-cover object-center"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.35) 0%, transparent 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, hsl(var(--background)/0.55) 0%, transparent 18%, transparent 80%, hsl(var(--background)/0.65) 100%)",
-          }}
-        />
+        {isMundial ? (
+          <>
+            {/* Mundial: panoramic image at top, gradient fill below */}
+            <div className="absolute inset-x-0 top-0 h-[45vh] sm:h-[55vh] lg:h-[65vh]">
+              <img
+                src={heroImage}
+                alt={heroImageAlt}
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a5c]/30 via-background/80 to-background" />
+          </>
+        ) : (
+          <>
+            <img
+              src={heroImage}
+              alt={heroImageAlt}
+              className="w-full h-full object-cover object-center"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.35) 0%, transparent 100%)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, hsl(var(--background)/0.55) 0%, transparent 18%, transparent 80%, hsl(var(--background)/0.65) 100%)",
+              }}
+            />
+          </>
+        )}
       </div>
 
       {/* Speaker overlay — mobile only, behind particles */}
