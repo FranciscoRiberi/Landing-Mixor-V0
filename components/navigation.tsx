@@ -40,7 +40,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
   );
 }
 
-export function Navigation() {
+export function Navigation({ isMundial = false }: { isMundial?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

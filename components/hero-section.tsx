@@ -62,8 +62,35 @@ function ParticleCanvas() {
   );
 }
 
-export function HeroSection() {
+export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
   const [showMessage, setShowMessage] = useState(false);
+
+  // Theme-specific content
+  const heroTitle = isMundial ? (
+    <>
+      <span className="text-gradient-red">Vamos Argentina,</span>
+      <br />
+      vamos a ganar.
+    </>
+  ) : (
+    <>
+      <span className="text-gradient-red">Nuevas tendencias,</span>
+      <br />
+      la mejor rotación.
+    </>
+  );
+
+  const heroSubtitle = isMundial
+    ? "Este mundial, equipate con Mixor. Parlantes, auriculares y accesorios para vivir cada partido al máximo. Precios mayoristas para distribuidores de todo el país."
+    : "En Mixor, contamos con:\nParlantes Bluetooth, auriculares, smartwatches, cargadores y muchos mas productos de alta rotación. Precios mayoristas directos del importador para distribuidores de todo el país.";
+
+  const heroImage = isMundial
+    ? "/images/mixor-mundial-argentina-hero.webp"
+    : "/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp";
+
+  const heroImageAlt = isMundial
+    ? "Mixor - Accesorios tecnológicos para el Mundial Argentina"
+    : "Parlantes Bluetooth Mixor con luces RGB - Accesorios tecnológicos mayoristas";
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-24 sm:pt-32">
@@ -71,8 +98,8 @@ export function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp"
-          alt="Parlantes Bluetooth Mixor con luces RGB - Accesorios tecnológicos mayoristas"
+          src={heroImage}
+          alt={heroImageAlt}
           className="w-full h-full object-cover object-center"
         />
         <div
@@ -113,13 +140,11 @@ export function HeroSection() {
         >
           {/* Mobile: slightly larger title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-foreground text-balance leading-[1.1] font-sans font-bold mb-4">
-            <span className="text-gradient-red">Nuevas tendencias,</span>
-            <br />
-            la mejor rotación.
+            {heroTitle}
           </h1>
 
-          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
-            {"En Mixor, contamos con:\nParlantes Bluetooth, auriculares, smartwatches, cargadores y muchos mas productos de alta rotación. Precios mayoristas directos del importador para distribuidores de todo el país."}
+          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed whitespace-pre-line">
+            {heroSubtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

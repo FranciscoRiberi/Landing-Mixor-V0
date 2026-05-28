@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
 import { CookieBanner } from "@/components/cookie-banner"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { isMundialTheme } from "@/lib/theme"
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -155,7 +156,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es-AR" data-scroll-behavior="smooth">
+    <html lang="es-AR" data-scroll-behavior="smooth" className={isMundialTheme ? "theme-mundial" : ""}>
       <body className={`font-sans antialiased`}>
         {children}
         <Analytics />
