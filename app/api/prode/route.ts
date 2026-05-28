@@ -1,28 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
-import { google } from "googleapis";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-const SPREADSHEET_ID = "1TAvREsH3Hr4YsKq04xwevafKTVAAJYCTJctOrZsfPQI";
-const SHEET_NAME = "Prode Mundial 2026";
-
-async function appendToSheet(values: string[]) {
-  const auth = new google.auth.GoogleAuth({
-    credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}"),
-    scopes: [
-      "https://www.googleapis.com/auth/spreadsheets",
-      "https://www.googleapis.com/auth/drive",
-    ],
-  });
-  const sheets = google.sheets({ version: "v4", auth });
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_NAME}!A:F`,
-    valueInputOption: "USER_ENTERED",
-    requestBody: { values: [values] },
-  });
-}
 
 const grupos = [
   { nombre: "Grupo A", equipos: ["México", "Sudáfrica", "Corea del Sur", "Rep. Checa"] },
@@ -85,20 +64,6 @@ export async function POST(req: Request) {
       hour: "2-digit",
       minute: "2-digit",
     });
-
-    // Guardar en Google Sheets
-    try {
-      await appendToSheet([
-        fecha,
-        nombre,
-        celular,
-        campeon || "Sin elegir",
-        subcampeon || "Sin elegir",
-        JSON.stringify(resultados || {}),
-      ]);
-    } catch (sheetError) {
-      console.error("Error guardando prode en Sheet:", sheetError);
-    }
 
     // Enviar email con Resend
     try {
