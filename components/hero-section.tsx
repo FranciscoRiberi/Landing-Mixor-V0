@@ -107,9 +107,9 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
                 alt={heroImageAlt}
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#75AADB]" />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a5c]/30 via-background/80 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a5c]/30 via-[#75AADB]/80 to-[#75AADB]" />
           </>
         ) : (
           <>
