@@ -119,17 +119,22 @@ const inputClass =
   "w-full px-4 py-3.5 bg-secondary border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-300 text-sm";
 
 export function OrderSection({ isMundial = false }: { isMundial?: boolean }) {
-  const [asesoresAleatorios] = useState(() =>
-    [...salesAdvisors].sort(() => Math.random() - 0.5)
-  );
+  // Start with stable order — randomize after mount to avoid hydration mismatch
+  const [asesoresAleatorios, setAsesoresAleatorios] = useState<typeof salesAdvisors>(salesAdvisors);
 
-  const [formData, setFormData] = useState(() => ({
+  const [formData, setFormData] = useState({
     name: "",
     celular: "",
     province: "Buenos Aires",
-    advisor: [...salesAdvisors].sort(() => Math.random() - 0.5)[0].name,
+    advisor: salesAdvisors[0].name,
     note: "",
-  }));
+  });
+
+  useEffect(() => {
+    const shuffled = [...salesAdvisors].sort(() => Math.random() - 0.5);
+    setAsesoresAleatorios(shuffled);
+    setFormData(prev => ({ ...prev, advisor: shuffled[0].name }));
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

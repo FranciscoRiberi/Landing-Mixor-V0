@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Instagram, Twitter, Linkedin, Mail, ArrowRight, FileText, Facebook, MessageCircle } from "lucide-react";
 
 const socialLinks = [
@@ -47,17 +47,22 @@ const provinces = [
 ];
 
 export function ContactSection() {
-  const [asesoresAleatorios] = useState(() =>
-    [...salesAdvisors].sort(() => Math.random() - 0.5)
-  );
+  // Start with stable order — randomize after mount to avoid hydration mismatch
+  const [asesoresAleatorios, setAsesoresAleatorios] = useState<typeof salesAdvisors>(salesAdvisors);
 
-  const [formData, setFormData] = useState(() => ({
+  const [formData, setFormData] = useState({
     name: "",
     celular: "",
-    advisor: [...salesAdvisors].sort(() => Math.random() - 0.5)[0].name,
+    advisor: salesAdvisors[0].name,
     province: "Buenos Aires",
     message: "",
-  }));
+  });
+
+  useEffect(() => {
+    const shuffled = [...salesAdvisors].sort(() => Math.random() - 0.5);
+    setAsesoresAleatorios(shuffled);
+    setFormData(prev => ({ ...prev, advisor: shuffled[0].name }));
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
