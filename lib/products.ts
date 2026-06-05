@@ -127,28 +127,19 @@ export function getCompatibility(category: string, name: string): string[] {
   return ["Múltiples dispositivos"];
 }
 
-// Helper: Qué incluye (basado en kit y producto)
-export function getIncludes(name: string, kit: string): string[] {
-  const base: Record<string, string[]> = {
-    "Parlante": [name, "Cable USB", "Manual de usuario", "Garantía 12 meses"],
-    "Smartwatch": [name, "Correas adicionales (x1-2)", "Cable de carga", "Manual", "Garantía 12 meses"],
-    "Auriculares": [name, "Estuche de carga", "Almohadillas de silicona (x3)", "Manual", "Garantía 12 meses"],
-    "Cable": [name, "Manual", "Garantía 12 meses"],
-    "Cargador": [name, "Manual de seguridad", "Garantía 24 meses", "Cable incluido"],
-    "Inflador": [name, "Adaptadores (x3)", "Manual", "Garantía 12 meses"],
-    "Holder": [name, "Laminilla adhesiva", "Manual", "Garantía 12 meses"],
-  };
+// Helper: Qué incluye (basado en foto/info - SIN INVENTAR)
+export function getIncludes(name: string, category: string): string[] {
+  const includes: string[] = [name];
 
-  let type = "Accesorios";
-  if (name.includes("Parlante")) type = "Parlante";
-  else if (name.includes("Smartwatch") || name.includes("Reloj")) type = "Smartwatch";
-  else if (name.includes("Auriculares") || name.includes("TWS")) type = "Auriculares";
-  else if (name.includes("Cable")) type = "Cable";
-  else if (name.includes("Cargador")) type = "Cargador";
-  else if (name.includes("Inflador")) type = "Inflador";
-  else if (name.includes("Holder")) type = "Holder";
+  // Agregar cable de carga solo para productos que NO son cables ni cargadores
+  if (category !== "cables" && category !== "cargadores") {
+    includes.push("Cable de carga");
+  }
 
-  return base[type] || [name, "Manual", "Garantía 12 meses"];
+  // Agregar garantía (todos 90 días)
+  includes.push("Garantía 90 días");
+
+  return includes;
 }
 
 export const categories = [

@@ -90,7 +90,7 @@ export default async function ProductSpecsPage({
           description: f.description,
         })),
         useCases: getUseCases(product.category),
-        includes: getIncludes(product.name, (product as { kit?: string }).kit || ""),
+        includes: getIncludes(product.name, product.category),
         care: getCareGuide(product.category),
         compatibility: getCompatibility(product.category, product.name),
         whyChoose,
