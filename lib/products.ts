@@ -40,6 +40,117 @@ export function getProductAlt(name: string): string {
   return altMap[name] ?? `Accesorios tecnológicos Mixor ${name} - Mayorista Argentina`;
 }
 
+// Helper: Generar datos de casos de uso por categoría
+export function getUseCases(category: string): string[] {
+  const cases: Record<string, string[]> = {
+    parlantes: ["Fiestas y eventos", "Espacios al aire libre", "Uso diario en casa", "Viajes y campings"],
+    smartwatch: ["Monitoreo de salud", "Entrenamiento deportivo", "Vida diaria", "Seguimiento de sueño"],
+    auriculares: ["Entrenamiento deportivo", "Viajes y desplazamientos", "Trabajo desde casa", "Entretenimiento"],
+    cables: ["Carga rápida", "Transferencia de datos", "Uso profesional", "Viajes frecuentes"],
+    cargadores: ["Carga en casa", "Carga en el auto", "Carga portátil", "Carga de múltiples dispositivos"],
+    accesorios: ["Sostenimiento de dispositivos", "Protección", "Portabilidad", "Uso multipropósito"],
+  };
+  return cases[category] || ["Uso diario", "Portabilidad"];
+}
+
+// Helper: Generar contenido de cuidados por categoría
+export function getCareGuide(category: string): string[] {
+  const care: Record<string, string[]> = {
+    parlantes: [
+      "Proteger de agua directa y humedad excesiva",
+      "Usar en ambientes entre 15-40°C",
+      "Limpiar con paño seco y suave",
+      "Evitar golpes y caídas",
+      "Cargar en ambiente seco"
+    ],
+    smartwatch: [
+      "Evitar golpes y caídas fuertes",
+      "No sumergir en agua salada",
+      "Recargar completamente una vez al mes",
+      "Limpiar correa con agua tibia",
+      "Usar protector de pantalla si es necesario"
+    ],
+    auriculares: [
+      "Guardar en estuche cuando no se usan",
+      "Limpiar auriculares con paño suave",
+      "Evitar temperaturas extremas",
+      "No retorcer cables",
+      "Cargar completamente antes de primer uso"
+    ],
+    cables: [
+      "No doblar bruscamente",
+      "Guardar en lugar seco",
+      "Evitar enrollar con fuerza extrema",
+      "Usar protector de punta si se transporta",
+      "Limpiar conectores periódicamente"
+    ],
+    cargadores: [
+      "Usar en superficies planas y ventiladas",
+      "Evitar agua y humedad",
+      "No bloquear ventilación",
+      "Desconectar cuando no se use",
+      "Proteger cables de daños físicos"
+    ],
+    accesorios: [
+      "Mantener en lugar seco",
+      "Evitar exposición solar prolongada",
+      "Limpiar regularmente",
+      "Guardar correctamente cuando no se usa",
+      "Revisar periódicamente su estado"
+    ],
+  };
+  return care[category] || ["Mantener en buen estado", "Guardar correctamente"];
+}
+
+// Helper: Compatibilidades por tipo
+export function getCompatibility(category: string, name: string): string[] {
+  if (category === "cables") {
+    if (name.includes("Tipo-C") || name.includes("USB-C")) {
+      return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
+    }
+    if (name.includes("V8")) {
+      return ["Samsung Android", "Huawei", "Xiaomi", "Otros Android", "Algunos tablets"];
+    }
+    return ["Smartphones Android", "Tablets", "Cámaras digitales"];
+  }
+  if (category === "smartwatch") {
+    return ["Android 5.0+", "iOS 12.0+", "Sincronización en la nube", "Apps de salud populares"];
+  }
+  if (category === "auriculares") {
+    return ["Todos los Bluetooth 4.0+", "Android e iOS", "PC y notebooks", "Gaming consoles"];
+  }
+  if (category === "cargadores") {
+    if (name.includes("PD")) return ["Laptops USB-C", "Tablets", "Smartphones", "Otros dispositivos PD"];
+    if (name.includes("Auto")) return ["12V/24V vehículos", "Smartphones", "Tablets", "Accesorios USB"];
+    return ["Smartphones", "Tablets", "Smartwatch", "Auriculares"];
+  }
+  return ["Múltiples dispositivos"];
+}
+
+// Helper: Qué incluye (basado en kit y producto)
+export function getIncludes(name: string, kit: string): string[] {
+  const base: Record<string, string[]> = {
+    "Parlante": [name, "Cable USB", "Manual de usuario", "Garantía 12 meses"],
+    "Smartwatch": [name, "Correas adicionales (x1-2)", "Cable de carga", "Manual", "Garantía 12 meses"],
+    "Auriculares": [name, "Estuche de carga", "Almohadillas de silicona (x3)", "Manual", "Garantía 12 meses"],
+    "Cable": [name, "Manual", "Garantía 12 meses"],
+    "Cargador": [name, "Manual de seguridad", "Garantía 24 meses", "Cable incluido"],
+    "Inflador": [name, "Adaptadores (x3)", "Manual", "Garantía 12 meses"],
+    "Holder": [name, "Laminilla adhesiva", "Manual", "Garantía 12 meses"],
+  };
+
+  let type = "Accesorios";
+  if (name.includes("Parlante")) type = "Parlante";
+  else if (name.includes("Smartwatch") || name.includes("Reloj")) type = "Smartwatch";
+  else if (name.includes("Auriculares") || name.includes("TWS")) type = "Auriculares";
+  else if (name.includes("Cable")) type = "Cable";
+  else if (name.includes("Cargador")) type = "Cargador";
+  else if (name.includes("Inflador")) type = "Inflador";
+  else if (name.includes("Holder")) type = "Holder";
+
+  return base[type] || [name, "Manual", "Garantía 12 meses"];
+}
+
 export const categories = [
   { id: "parlantes", name: "Parlantes" },
   { id: "auriculares", name: "Auriculares" },
@@ -565,3 +676,36 @@ export const products = [
 ];
 
 export type Product = typeof products[number];
+
+/** Slug URL-safe a partir del nombre del producto (compartido por catálogo y specs). */
+export function toSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/\s+/g, "-");
+}
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find((p) => toSlug(p.name) === slug);
+}
+
+/**
+ * Acento de color por categoría — usado por la página de specs (estilo spatial dark).
+ * `gradient` = clases Tailwind para el glow; `rgb` = para sombras/halos dinámicos.
+ */
+export const categoryAccent: Record<
+  string,
+  { gradient: string; rgb: string; label: string }
+> = {
+  parlantes:   { gradient: "from-red-500 to-rose-700",      rgb: "239,68,68",  label: "Parlantes" },
+  auriculares: { gradient: "from-violet-500 to-indigo-700", rgb: "139,92,246", label: "Auriculares" },
+  smartwatch:  { gradient: "from-sky-400 to-blue-700",      rgb: "56,189,248", label: "Smartwatch" },
+  cables:      { gradient: "from-amber-400 to-orange-600",  rgb: "251,191,36", label: "Cables" },
+  cargadores:  { gradient: "from-emerald-400 to-teal-700",  rgb: "52,211,153", label: "Cargadores" },
+  accesorios:  { gradient: "from-fuchsia-500 to-pink-700",  rgb: "232,121,249", label: "Accesorios" },
+};
+
+export function getAccent(category: string) {
+  return categoryAccent[category] ?? { gradient: "from-red-500 to-rose-700", rgb: "255,49,49", label: category };
+}

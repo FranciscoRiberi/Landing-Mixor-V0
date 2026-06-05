@@ -1,7 +1,7 @@
 import { products, categories, getProductAlt } from "@/lib/products"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowLeft, ArrowRight, Sliders } from "lucide-react"
 import type { Metadata } from "next"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -159,14 +159,25 @@ export default async function ProductPage({
                   </div>
                 )}
 
-                {/* CTA */}
-                <a
-                  href="/#contacto"
-                  className="inline-flex w-full md:w-auto items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium text-base hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 mt-2"
-                >
-                  Consultar Precio Mayorista
-                  <ArrowRight size={18} />
-                </a>
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3 mt-2">
+                  <a
+                    href="/#contacto"
+                    className="inline-flex flex-1 items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium text-base hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+                  >
+                    Consultar Precio Mayorista
+                    <ArrowRight size={18} />
+                  </a>
+                  {"features" in product && product.features && (
+                    <Link
+                      href={`/productos/${slug}/specs`}
+                      className="inline-flex items-center justify-center gap-2 border border-border text-foreground px-8 py-4 rounded-full font-medium text-base hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                    >
+                      <Sliders size={18} />
+                      Conoce más
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           </div>
