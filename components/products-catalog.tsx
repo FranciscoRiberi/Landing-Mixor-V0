@@ -37,25 +37,25 @@ export function ProductsCatalog() {
     <section className="px-4 sm:px-6 pb-24">
       <div className="max-w-7xl mx-auto">
         {/* Filter bar */}
-        <div className="sticky top-20 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 bg-background/80 backdrop-blur-xl border-b border-border mb-10">
+        <div className="sticky top-20 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 bg-zinc-950/80 backdrop-blur-xl border-b border-white/10 mb-10">
           {/* Search */}
           <div className="relative mb-4 max-w-md mx-auto">
             <Search
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"
             />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar producto, código o función…"
-              className="w-full pl-11 pr-10 py-3 bg-card border border-border rounded-full text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+              className="w-full pl-11 pr-10 py-3 bg-zinc-900/40 border border-white/10 rounded-full text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
                 aria-label="Limpiar búsqueda"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
               >
                 <X size={16} />
               </button>
@@ -70,8 +70,8 @@ export function ProductsCatalog() {
                 onClick={() => setCategory(f.id)}
                 className={`px-4 py-2 text-sm rounded-full font-medium transition-all duration-300 fx-shine ${
                   category === f.id
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                    : "bg-card border border-border text-foreground hover:border-primary/50 hover:bg-primary/5"
+                    ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+                    : "bg-zinc-900/40 border border-white/10 text-white hover:border-cyan-500/50 hover:bg-cyan-500/10"
                 }`}
               >
                 {f.name}
@@ -81,8 +81,8 @@ export function ProductsCatalog() {
               onClick={() => setOnlyNew((v) => !v)}
               className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm rounded-full font-medium transition-all duration-300 ${
                 onlyNew
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                  : "bg-card border border-border text-foreground hover:border-primary/50 hover:bg-primary/5"
+                  ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+                  : "bg-zinc-900/40 border border-white/10 text-white hover:border-cyan-500/50 hover:bg-cyan-500/10"
               }`}
             >
               <Sparkles size={14} />
@@ -92,16 +92,16 @@ export function ProductsCatalog() {
         </div>
 
         {/* Result count */}
-        <p className="text-center text-sm text-muted-foreground mb-8">
+        <p className="text-center text-sm text-zinc-400 mb-8">
           {filtered.length} {filtered.length === 1 ? "producto" : "productos"}
           {category !== ALL && (
-            <> en <span className="text-primary font-medium">{filters.find((f) => f.id === category)?.name}</span></>
+            <> en <span className="text-cyan-400 font-medium">{filters.find((f) => f.id === category)?.name}</span></>
           )}
         </p>
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <div className="text-center py-24 text-muted-foreground">
+          <div className="text-center py-24 text-zinc-400">
             <p className="text-lg font-medium mb-1">Sin resultados</p>
             <p className="text-sm">Probá con otra categoría o término de búsqueda.</p>
           </div>
@@ -119,7 +119,7 @@ export function ProductsCatalog() {
               return (
                 <div
                   key={product.id}
-                  className="fx-spotlight group relative flex flex-col rounded-2xl bg-card border border-border overflow-hidden transition-all duration-500 hover:border-primary/50 hover-lift"
+                  className="fx-spotlight group relative flex flex-col rounded-2xl bg-zinc-900/40 border border-white/10 overflow-hidden transition-all duration-500 hover:border-cyan-500/50 hover-lift"
                 >
                   {/* Image */}
                   <Link
@@ -135,15 +135,15 @@ export function ProductsCatalog() {
                         isComingSoon ? "opacity-60" : ""
                       }`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-card/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
 
                     {isNew && (
-                      <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-primary text-primary-foreground text-[9px] font-bold tracking-wider">
+                      <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-cyan-500 text-white text-[9px] font-bold tracking-wider">
                         NUEVO
                       </span>
                     )}
                     {isComingSoon && (
-                      <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-foreground/80 text-background text-[9px] font-bold tracking-wider">
+                      <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-zinc-400 text-zinc-950 text-[9px] font-bold tracking-wider">
                         PRÓXIMAMENTE
                       </span>
                     )}
@@ -151,37 +151,37 @@ export function ProductsCatalog() {
 
                   {/* Info */}
                   <div className="flex flex-col flex-1 p-3 sm:p-4">
-                    <p className="text-[10px] uppercase tracking-widest text-primary font-semibold mb-1">
+                    <p className="text-[10px] uppercase tracking-widest text-cyan-400 font-semibold mb-1">
                       {cat?.name ?? product.category}
                     </p>
                     <Link href={`/productos/${slug}`}>
-                      <h3 className="text-sm sm:text-base font-semibold text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1">
+                      <h3 className="text-sm sm:text-base font-semibold text-white leading-tight group-hover:text-cyan-400 transition-colors line-clamp-1">
                         {product.name}
                       </h3>
                     </Link>
-                    <p className="text-[11px] text-muted-foreground mt-1 leading-snug line-clamp-2 flex-1">
+                    <p className="text-[11px] text-zinc-400 mt-1 leading-snug line-clamp-2 flex-1">
                       {product.description}
                     </p>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
+                    <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/10">
                       {hasSpecs && !isComingSoon ? (
                         <Link
                           href={`/productos/${slug}/specs`}
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-cyan-400 transition-colors"
                         >
                           <Sliders size={13} />
                           Conoce más
                         </Link>
                       ) : (
-                        <span className="text-xs text-muted-foreground/60">
+                        <span className="text-xs text-zinc-500">
                           {isComingSoon ? "Pronto" : "—"}
                         </span>
                       )}
                       <Link
                         href={`/productos/${slug}`}
                         aria-label={`Ver ${product.name}`}
-                        className="ml-auto inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
+                        className="ml-auto inline-flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
                       >
                         <ArrowRight size={14} />
                       </Link>
