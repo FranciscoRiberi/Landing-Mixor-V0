@@ -42,7 +42,7 @@ const FloatingNav = () => {
   }, [active]);
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full px-4 pb-6 pt-4">
       <div
         ref={containerRef}
         className="relative flex items-center justify-between bg-background/80 backdrop-blur-xl dark:bg-zinc-900/80 shadow-2xl rounded-full px-2 py-3 border border-primary/20"
