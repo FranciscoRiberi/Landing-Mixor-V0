@@ -12,11 +12,11 @@ const FloatingNav = () => {
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const items = [
-    { id: 0, icon: <Home size={22} />, label: "Inicio", href: "/#" },
-    { id: 1, icon: <ShoppingCart size={22} />, label: "Productos", href: "/#productos" },
+    { id: 0, icon: <Home size={22} />, label: "Inicio", href: "/" },
+    { id: 1, icon: <ShoppingCart size={22} />, label: "Productos", href: "/productos" },
     { id: 2, icon: <Share2 size={22} />, label: "Redes", href: "/#redes" },
     { id: 3, icon: <Mail size={22} />, label: "Contacto", href: "/#contacto" },
-    { id: 4, icon: <MessageCircle size={22} />, label: "Pedido", href: "https://wa.me/5491137994825" },
+    { id: 4, icon: <MessageCircle size={22} />, label: "Pedido", href: "/#contacto" },
   ];
 
   // Update indicator position when active changes or resize
