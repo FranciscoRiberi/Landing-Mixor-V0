@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { ShoppingCart, Share2, Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const FloatingNav = () => {
+  const pathname = usePathname();
   const [active, setActive] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,17 @@ const FloatingNav = () => {
     { id: 3, icon: <Mail size={22} />, label: "Contacto", href: "/#contacto" },
     { id: 4, icon: <MessageCircle size={22} />, label: "Pedido", href: "/#contacto" },
   ];
+
+  // Detectar la página actual y establecer el active
+  useEffect(() => {
+    if (pathname === "/productos") {
+      setActive(1);
+    } else if (pathname === "/" || pathname === "/#") {
+      setActive(0);
+    } else {
+      setActive(0);
+    }
+  }, [pathname]);
 
   // Update indicator position when active changes or resize
   useEffect(() => {
