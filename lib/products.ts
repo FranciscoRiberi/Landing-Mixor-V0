@@ -540,11 +540,12 @@ export const products = [
     kit: "Kit x 200 unidades",
     image: "/images/cargador-pd-45w-mixor-verdad-usb-c-adaptativo-mayorista.webp",
     modalImage: "/images/cargador-pd-45w-mixor-verdad-modal-usb-c-adaptativo.webp",
-    description: "Cargador PD de 45W adaptativo con carga rápida y puerto USB-C",
+    description: "Cargador PD de 45W adaptativo con carga rápida y puerto USB-C. Incluye cable tipo C a tipo C.",
     features: [
       { icon: Zap, title: "Carga Adaptativa 45W", description: "Potencia de 45W con tecnología adaptativa que ajusta la salida según el dispositivo conectado." },
       { icon: Sparkles, title: "Entrada Universal", description: "Tensión de entrada AC 100-220V - 50/60Hz compatible con todo el mundo." },
       { icon: Battery, title: "Puerto USB-C PD", description: "Tecnología Power Delivery para cargar laptops compactas, tablets y smartphones rapidísimo." },
+      { icon: Usb, title: "Cable Tipo-C Incluido", description: "Viene con cable USB-C a USB-C de alta calidad para comenzar a cargar de inmediato." },
       { icon: Settings, title: "Material Resistente", description: "Construcción en ABS de alta calidad con diseño compacto para máxima portabilidad y seguridad." },
     ],
   },
