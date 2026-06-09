@@ -79,7 +79,8 @@ const imageVariants: Variants = {
 // Componente
 // =========================================
 export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
-  const accent = data.accentRgb;
+  // Usar rojo Mixor como color principal en todas las specs
+  const accent = "226, 75, 74"; // Rojo Mixor
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-zinc-950 text-zinc-100 selection:bg-zinc-800">
