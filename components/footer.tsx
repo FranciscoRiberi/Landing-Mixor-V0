@@ -41,16 +41,16 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-bold uppercase tracking-widest text-cyan-400 mb-4">Síguenos</h4>
             <div className="flex gap-3">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">
+              <a href="https://www.instagram.com/mixoroficial/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">
+              <a href="https://www.tiktok.com/@mixoroficial" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors">
                 <Music4 size={20} />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">
+              <a href="https://www.facebook.com/p/Mixor-61558422137441/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors">
                 <Send size={20} />
               </a>
-              <a href="https://wa.me/5491234567890" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">
+              <a href="https://wa.me/5491137994825" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors">
                 <MessageCircle size={20} />
               </a>
             </div>
