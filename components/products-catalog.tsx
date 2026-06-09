@@ -122,10 +122,7 @@ export function ProductsCatalog() {
                   className="fx-spotlight group relative flex flex-col rounded-2xl bg-zinc-900/40 border border-white/10 overflow-hidden transition-all duration-500 hover:border-cyan-500/50 hover-lift"
                 >
                   {/* Image */}
-                  <Link
-                    href={`/productos/${slug}`}
-                    className="relative aspect-square block overflow-hidden"
-                  >
+                  <div className="relative aspect-square block overflow-hidden">
                     <Image
                       src={product.image || "/placeholder.svg"}
                       alt={getProductAlt(product.name)}
@@ -147,44 +144,34 @@ export function ProductsCatalog() {
                         PRÓXIMAMENTE
                       </span>
                     )}
-                  </Link>
+                  </div>
 
                   {/* Info */}
                   <div className="flex flex-col flex-1 p-3 sm:p-4">
                     <p className="text-[10px] uppercase tracking-widest text-cyan-400 font-semibold mb-1">
                       {cat?.name ?? product.category}
                     </p>
-                    <Link href={`/productos/${slug}`}>
-                      <h3 className="text-sm sm:text-base font-semibold text-white leading-tight group-hover:text-cyan-400 transition-colors line-clamp-1">
-                        {product.name}
-                      </h3>
-                    </Link>
+                    <h3 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-1">
+                      {product.name}
+                    </h3>
                     <p className="text-[11px] text-zinc-400 mt-1 leading-snug line-clamp-2 flex-1">
                       {product.description}
                     </p>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/10">
-                      {hasSpecs && !isComingSoon ? (
+                    <div className="mt-3 pt-3 border-t border-white/10">
+                      {!isComingSoon ? (
                         <Link
-                          href={`/productos/${slug}/specs`}
+                          href={`/productos/${slug}`}
                           className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-cyan-400 transition-colors"
                         >
                           <Sliders size={13} />
-                          Conoce más
+                          Conocer más
+                          <ArrowRight size={13} className="ml-auto" />
                         </Link>
                       ) : (
-                        <span className="text-xs text-zinc-500">
-                          {isComingSoon ? "Pronto" : "—"}
-                        </span>
+                        <span className="text-xs text-zinc-500">Próximamente</span>
                       )}
-                      <Link
-                        href={`/productos/${slug}`}
-                        aria-label={`Ver ${product.name}`}
-                        className="ml-auto inline-flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
-                      >
-                        <ArrowRight size={14} />
-                      </Link>
                     </div>
                   </div>
                 </div>
