@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ProductsCatalog } from "@/components/products-catalog";
+import FloatingNav from "@/components/floating-nav";
 import { isMundialTheme } from "@/lib/theme";
 
 export const metadata: Metadata = {
@@ -45,7 +45,7 @@ export default function ProductosPage() {
       </div>
 
       <div className="relative z-10 flex flex-col flex-1">
-        <Navigation isMundial={isMundialTheme} />
+        <FloatingNav />
 
         <main className="flex-1 pt-28 sm:pt-32">
           {/* Hero header */}

@@ -16,13 +16,13 @@ const FloatingNav = () => {
     {
       id: 0,
       icon: (
-        <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center overflow-hidden">
+        <div className="w-7 h-7 rounded-full bg-white/90 flex items-center justify-center overflow-hidden flex-shrink-0">
           <Image
             src="/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp"
             alt="Mixor"
-            width={24}
-            height={24}
-            className="w-full h-full object-cover"
+            width={28}
+            height={28}
+            className="w-5 h-5 object-contain"
           />
         </div>
       ),
