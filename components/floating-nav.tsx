@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Share2, Phone, Grid, Smartphone } from "lucide-react";
+import { ShoppingCart, Share2, Phone, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -31,7 +31,7 @@ const FloatingNav = () => {
       label: "Inicio",
       href: "/"
     },
-    { id: 1, icon: <Smartphone size={22} />, label: "Productos", href: "/productos" },
+    { id: 1, icon: <BookOpen size={22} />, label: "Productos", href: "/productos" },
     { id: 2, icon: <Share2 size={22} />, label: "Redes", href: "/#redes" },
     { id: 3, icon: <Phone size={22} />, label: "Asesor", href: "/#contacto" },
     { id: 4, icon: <ShoppingCart size={22} />, label: "Pedido", href: "/#pedido" },
