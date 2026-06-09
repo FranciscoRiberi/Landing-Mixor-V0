@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Home, ShoppingCart, Share2, Mail, MessageCircle } from "lucide-react";
+import { ShoppingCart, Share2, Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const FloatingNav = () => {
   const [active, setActive] = useState(0);
@@ -12,7 +13,22 @@ const FloatingNav = () => {
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const items = [
-    { id: 0, icon: <Home size={22} />, label: "Inicio", href: "/" },
+    {
+      id: 0,
+      icon: (
+        <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center overflow-hidden">
+          <Image
+            src="/images/mixor-logo-importador-mayorista-tecnologia-argentina.webp"
+            alt="Mixor"
+            width={24}
+            height={24}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ),
+      label: "Inicio",
+      href: "/"
+    },
     { id: 1, icon: <ShoppingCart size={22} />, label: "Productos", href: "/productos" },
     { id: 2, icon: <Share2 size={22} />, label: "Redes", href: "/#redes" },
     { id: 3, icon: <Mail size={22} />, label: "Contacto", href: "/#contacto" },
