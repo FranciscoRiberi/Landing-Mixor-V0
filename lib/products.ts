@@ -28,6 +28,7 @@ export const altMap: Record<string, string> = {
   "Cargador Quiero":   "Cargador Pared Mixor Quiero 5.1A 2 USB con Cable Tipo-C - Mayorista",
   "Cargador Realidad": "Cargador 220V Mixor Realidad 4.4A Triple Protección - Mayorista Argentina",
   "Cargador Verdad": "Cargador PD 45W Mixor Verdad USB-C Adaptativo - Mayorista Argentina",
+  "Cargador Cumbre": "Cargador PD 65W Mixor Cumbre USB-C + USB-A Adaptive Quick Charging - Mayorista Argentina",
   "Cargador Sinergia": "Próximo Cargador Mixor Sinergia - Accesorios tecnológicos mayoristas",
   "Inflador Ruta":   "Inflador Portátil Mixor Ruta 4000mAh Digital - Mayorista Argentina",
   "Holder Atrae":    "Soporte Magnético Mixor Atrae 360° Universal - Importador directo Argentina",
@@ -135,6 +136,23 @@ export function getIncludes(name: string, category: string): string[] {
   // Agregar cable de carga solo para productos que NO son cables ni cargadores
   if (category !== "cables" && category !== "cargadores") {
     includes.push("Cable de carga");
+  }
+
+  // Cargadores con cable incluido
+  if (name === "Cargador Verdad") {
+    includes.push("Cable USB-C a USB-C");
+  }
+  if (name === "Cargador Cumbre") {
+    includes.push("Cable USB-C a USB-C");
+  }
+  if (name === "Cargador Somos") {
+    includes.push("Cable USB a V8");
+  }
+  if (name === "Cargador Proton") {
+    includes.push("Cable V8");
+  }
+  if (name === "Cargador Quiero") {
+    includes.push("Cable Tipo-C");
   }
 
   // Agregar garantía (todos 90 días)
@@ -545,12 +563,28 @@ export const products = [
       { icon: Zap, title: "Carga Adaptativa 45W", description: "Potencia de 45W con tecnología adaptativa que ajusta la salida según el dispositivo conectado." },
       { icon: Sparkles, title: "Entrada Universal", description: "Tensión de entrada AC 100-220V - 50/60Hz compatible con todo el mundo." },
       { icon: Battery, title: "Puerto USB-C PD", description: "Tecnología Power Delivery para cargar laptops compactas, tablets y smartphones rapidísimo." },
-      { icon: Usb, title: "Cable Tipo-C Incluido", description: "Viene con cable USB-C a USB-C de alta calidad para comenzar a cargar de inmediato." },
       { icon: Settings, title: "Material Resistente", description: "Construcción en ABS de alta calidad con diseño compacto para máxima portabilidad y seguridad." },
     ],
   },
   {
     id: 26,
+    name: "Cargador Cumbre",
+    category: "cargadores",
+    price: "Consultar",
+    code: "MODM-00K1",
+    kit: "Kit x 200 unidades",
+    image: "/images/cargador-pd-65w-mixor-cumbre-usb-c-usb-a-mayorista.webp",
+    modalImage: "/images/cargador-pd-65w-mixor-cumbre-modal-usb-c-usb-a.webp",
+    description: "Cargador PD de 65W con doble puerto USB-C y USB-A, carga adaptativa rápida. Incluye cable USB-C a USB-C.",
+    features: [
+      { icon: Zap, title: "Carga Rápida 65W", description: "Potencia de 65W con tecnología Adaptive Quick Charging que ajusta la salida según cada dispositivo." },
+      { icon: Usb, title: "Doble Puerto USB-C + USB-A", description: "Puerto USB-C PD 65W y puerto USB-A para cargar dos dispositivos simultáneamente." },
+      { icon: Sparkles, title: "Entrada Universal", description: "Tensión de entrada AC 100-220V - 50/60Hz compatible con todo el mundo." },
+      { icon: Settings, title: "Material Resistente", description: "Construcción en ABS de alta calidad con diseño compacto para máxima portabilidad y seguridad." },
+    ],
+  },
+  {
+    id: 28,
     name: "Inflador Ruta",
     category: "accesorios",
     price: "Consultar",
@@ -567,7 +601,7 @@ export const products = [
     ],
   },
   {
-    id: 27,
+    id: 29,
     name: "Holder Atrae",
     category: "accesorios",
     price: "Consultar",
@@ -584,7 +618,7 @@ export const products = [
     ],
   },
   {
-    id: 28,
+    id: 30,
     name: "Cargador Nexo",
     category: "accesorios",
     price: "Consultar",
