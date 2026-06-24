@@ -35,6 +35,10 @@ const productSeo: Record<string, { title: string; description: string }> = {
     title: "Cable Origen Micro USB (V8) 5.4A Mallado | Mayorista | Mixor",
     description: "Cable USB a Micro USB (V8) mayorista. Malla de nylon trenzado, 1 metro, carga rápida 5.4A. Importado directo, kit cerrado, envíos a todo el país.",
   },
+  "cargador-sinergia": {
+    title: "Cargador de Auto Sinergia 50W PD USB-C | Mayorista | Mixor",
+    description: "Cargador para auto mayorista 50W con carga rápida PD. Doble puerto USB-A + USB-C, portátil. Importado directo, kit cerrado, envíos a todo el país.",
+  },
 };
 
 export async function generateMetadata({

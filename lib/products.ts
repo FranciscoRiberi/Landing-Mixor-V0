@@ -30,7 +30,7 @@ export const altMap: Record<string, string> = {
   "Cargador Realidad": "Cargador 220V Mixor Realidad 4.4A Triple Protección - Mayorista Argentina",
   "Cargador Verdad": "Cargador PD 45W Mixor Verdad USB-C Adaptativo - Mayorista Argentina",
   "Cargador Cumbre": "Cargador PD 65W Mixor Cumbre USB-C + USB-A Adaptive Quick Charging - Mayorista Argentina",
-  "Cargador Sinergia": "Próximo Cargador Mixor Sinergia - Accesorios tecnológicos mayoristas",
+  "Cargador Sinergia": "Cargador Auto Mixor Sinergia 50W Carga Rápida PD USB-C Mayorista Argentina",
   "Inflador Ruta":   "Inflador Portátil Mixor Ruta 4000mAh Digital - Mayorista Argentina",
   "Holder Atrae":    "Soporte Magnético Mixor Atrae 360° Universal - Importador directo Argentina",
   "Cargador Nexo":   "Cargador Universal Notebook Mixor Nexo 9 Pines - Mayorista Argentina",
@@ -124,6 +124,7 @@ export function getCompatibility(category: string, name: string): string[] {
   }
   if (category === "cargadores") {
     if (name.includes("PD")) return ["Laptops USB-C", "Tablets", "Smartphones", "Otros dispositivos PD"];
+    if (name === "Cargador Sinergia") return ["12V/24V vehículos", "Smartphones", "Tablets", "Dispositivos USB-C PD"];
     if (name.includes("Auto")) return ["12V/24V vehículos", "Smartphones", "Tablets", "Accesorios USB"];
     return ["Smartphones", "Tablets", "Smartwatch", "Auriculares"];
   }
@@ -697,7 +698,25 @@ export const products = [
     ],
   },
   { id: 32, name: "Cable Pleno", category: "cables", price: "Próximamente", code: "MODM-00PM", kit: "Kit x 500 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
-  { id: 33, name: "Cargador Sinergia", category: "cargadores", price: "Próximamente", code: "MODM-00SN", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  {
+    id: 33,
+    name: "Cargador Sinergia",
+    category: "cargadores",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Hace 5 días",
+    code: "MODM-00IM",
+    kit: "Kit x 200 unidades",
+    image: "/images/cargador-auto-mixor-sinergia-50w-pd-usb-c-mayorista.webp",
+    modalImage: "/images/cargador-auto-mixor-sinergia-50w-pd-usb-c-modal.webp",
+    description: "Cargador para auto de hasta 50W con carga rápida PD. Doble puerto (USB-A + USB-C), diseño portátil y compacto para el encendedor del auto.",
+    features: [
+      { icon: Zap, title: "Carga Súper Rápida 50W", description: "Hasta 50W de potencia total para cargar smartphones y tablets a máxima velocidad directamente desde el encendedor de tu auto." },
+      { icon: Car, title: "Diseño Para el Auto", description: "Formato compacto y portátil pensado para el encendedor 12V/24V del vehículo. No ocupa espacio ni incomoda al conductor." },
+      { icon: Usb, title: "Doble Puerto USB-A + USB-C", description: "Cargá dos dispositivos al mismo tiempo: uno por el puerto USB-A y otro por USB-C con Power Delivery activo." },
+      { icon: Shield, title: "Protección Integrada", description: "Certificado CE y RoHS. Protección contra sobrecorriente, sobretensión y sobrecalentamiento para una carga segura en todo momento." },
+    ],
+  },
   { id: 34, name: "Micrófono Voz", category: "accesorios", price: "Próximamente", code: "MODM-00VO", kit: "Kit x 50 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
   {
     id: 36,
