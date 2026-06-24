@@ -21,6 +21,7 @@ export const altMap: Record<string, string> = {
   "Cable Impulso":    "Cable USB a Tipo-C Mixor Impulso 7.1A Carga Rápida - Importador directo",
   "Cable Vital":      "Cable USB Reforzado Mixor Vital 5.4A Cobre Puro - Mayorista Argentina",
   "Cable Eternidad":  "Cable Mixor Eternidad USB-A a Tipo C 7.1A Carga Rápida Nylon Trenzado - Mayorista Argentina",
+  "Cable Origen":     "Cable Mixor Origen USB-A a Micro USB V8 5.4A Nylon Trenzado Mayorista Argentina",
   "Cable Pleno":      "Próximo Cable Mixor Pleno - Importador directo Argentina",
   "Cargador Leyenda":  "Cargador PD 65W Mixor Leyenda USB-C - Mayorista Argentina",
   "Cargador Somos":    "Cargador Rápido Mixor Somos 19W con Cable V8 - Importador directo",
@@ -110,7 +111,7 @@ export function getCompatibility(category: string, name: string): string[] {
     if (name.includes("Tipo-C") || name.includes("USB-C")) {
       return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
     }
-    if (name.includes("V8")) {
+    if (name.includes("V8") || name === "Cable Origen") {
       return ["Samsung Android", "Huawei", "Xiaomi", "Otros Android", "Algunos tablets"];
     }
     return ["Smartphones Android", "Tablets", "Cámaras digitales"];
@@ -673,6 +674,26 @@ export const products = [
       { icon: Shield, title: "Construcción Eternidad", description: "Revestimiento de nylon trenzado de alta densidad en color blanco, resistente al desgaste diario y a los tirones." },
       { icon: Usb, title: "Conectores Reforzados", description: "Ambas fichas con diseño ergonómico y cuello articulado reforzado para prevenir fracturas en los puntos críticos de flexión." },
       { icon: Sparkles, title: "Diseño Premium", description: "Estética moderna con el logo distintivo de Mixor, ideal para un público que valora tanto la funcionalidad como el estilo." },
+    ],
+  },
+  {
+    id: 35,
+    name: "Cable Origen",
+    category: "cables",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Hace 5 días",
+    code: "MODM-00JQ",
+    kit: "Kit x 200 unidades",
+    image: "/images/cable-mixor-origen-micro-usb-v8-nylon-mallado-mayorista.webp",
+    modalImage: "/images/cable-mixor-origen-micro-usb-v8-colores-modal.webp",
+    description: "Cable USB-A a Micro USB (V8) de 1 metro con malla de nylon trenzado, conectores reforzados y carga rápida de hasta 5.4A.",
+    variants: ["Blanco/Gris", "Rojo", "Violeta", "Azul"],
+    features: [
+      { icon: Zap, title: "Carga Rápida 5.4A", description: "Soporta hasta 5.4 Amperios para una carga rápida de smartphones Android, tablets y otros dispositivos con entrada Micro USB." },
+      { icon: Shield, title: "Nylon Trenzado Resistente", description: "Revestimiento de malla de nylon de alta densidad, resistente al desgaste diario y a los dobleces repetidos." },
+      { icon: Usb, title: "Conectores Reforzados", description: "Ficha Micro USB (V8) y USB-A con diseño ergonómico y cuello articulado reforzado para prevenir fracturas en los puntos críticos." },
+      { icon: Sparkles, title: "4 Colores Disponibles", description: "Disponible en Blanco/Gris, Rojo, Violeta y Azul para adaptarte a la demanda variada de tus clientes." },
     ],
   },
   { id: 32, name: "Cable Pleno", category: "cables", price: "Próximamente", code: "MODM-00PM", kit: "Kit x 500 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },

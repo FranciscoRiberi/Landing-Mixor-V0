@@ -30,6 +30,13 @@ export function generateStaticParams() {
     .map((p) => ({ slug: toSlug(p.name) }));
 }
 
+const productSeo: Record<string, { title: string; description: string }> = {
+  "cable-origen": {
+    title: "Cable Origen Micro USB (V8) 5.4A Mallado | Mayorista | Mixor",
+    description: "Cable USB a Micro USB (V8) mayorista. Malla de nylon trenzado, 1 metro, carga rápida 5.4A. Importado directo, kit cerrado, envíos a todo el país.",
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -40,9 +47,10 @@ export async function generateMetadata({
   if (!product) return {};
   const categoryName =
     categories.find((c) => c.id === product.category)?.name ?? product.category;
+  const custom = productSeo[slug];
   return {
-    title: `${product.name} — Especificaciones técnicas`,
-    description: `Especificaciones técnicas completas del ${product.name} (${categoryName}) de Mixor. ${product.description}`,
+    title: custom?.title ?? `${product.name} — Especificaciones técnicas`,
+    description: custom?.description ?? `Especificaciones técnicas completas del ${product.name} (${categoryName}) de Mixor. ${product.description}`,
     alternates: { canonical: `https://mixor.com.ar/productos/${slug}` },
     openGraph: {
       title: `${product.name} — Mixor`,
@@ -72,30 +80,53 @@ export default async function ProductPage({
     `Kit x ${(product as { kit?: string }).kit?.match(/\d+/)?.[0] || "1"} unidades`,
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    brand: { "@type": "Brand", name: "Mixor" },
+    mpn: product.code,
+    image: `https://mixor.com.ar${image}`,
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "ARS",
+      seller: { "@type": "Organization", name: "Mixor" },
+    },
+  };
+
   return (
-    <ProductSpecsShowcase
-      data={{
-        name: product.name,
-        categoryLabel: categoryName,
-        description: product.description,
-        image,
-        imageAlt: getProductAlt(product.name),
-        code: product.code,
-        kit: (product as { kit?: string }).kit,
-        accentRgb: accent.rgb,
-        accentGradient: accent.gradient,
-        features: product.features.map((f) => ({
-          iconName: f.icon?.displayName ?? "Sparkles",
-          title: f.title,
-          description: f.description,
-        })),
-        useCases: getUseCases(product.category),
-        includes: getIncludes(product.name, product.category),
-        care: getCareGuide(product.category),
-        compatibility: getCompatibility(product.category, product.name),
-        whyChoose,
-        slug,
-      }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductSpecsShowcase
+        data={{
+          name: product.name,
+          categoryLabel: categoryName,
+          description: product.description,
+          image,
+          imageAlt: getProductAlt(product.name),
+          code: product.code,
+          kit: (product as { kit?: string }).kit,
+          accentRgb: accent.rgb,
+          accentGradient: accent.gradient,
+          features: product.features.map((f) => ({
+            iconName: f.icon?.displayName ?? "Sparkles",
+            title: f.title,
+            description: f.description,
+          })),
+          useCases: getUseCases(product.category),
+          includes: getIncludes(product.name, product.category),
+          care: getCareGuide(product.category),
+          compatibility: getCompatibility(product.category, product.name),
+          variants: (product as { variants?: string[] }).variants,
+          whyChoose,
+          slug,
+        }}
+      />
+    </>
   );
 }

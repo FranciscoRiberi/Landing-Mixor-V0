@@ -41,6 +41,7 @@ export interface ProductSpecsData {
   care?: string[];
   compatibility?: string[];
   whyChoose?: string[];
+  variants?: string[];
   slug: string;
 }
 
@@ -227,6 +228,36 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
                 );
               })}
             </motion.div>
+
+            {/* Variantes de color */}
+            {data.variants && data.variants.length > 0 && (
+              <motion.div variants={item} className="mb-6">
+                <p className="text-xs uppercase tracking-widest text-zinc-500 mb-3">Variantes disponibles</p>
+                <div className="flex flex-wrap gap-2">
+                  {data.variants.map((variant) => {
+                    const colorMap: Record<string, string> = {
+                      "Blanco/Gris": "#d4d4d8",
+                      "Rojo": "#ef4444",
+                      "Violeta": "#8b5cf6",
+                      "Azul": "#3b82f6",
+                    };
+                    const swatch = colorMap[variant] ?? "#6b7280";
+                    return (
+                      <div
+                        key={variant}
+                        className="flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-300"
+                      >
+                        <span
+                          className="h-3 w-3 rounded-full border border-white/20 flex-shrink-0"
+                          style={{ background: swatch }}
+                        />
+                        {variant}
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
 
             {/* CTAs */}
             <motion.div
