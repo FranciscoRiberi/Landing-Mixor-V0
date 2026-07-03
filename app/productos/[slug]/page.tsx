@@ -39,6 +39,10 @@ const productSeo: Record<string, { title: string; description: string }> = {
     title: "Cargador de Auto Sinergia 50W PD USB-C | Mayorista | Mixor",
     description: "Cargador para auto mayorista 50W con carga rápida PD. Doble puerto USB-A + USB-C, portátil. Importado directo, kit cerrado, envíos a todo el país.",
   },
+  "cable-pleno": {
+    title: "Cable Pleno 240W USB-C con Holder | Mayorista | Mixor",
+    description: "Cable de carga USB-C 240W mayorista con holder integrado para el celular. Malla textil, conector en ángulo, 1,2 m. Importado directo, kit cerrado, envíos a todo el país.",
+  },
 };
 
 export async function generateMetadata({

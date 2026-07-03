@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/productos`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/#nosotros`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -43,6 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       'cable-vital', 'cargador-leyenda', 'cargador-somos', 'cargador-proton',
       'cargador-quiero', 'cargador-realidad', 'inflador-ruta', 'holder-atrae',
       'cargador-nexo', 'parlante-recuerdo', 'smartwatch-activo', 'cable-eternidad',
+      'cable-origen', 'cargador-sinergia', 'cable-pleno',
     ].map((slug) => ({
       url: `${BASE_URL}/productos/${slug}`,
       lastModified: new Date(),

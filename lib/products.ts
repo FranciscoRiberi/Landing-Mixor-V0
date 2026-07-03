@@ -22,7 +22,7 @@ export const altMap: Record<string, string> = {
   "Cable Vital":      "Cable USB Reforzado Mixor Vital 5.4A Cobre Puro - Mayorista Argentina",
   "Cable Eternidad":  "Cable Mixor Eternidad USB-A a Tipo C 7.1A Carga Rápida Nylon Trenzado - Mayorista Argentina",
   "Cable Origen":     "Cable Mixor Origen USB-A a Micro USB V8 5.4A Nylon Trenzado Mayorista Argentina",
-  "Cable Pleno":      "Próximo Cable Mixor Pleno - Importador directo Argentina",
+  "Cable Pleno":      "Cable Pleno Mixor 240W USB-C con holder para celular mayorista",
   "Cargador Leyenda":  "Cargador PD 65W Mixor Leyenda USB-C - Mayorista Argentina",
   "Cargador Somos":    "Cargador Rápido Mixor Somos 19W con Cable V8 - Importador directo",
   "Cargador Proton":   "Cargador Auto 12V Mixor Proton Doble USB - Mayorista Argentina",
@@ -108,7 +108,7 @@ export function getCareGuide(category: string): string[] {
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
   if (category === "cables") {
-    if (name.includes("Tipo-C") || name.includes("USB-C")) {
+    if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno") {
       return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
     }
     if (name.includes("V8") || name === "Cable Origen") {
@@ -697,7 +697,25 @@ export const products = [
       { icon: Sparkles, title: "4 Colores Disponibles", description: "Disponible en Blanco/Gris, Rojo, Violeta y Azul para adaptarte a la demanda variada de tus clientes." },
     ],
   },
-  { id: 32, name: "Cable Pleno", category: "cables", price: "Próximamente", code: "MODM-00PM", kit: "Kit x 500 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  {
+    id: 32,
+    name: "Cable Pleno",
+    category: "cables",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Hace 5 días",
+    code: "MODM-00IL",
+    kit: "Kit x 200 unidades",
+    image: "/images/cable-mixor-pleno-240w-usb-c-holder-mayorista.webp",
+    modalImage: "/images/cable-mixor-pleno-240w-usb-c-holder-modal.webp",
+    description: "Cable de carga USB-C de 240W con holder integrado para el celular. Malla textil reforzada, conector en ángulo y 1,2 metros de longitud.",
+    features: [
+      { icon: Zap, title: "Súper Carga Rápida 240W", description: "Hasta 240W de potencia para carga ultrarrápida de notebooks, tablets y smartphones USB-C de última generación." },
+      { icon: Usb, title: "USB Tipo C a Tipo C", description: "Conector USB-C a USB-C (Ficha TC) con soporte Power Delivery, compatible con todos los dispositivos modernos de carga rápida." },
+      { icon: Shield, title: "Malla Textil Reforzada", description: "Revestimiento de tela trenzada resistente al desgaste y a los dobleces, con conector en ángulo para mayor durabilidad y comodidad de uso." },
+      { icon: Sparkles, title: "Holder Integrado", description: "Soporte plegable integrado en el cable para sostener el celular mientras cargás. 1,2 metros de longitud, color negro." },
+    ],
+  },
   {
     id: 33,
     name: "Cargador Sinergia",
