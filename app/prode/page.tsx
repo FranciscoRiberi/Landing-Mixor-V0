@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { ChevronLeft, Trophy, Send, CheckCircle2 } from "lucide-react";
 
-const CELESTE = "#75AADB";
-const GOLD = "#E8C547";
-const NAVY = "#1a3a5c";
+// Mixor red palette
+const CELESTE = "#ff3131"; // primary Mixor red (bright accent)
+const GOLD = "#ffffff";    // white accent (on dark surfaces)
+const NAVY = "#8B1414";    // deep Mixor red (dark surfaces)
 
 const grupos = [
   { nombre: "Grupo A", equipos: ["México", "Sudáfrica", "Corea del Sur", "Rep. Checa"] },
@@ -91,7 +92,7 @@ export default function ProdePage() {
     return (
       <main
         className="min-h-screen flex items-center justify-center px-4"
-        style={{ background: `linear-gradient(160deg, ${NAVY} 0%, ${CELESTE} 60%, #a8cde8 100%)` }}
+        style={{ background: `linear-gradient(160deg, ${NAVY} 0%, ${CELESTE} 60%, #ff8a8a 100%)` }}
       >
         <div className="text-center max-w-md">
           <img
@@ -128,7 +129,7 @@ export default function ProdePage() {
       {/* Hero */}
       <section
         className="relative overflow-hidden"
-        style={{ background: `linear-gradient(160deg, ${NAVY} 0%, #1e4d80 50%, ${CELESTE} 100%)` }}
+        style={{ background: `linear-gradient(160deg, ${NAVY} 0%, #c41818 50%, ${CELESTE} 100%)` }}
       >
         {/* Dot grid overlay */}
         <div
@@ -304,7 +305,7 @@ export default function ProdePage() {
 
         <div
           className="rounded-2xl overflow-hidden mb-14 shadow-sm"
-          style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #1e4d80 100%)` }}
+          style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #c41818 100%)` }}
         >
           <div className="p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-6">
@@ -402,9 +403,9 @@ export default function ProdePage() {
           disabled={enviando}
           className="w-full flex items-center justify-center gap-3 font-black text-base py-5 rounded-2xl transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 shadow-lg hover:shadow-xl"
           style={{
-            background: `linear-gradient(135deg, ${NAVY} 0%, #1e4d80 100%)`,
+            background: `linear-gradient(135deg, ${NAVY} 0%, #c41818 100%)`,
             color: "white",
-            boxShadow: `0 8px 30px rgba(26, 58, 92, 0.35)`,
+            boxShadow: `0 8px 30px rgba(139, 20, 20, 0.35)`,
           }}
         >
           {enviando ? (
