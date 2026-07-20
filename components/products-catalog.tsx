@@ -14,7 +14,33 @@ import {
 const ALL = "todos";
 const filters = [{ id: ALL, name: "Todos" }, ...categories];
 
-export function ProductsCatalog() {
+// Paleta de acento según el tema activo.
+// default = rojo de marca Mixor · mundial = celeste/cyan Argentina.
+const THEME_ACCENT = {
+  mundial: {
+    ring: "focus:ring-cyan-500",
+    pillActive: "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25",
+    pillIdle:
+      "bg-zinc-900/40 border border-white/10 text-white hover:border-cyan-500/50 hover:bg-cyan-500/10",
+    text: "text-cyan-400",
+    cardHover: "hover:border-cyan-500/50",
+    badge: "bg-cyan-500 text-white",
+    linkHover: "hover:text-cyan-400",
+  },
+  default: {
+    ring: "focus:ring-red-500",
+    pillActive: "bg-red-600 text-white shadow-lg shadow-red-600/25",
+    pillIdle:
+      "bg-zinc-900/40 border border-white/10 text-white hover:border-red-500/50 hover:bg-red-500/10",
+    text: "text-red-500",
+    cardHover: "hover:border-red-500/50",
+    badge: "bg-red-600 text-white",
+    linkHover: "hover:text-red-500",
+  },
+} as const;
+
+export function ProductsCatalog({ isMundial = false }: { isMundial?: boolean }) {
+  const accent = isMundial ? THEME_ACCENT.mundial : THEME_ACCENT.default;
   const [category, setCategory] = useState(ALL);
   const [query, setQuery] = useState("");
   const [onlyNew, setOnlyNew] = useState(false);
@@ -49,7 +75,7 @@ export function ProductsCatalog() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar producto, código o función…"
-              className="w-full pl-11 pr-10 py-3 bg-zinc-900/40 border border-white/10 rounded-full text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+              className={`w-full pl-11 pr-10 py-3 bg-zinc-900/40 border border-white/10 rounded-full text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 ${accent.ring} focus:border-transparent transition-all`}
             />
             {query && (
               <button
@@ -69,9 +95,7 @@ export function ProductsCatalog() {
                 key={f.id}
                 onClick={() => setCategory(f.id)}
                 className={`px-4 py-2 text-sm rounded-full font-medium transition-all duration-300 fx-shine ${
-                  category === f.id
-                    ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25"
-                    : "bg-zinc-900/40 border border-white/10 text-white hover:border-cyan-500/50 hover:bg-cyan-500/10"
+                  category === f.id ? accent.pillActive : accent.pillIdle
                 }`}
               >
                 {f.name}
@@ -80,9 +104,7 @@ export function ProductsCatalog() {
             <button
               onClick={() => setOnlyNew((v) => !v)}
               className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm rounded-full font-medium transition-all duration-300 ${
-                onlyNew
-                  ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25"
-                  : "bg-zinc-900/40 border border-white/10 text-white hover:border-cyan-500/50 hover:bg-cyan-500/10"
+                onlyNew ? accent.pillActive : accent.pillIdle
               }`}
             >
               <Sparkles size={14} />
@@ -95,7 +117,7 @@ export function ProductsCatalog() {
         <p className="text-center text-sm text-zinc-400 mb-8">
           {filtered.length} {filtered.length === 1 ? "producto" : "productos"}
           {category !== ALL && (
-            <> en <span className="text-cyan-400 font-medium">{filters.find((f) => f.id === category)?.name}</span></>
+            <> en <span className={`${accent.text} font-medium`}>{filters.find((f) => f.id === category)?.name}</span></>
           )}
         </p>
 
@@ -119,7 +141,7 @@ export function ProductsCatalog() {
               return (
                 <div
                   key={product.id}
-                  className="fx-spotlight group relative flex flex-col rounded-2xl bg-zinc-900/40 border border-white/10 overflow-hidden transition-all duration-500 hover:border-cyan-500/50 hover-lift"
+                  className={`fx-spotlight group relative flex flex-col rounded-2xl bg-zinc-900/40 border border-white/10 overflow-hidden transition-all duration-500 ${accent.cardHover} hover-lift`}
                 >
                   {/* Image */}
                   <div className="relative aspect-square block overflow-hidden">
@@ -135,7 +157,7 @@ export function ProductsCatalog() {
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
 
                     {isNew && (
-                      <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-cyan-500 text-white text-[9px] font-bold tracking-wider">
+                      <span className={`absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full ${accent.badge} text-[9px] font-bold tracking-wider`}>
                         NUEVO
                       </span>
                     )}
@@ -148,7 +170,7 @@ export function ProductsCatalog() {
 
                   {/* Info */}
                   <div className="flex flex-col flex-1 p-3 sm:p-4">
-                    <p className="text-[10px] uppercase tracking-widest text-cyan-400 font-semibold mb-1">
+                    <p className={`text-[10px] uppercase tracking-widest ${accent.text} font-semibold mb-1`}>
                       {cat?.name ?? product.category}
                     </p>
                     <h3 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-1">
@@ -163,7 +185,7 @@ export function ProductsCatalog() {
                       {!isComingSoon ? (
                         <Link
                           href={`/productos/${slug}`}
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-cyan-400 transition-colors"
+                          className={`inline-flex items-center gap-1.5 text-xs font-semibold text-white ${accent.linkHover} transition-colors`}
                         >
                           <Sliders size={13} />
                           Conocer más

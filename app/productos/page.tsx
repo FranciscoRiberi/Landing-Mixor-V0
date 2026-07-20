@@ -28,7 +28,7 @@ export default function ProductosPage() {
           style={{
             background: isMundialTheme
               ? "radial-gradient(circle at 50% 0%, rgba(117, 170, 219, 0.15), transparent 55%)"
-              : "radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), transparent 55%)",
+              : "radial-gradient(circle at 50% 0%, rgba(255, 49, 49, 0.15), transparent 55%)",
           }}
         />
         {/* Grid Background */}
@@ -51,7 +51,7 @@ export default function ProductosPage() {
           {/* Hero header */}
           <header className="relative px-4 sm:px-6 pb-12 text-center">
             <p className={`text-xs uppercase tracking-[0.3em] mb-4 ${
-              isMundialTheme ? "text-cyan-400" : "text-blue-400"
+              isMundialTheme ? "text-cyan-400" : "text-red-500"
             }`}>
               Catálogo Mayorista
             </p>
@@ -59,7 +59,7 @@ export default function ProductosPage() {
               Todos nuestros <span className="fx-text-shimmer" style={{
                 background: isMundialTheme
                   ? "linear-gradient(135deg, #75AADB 0%, #F5D547 100%)"
-                  : "linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)",
+                  : "linear-gradient(135deg, #ff3131 0%, #ff6b6b 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -71,7 +71,7 @@ export default function ProductosPage() {
             </p>
           </header>
 
-          <ProductsCatalog />
+          <ProductsCatalog isMundial={isMundialTheme} />
         </main>
 
         <Footer />
