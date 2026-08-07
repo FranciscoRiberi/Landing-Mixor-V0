@@ -325,6 +325,42 @@
   box-shadow: 0 0 50px rgba(255, 49, 49, 0.4);
 }
 
+/* Carbon Fiber — tejido twill generado 100% en CSS.
+   Sin imagen ni request extra: son gradientes repetidos sobre un color base.
+   .carbon-sheen agrega el brillo diagonal que da la sensacion de material. */
+.carbon-fiber {
+  background-color: #0d0d0f;
+  background-image:
+    linear-gradient(27deg, #141418 5px, transparent 5px),
+    linear-gradient(207deg, #141418 5px, transparent 5px),
+    linear-gradient(27deg, #1c1c22 5px, transparent 5px),
+    linear-gradient(207deg, #1c1c22 5px, transparent 5px),
+    linear-gradient(90deg, #18181c 10px, transparent 10px),
+    linear-gradient(
+      #191920 25%,
+      #151519 25%,
+      #151519 50%,
+      transparent 50%,
+      transparent 75%,
+      #1e1e25 75%,
+      #1e1e25
+    );
+  background-size: 20px 20px;
+  background-position: 0 5px, 10px 0, 0 10px, 10px 5px, 0 0, 0 0;
+}
+
+.carbon-sheen {
+  background-image:
+    radial-gradient(120% 80% at 15% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 60%),
+    radial-gradient(90% 70% at 85% 100%, rgba(255, 49, 49, 0.08) 0%, transparent 65%);
+}
+
+.theme-mundial .carbon-sheen {
+  background-image:
+    radial-gradient(120% 80% at 15% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 60%),
+    radial-gradient(90% 70% at 85% 100%, rgba(34, 211, 238, 0.1) 0%, transparent 65%);
+}
+
 /* Gradient Text */
 .text-gradient-red {
   background: linear-gradient(135deg, #ff3131 0%, #ff6b6b 100%);
