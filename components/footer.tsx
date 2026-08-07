@@ -56,7 +56,8 @@ export function Footer() {
               <a href="https://www.facebook.com/p/Mixor-61558422137441/" target="_blank" rel="noopener noreferrer" className={`${accentText} ${accentHoverBright} transition-colors`}>
                 <Send size={20} />
               </a>
-              <a href="https://wa.me/5491137994825" target="_blank" rel="noopener noreferrer" className={`${accentText} ${accentHoverBright} transition-colors`}>
+              {/* Contacto general. Antes: +5491137994825 (Alejandra, desactivada) */}
+              <a href="https://wa.me/5491158979196" target="_blank" rel="noopener noreferrer" className={`${accentText} ${accentHoverBright} transition-colors`}>
                 <MessageCircle size={20} />
               </a>
             </div>
