@@ -5,7 +5,8 @@ import { ArrowRight, ShoppingBag, MessageCircle } from "lucide-react";
 import { MundialConfetti, ArgentinaFlag } from "./mundial-confetti";
 
 const salesAdvisors = [
-  { name: "Alejandra", phone: "+5491137994825" },
+  // Desactivada temporalmente: descomentar para volver a habilitarla
+  // { name: "Alejandra", phone: "+5491137994825" },
   { name: "Marcelo", phone: "+5493518698065" },
   { name: "German", phone: "+5491158979196" },
 ];
