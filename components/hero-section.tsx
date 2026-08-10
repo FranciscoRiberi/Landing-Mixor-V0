@@ -87,11 +87,16 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
 
   const heroImage = isMundial
     ? "/images/mixor-mundial-argentina-hero.webp"
-    : "/images/parlantes-bluetooth-mixor-accesorios-mayoristas-argentina.webp";
+    : "/images/mixor-impacto-parlantes-bluetooth-hero-desktop.webp";
+
+  // Version vertical: misma escena recompuesta para pantallas angostas, para no
+  // depender del recorte de object-cover en celular.
+  const heroImageMobile =
+    "/images/mixor-impacto-parlantes-bluetooth-hero-mobile.webp";
 
   const heroImageAlt = isMundial
     ? "Mixor - Accesorios tecnológicos para el Mundial Argentina"
-    : "Parlantes Bluetooth Mixor con luces RGB - Accesorios tecnológicos mayoristas";
+    : "Parlantes Bluetooth Mixor Impacto en negro, beige, azul y rojo - Accesorios tecnológicos mayoristas";
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-24 sm:pt-32">
@@ -113,11 +118,14 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
           </>
         ) : (
           <>
-            <img
-              src={heroImage}
-              alt={heroImageAlt}
-              className="w-full h-full object-cover object-center"
-            />
+            <picture className="block w-full h-full">
+              <source media="(max-width: 639px)" srcSet={heroImageMobile} />
+              <img
+                src={heroImage}
+                alt={heroImageAlt}
+                className="w-full h-full object-cover object-center"
+              />
+            </picture>
             <div
               className="absolute inset-0"
               style={{
@@ -139,16 +147,19 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
       {/* Mundial confetti - white and gold */}
       {isMundial && <MundialConfetti />}
 
-      {/* Speaker overlay — mobile only, behind particles */}
-      <div className="sm:hidden absolute inset-0 z-[0] pointer-events-none overflow-hidden flex items-end justify-center">
-        <img
-          src="/images/mixor-parlante-hero-overlay.webp"
-          alt=""
-          aria-hidden="true"
-          className="w-[75%] object-contain opacity-30 mix-blend-luminosity"
-          style={{ filter: "saturate(0.4) brightness(1.1)" }}
-        />
-      </div>
+      {/* Speaker overlay — solo para el hero del Mundial. En el tema default la
+          imagen vertical ya trae los parlantes, y superponerlo enturbiaba. */}
+      {isMundial && (
+        <div className="sm:hidden absolute inset-0 z-[0] pointer-events-none overflow-hidden flex items-end justify-center">
+          <img
+            src="/images/mixor-parlante-hero-overlay.webp"
+            alt=""
+            aria-hidden="true"
+            className="w-[75%] object-contain opacity-30 mix-blend-luminosity"
+            style={{ filter: "saturate(0.4) brightness(1.1)" }}
+          />
+        </div>
+      )}
 
       {/* Particles layer */}
       <ParticleCanvas />
