@@ -1,7 +1,7 @@
 import { Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
 export const altMap: Record<string, string> = {
-  "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto LED 4 colores - Mayorista Argentina",
+  "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto 10W 3'' LED 4 colores - Mayorista Argentina",
   "Parlante Impetu":    "Parlante Bluetooth Mixor Ímpetu 20W RGB - Mayorista Argentina",
   "Parlante Latido":   "Parlante Portátil Mixor Latido Bluetooth 5.1 - Importador directo",
   "Parlante Curvas":   "Parlante Portátil Mixor Curvas LED RGB - Accesorios mayoristas Argentina",
@@ -174,10 +174,6 @@ export const categories = [
 ];
 
 export const products = [
-  // PENDIENTE: falta el codigo MODM y las 4 features tecnicas (potencia en W,
-  // bateria en mAh, version de Bluetooth y entradas). Sin esos datos no se
-  // cargan para no publicar specs inventadas. Al tenerlos, agregar `code` y el
-  // array `features` siguiendo el formato del resto de los productos.
   {
     id: 39,
     name: "Parlante Impacto",
@@ -185,17 +181,18 @@ export const products = [
     price: "Consultar",
     isNew: true,
     arrivedAt: "Recién llegado",
+    code: "MODM-00N6",
     kit: "Kit x 50 unidades",
     image: "/images/parlante-bluetooth-mixor-impacto-4-colores-mayorista.webp",
     modalImage: "/images/parlante-bluetooth-mixor-impacto-modal-4-colores.webp",
     description:
-      "Parlante Bluetooth portátil con malla textil, iluminación LED perimetral y controles integrados de volumen, modo y luces. Disponible en cuatro colores.",
+      "Parlante Bluetooth 5.3 de 3'' con 10W de potencia, batería de 1200mAh, luces LED y tela de silicona. Radio FM, USB y tarjeta TF. Disponible en cuatro colores.",
     variants: ["Negro", "Beige", "Azul", "Rojo"],
     features: [
-      { icon: Volume2, title: "Malla Textil de Alta Densidad", description: "El tejido envuelve el cuerpo del parlante y protege el driver sin apagar el sonido, con un acabado que resiste el uso diario." },
-      { icon: Lightbulb, title: "Iluminación LED Perimetral", description: "Una franja de luz recorre el contorno del panel de controles y acompaña la reproducción, con botón dedicado para cambiarla o apagarla." },
-      { icon: Settings, title: "Controles Sobre el Equipo", description: "Encendido, modo, volumen, reproducción e iluminación resueltos en el panel frontal, sin depender del celular." },
-      { icon: Sparkles, title: "4 Colores Disponibles", description: "Negro, beige, azul y rojo en kit x 50 unidades, para cubrir demanda variada con un solo pedido." },
+      { icon: Volume2, title: "Potencia de 10W", description: "Parlante de 3 pulgadas que entrega 10W de sonido nítido, con cuerpo ergonómico pensado para llevarlo a cualquier lado." },
+      { icon: Battery, title: "Batería de 1200mAh", description: "Autonomía para que la música no pare durante toda la jornada, sin depender del enchufe." },
+      { icon: Wifi, title: "Bluetooth 5.3 y Multiformato", description: "Conexión inalámbrica de última generación, más Radio FM, entrada USB y lector de tarjeta TF para reproducir desde donde quieras." },
+      { icon: Lightbulb, title: "Tela de Silicona con LED", description: "Revestimiento de tela de silicona resistente e iluminación LED integrada. Disponible en negro, beige, azul y rojo." },
     ],
   },
   {

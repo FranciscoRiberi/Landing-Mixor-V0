@@ -31,6 +31,10 @@ export function generateStaticParams() {
 }
 
 const productSeo: Record<string, { title: string; description: string }> = {
+  "parlante-impacto": {
+    title: "Parlante Impacto 10W Bluetooth 5.3 con LED | Mayorista | Mixor",
+    description: "Parlante Bluetooth mayorista de 3'' y 10W, batería 1200mAh, luces LED y tela de silicona. Radio FM, USB y tarjeta TF, en 4 colores. Importado directo, kit x 50, envíos a todo el país.",
+  },
   "cable-origen": {
     title: "Cable Origen Micro USB (V8) 5.4A Mallado | Mayorista | Mixor",
     description: "Cable USB a Micro USB (V8) mayorista. Malla de nylon trenzado, 1 metro, carga rápida 5.4A. Importado directo, kit cerrado, envíos a todo el país.",

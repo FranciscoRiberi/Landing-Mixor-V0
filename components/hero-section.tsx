@@ -225,9 +225,9 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
               </p>
 
               <p className="mx-auto mb-8 max-w-xl text-base sm:text-lg leading-relaxed text-zinc-400 text-balance">
-                Parlantes Bluetooth en negro, beige, azul y rojo. Kit x 50
-                unidades ya disponible, a precio mayorista directo del
-                importador.
+                Parlante Bluetooth 5.3 de 10W con luces LED, en negro, beige,
+                azul y rojo. Kit x 50 unidades ya disponible, a precio mayorista
+                directo del importador.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
