@@ -216,13 +216,19 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
                 Nuevo ingreso
               </p>
 
-              <h1 className="mb-3 font-sans text-5xl sm:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] tracking-tight text-balance">
-                <span className="text-chrome">Impacto</span>
+              {/* El h1 carga tambien la linea con keywords: el titular es el
+                  nombre del producto y por si solo no posiciona nada. */}
+              <h1 className="mb-3 font-sans leading-[0.95] text-balance">
+                <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-chrome">
+                  Impacto
+                </span>
+                <span className="mt-3 block text-lg sm:text-xl font-semibold text-white/90">
+                  4 modelos de otro planeta
+                </span>
+                <span className="mt-3 block text-[11px] sm:text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
+                  Parlantes Bluetooth mayoristas · Importador directo
+                </span>
               </h1>
-
-              <p className="mb-3 text-lg sm:text-xl font-semibold text-white/90 text-balance">
-                4 modelos de otro planeta
-              </p>
 
               <p className="mx-auto mb-8 max-w-xl text-base sm:text-lg leading-relaxed text-zinc-400 text-balance">
                 Parlante Bluetooth 5.3 de 10W con luces LED, en negro, beige,
