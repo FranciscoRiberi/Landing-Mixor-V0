@@ -1,6 +1,7 @@
 import { Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
 export const altMap: Record<string, string> = {
+  "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto LED 4 colores - Mayorista Argentina",
   "Parlante Impetu":    "Parlante Bluetooth Mixor Ímpetu 20W RGB - Mayorista Argentina",
   "Parlante Latido":   "Parlante Portátil Mixor Latido Bluetooth 5.1 - Importador directo",
   "Parlante Curvas":   "Parlante Portátil Mixor Curvas LED RGB - Accesorios mayoristas Argentina",
@@ -173,6 +174,30 @@ export const categories = [
 ];
 
 export const products = [
+  // PENDIENTE: falta el codigo MODM y las 4 features tecnicas (potencia en W,
+  // bateria en mAh, version de Bluetooth y entradas). Sin esos datos no se
+  // cargan para no publicar specs inventadas. Al tenerlos, agregar `code` y el
+  // array `features` siguiendo el formato del resto de los productos.
+  {
+    id: 39,
+    name: "Parlante Impacto",
+    category: "parlantes",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    kit: "Kit x 50 unidades",
+    image: "/images/parlante-bluetooth-mixor-impacto-4-colores-mayorista.webp",
+    modalImage: "/images/parlante-bluetooth-mixor-impacto-modal-4-colores.webp",
+    description:
+      "Parlante Bluetooth portátil con malla textil, iluminación LED perimetral y controles integrados de volumen, modo y luces. Disponible en cuatro colores.",
+    variants: ["Negro", "Beige", "Azul", "Rojo"],
+    features: [
+      { icon: Volume2, title: "Malla Textil de Alta Densidad", description: "El tejido envuelve el cuerpo del parlante y protege el driver sin apagar el sonido, con un acabado que resiste el uso diario." },
+      { icon: Lightbulb, title: "Iluminación LED Perimetral", description: "Una franja de luz recorre el contorno del panel de controles y acompaña la reproducción, con botón dedicado para cambiarla o apagarla." },
+      { icon: Settings, title: "Controles Sobre el Equipo", description: "Encendido, modo, volumen, reproducción e iluminación resueltos en el panel frontal, sin depender del celular." },
+      { icon: Sparkles, title: "4 Colores Disponibles", description: "Negro, beige, azul y rojo en kit x 50 unidades, para cubrir demanda variada con un solo pedido." },
+    ],
+  },
   {
     id: 1,
     name: "Parlante Impetu",

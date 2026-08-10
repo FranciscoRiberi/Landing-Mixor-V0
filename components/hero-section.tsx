@@ -63,27 +63,24 @@ function ParticleCanvas() {
   );
 }
 
+// Destino del CTA principal del hero: la ficha del producto en el catalogo.
+const IMPACTO_URL = "/productos/parlante-impacto";
+
 export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
   const [showMessage, setShowMessage] = useState(false);
 
-  // Theme-specific content
-  const heroTitle = isMundial ? (
+  // Contenido del tema mundial. El tema default usa el panel de Impacto de
+  // mas abajo, que trae su propio titulo y copy.
+  const heroTitle = (
     <>
       <span className="text-gradient-red">Vamos Argentina,</span>
       <br />
       vamos a ganar.
     </>
-  ) : (
-    <>
-      <span className="text-gradient-red">Nuevas tendencias,</span>
-      <br />
-      la mejor rotación.
-    </>
   );
 
-  const heroSubtitle = isMundial
-    ? "Este mundial, equipate con Mixor. Parlantes, auriculares y accesorios para vivir cada partido al máximo. Precios mayoristas para distribuidores de todo el país."
-    : "En Mixor, contamos con:\nParlantes Bluetooth, auriculares, smartwatches, cargadores y muchos mas productos de alta rotación. Precios mayoristas directos del importador para distribuidores de todo el país.";
+  const heroSubtitle =
+    "Este mundial, equipate con Mixor. Parlantes, auriculares y accesorios para vivir cada partido al máximo. Precios mayoristas para distribuidores de todo el país.";
 
   const heroImage = isMundial
     ? "/images/mixor-mundial-argentina-hero.webp"
@@ -166,42 +163,93 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
 
       {/* Text content card */}
       <div className="relative z-10 w-full max-w-2xl mx-auto text-center">
-        <div
-          className="bg-background/88 backdrop-blur-xl rounded-3xl px-5 py-8 sm:px-8 sm:py-10 shadow-2xl border border-border/60 animate-fade-in-up opacity-0"
-          style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
-        >
-          {/* Argentina flag for mundial */}
-          {isMundial && (
+        {isMundial ? (
+          <div
+            className="bg-background/88 backdrop-blur-xl rounded-3xl px-5 py-8 sm:px-8 sm:py-10 shadow-2xl border border-border/60 animate-fade-in-up opacity-0"
+            style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
+          >
             <ArgentinaFlag className="w-20 h-12 mx-auto mb-5 rounded-lg shadow-lg" />
-          )}
 
-          {/* Mobile: slightly larger title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-foreground text-balance leading-[1.1] font-sans font-bold mb-4">
-            {heroTitle}
-          </h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight text-foreground text-balance leading-[1.1] font-sans font-bold mb-4">
+              {heroTitle}
+            </h1>
 
-          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed whitespace-pre-line">
-            {heroSubtitle}
-          </p>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed whitespace-pre-line">
+              {heroSubtitle}
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="#productos"
-              className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground w-full sm:w-auto px-8 py-4 min-h-[52px] rounded-full text-base font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
-            >
-              Explorar Productos
-              <span className="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
-            </a>
-            <a
-              href="#contacto"
-              className="inline-flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground w-full sm:w-auto px-8 py-4 min-h-[52px] text-base font-medium transition-all duration-300 border border-border rounded-full hover:border-primary/50 hover:bg-primary/5"
-            >
-              Contactanos
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                href="#productos"
+                className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground w-full sm:w-auto px-8 py-4 min-h-[52px] rounded-full text-base font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
+              >
+                Explorar Productos
+                <span className="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
+              </a>
+              <a
+                href="#contacto"
+                className="inline-flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground w-full sm:w-auto px-8 py-4 min-h-[52px] text-base font-medium transition-all duration-300 border border-border rounded-full hover:border-primary/50 hover:bg-primary/5"
+              >
+                Contactanos
+              </a>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* Panel oscuro alineado a la linea grafica del creativo Impacto:
+             vidrio ahumado, filo verde kriptonita arriba y titulo cromado. */
+          <div
+            className="relative overflow-hidden rounded-3xl border border-white/12 bg-[#07090a]/72 px-5 py-8 sm:px-10 sm:py-11 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)] backdrop-blur-xl animate-fade-in-up opacity-0"
+            style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
+          >
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/70 to-transparent" />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(80% 55% at 50% 100%, rgba(16,185,129,0.10) 0%, transparent 70%)",
+              }}
+            />
 
+            <div className="relative">
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                Nuevo ingreso
+              </p>
 
+              <h1 className="mb-3 font-sans text-5xl sm:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] tracking-tight text-balance">
+                <span className="text-chrome">Impacto</span>
+              </h1>
+
+              <p className="mb-3 text-lg sm:text-xl font-semibold text-white/90 text-balance">
+                4 modelos de otro planeta
+              </p>
+
+              <p className="mx-auto mb-8 max-w-xl text-base sm:text-lg leading-relaxed text-zinc-400 text-balance">
+                Parlantes Bluetooth en negro, beige, azul y rojo. Kit x 50
+                unidades ya disponible, a precio mayorista directo del
+                importador.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a
+                  href={IMPACTO_URL}
+                  className="group inline-flex w-full sm:w-auto min-h-[52px] items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground transition-all duration-300 hover:-translate-y-1 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30"
+                >
+                  Ver Impacto
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    &rarr;
+                  </span>
+                </a>
+                <a
+                  href="#pedido"
+                  className="inline-flex w-full sm:w-auto min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/20 px-8 py-4 text-base font-medium text-zinc-300 transition-all duration-300 hover:border-white/40 hover:bg-white/5 hover:text-white"
+                >
+                  Hacer un pedido
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* "Conocé más" banner */}
@@ -209,14 +257,24 @@ export function HeroSection({ isMundial = false }: { isMundial?: boolean }) {
         className="mt-8 sm:mt-8 w-full max-w-xl mx-auto text-center animate-fade-in-up opacity-0 relative z-10 mb-20"
         style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
       >
-        <div className="rounded-2xl px-6 py-5 sm:py-5 backdrop-blur-md bg-background/80 border border-border/50 border-t-[3px] border-t-primary">
+        <div
+          className={
+            isMundial
+              ? "rounded-2xl px-6 py-5 sm:py-5 backdrop-blur-md bg-background/80 border border-border/50 border-t-[3px] border-t-primary"
+              : "rounded-2xl px-6 py-5 sm:py-5 backdrop-blur-md bg-[#07090a]/60 border border-white/10 border-t-[3px] border-t-primary"
+          }
+        >
           <p className="uppercase tracking-[0.2em] text-primary mb-1 text-xs">
             CONOCÉ MAS
           </p>
-          <p className="text-lg sm:text-lg font-bold mb-1 text-foreground">
+          <p
+            className={`text-lg sm:text-lg font-bold mb-1 ${isMundial ? "text-foreground" : "text-white"}`}
+          >
             {"¿QUÉ PRODUCTOS IMPORTA MIXOR?"}
           </p>
-          <p className="text-sm text-muted-foreground mb-3">
+          <p
+            className={`text-sm mb-3 ${isMundial ? "text-muted-foreground" : "text-zinc-400"}`}
+          >
             {"Todo los meses llegan a nuestros depositos nuevos produtos para que puedas actualizar tu stock cuando vos quieras."}
           </p>
           {/* Bouncing chevron */}

@@ -361,6 +361,21 @@
     radial-gradient(90% 70% at 85% 100%, rgba(34, 211, 238, 0.1) 0%, transparent 65%);
 }
 
+/* Texto cromado — imita el logotipo metalico del creativo Impacto. */
+.text-chrome {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #d8dbe0 38%,
+    #8f949c 55%,
+    #e8eaed 78%,
+    #b6bac1 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Gradient Text */
 .text-gradient-red {
   background: linear-gradient(135deg, #ff3131 0%, #ff6b6b 100%);
