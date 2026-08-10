@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mixor-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 3000
+    },
+    {
+      "name": "mixor-mundial",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "THEME=mundial pnpm dev -p 3010"],
+      "port": 3010
+    }
+  ]
+}
