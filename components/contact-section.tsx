@@ -3,15 +3,7 @@
 import React from "react"
 
 import { useState, useEffect } from "react";
-import { Instagram, Twitter, Linkedin, Mail, ArrowRight, FileText, Facebook, MessageCircle } from "lucide-react";
-
-const socialLinks = [
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Facebook, href: "https://www.facebook.com/p/Mixor-61558422137441/", label: "Facebook" },
-  { icon: Mail, href: "mailto:hello@nion.tech", label: "Email" },
-];
+import { ArrowRight, FileText, MessageCircle } from "lucide-react";
 
 const salesAdvisors = [
   // Desactivada temporalmente: descomentar para volver a habilitarla

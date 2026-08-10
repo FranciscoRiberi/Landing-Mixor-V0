@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { products, toSlug } from '@/lib/products'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const BASE_URL = 'https://mixor.com.ar'
@@ -40,18 +41,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.6,
     },
-    // Product pages
-    ...[
-      'parlante-impetu', 'parlante-latido', 'parlante-curvas', 'parlante-mio',
-      'parlante-leal', 'parlante-mito', 'parlante-noche', 'parlante-caos',
-      'parlante-alma', 'smartwatch-pulso', 'smartwatch-momentos', 'tws-claridad',
-      'auriculares-fusion', 'auriculares-sensacion', 'cable-vinculo', 'cable-impulso',
-      'cable-vital', 'cargador-leyenda', 'cargador-somos', 'cargador-proton',
-      'cargador-quiero', 'cargador-realidad', 'inflador-ruta', 'holder-atrae',
-      'cargador-nexo', 'parlante-recuerdo', 'smartwatch-activo', 'cable-eternidad',
-      'cable-origen', 'cargador-sinergia', 'cable-pleno',
-    ].map((slug) => ({
-      url: `${BASE_URL}/productos/${slug}`,
+    {
+      url: `${BASE_URL}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${BASE_URL}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    // Fichas de producto. Se derivan de lib/products para que agregar un
+    // producto no requiera acordarse de tocar el sitemap.
+    ...products.map((p) => ({
+      url: `${BASE_URL}/productos/${toSlug(p.name)}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
