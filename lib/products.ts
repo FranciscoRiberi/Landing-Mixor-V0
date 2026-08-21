@@ -660,7 +660,7 @@ export const products = [
   },
   // --- Próximamente ---
   {
-    id: 30,
+    id: 40,
     name: "Smartwatch Activo",
     category: "smartwatch",
     price: "Consultar",
