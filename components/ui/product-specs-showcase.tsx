@@ -67,7 +67,7 @@ const item: Variants = {
 };
 
 const imageVariants: Variants = {
-  initial: { opacity: 0, scale: 1.4, filter: "blur(15px)" },
+  initial: { opacity: 0, scale: 1.06, filter: "blur(15px)" },
   animate: {
     opacity: 1,
     scale: 1,
@@ -127,32 +127,20 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
           {/* Visual */}
           <div className="relative flex justify-center shrink-0">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-[-8%] rounded-full border border-dashed border-white/10"
+            <div
+              className={`pointer-events-none absolute inset-[8%] rounded-[3rem] bg-gradient-to-br ${data.accentGradient} blur-3xl opacity-25`}
             />
-            <motion.div
-              animate={{ scale: [1, 1.06, 1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className={`absolute inset-[6%] rounded-full bg-gradient-to-br ${data.accentGradient} blur-3xl opacity-30`}
-            />
-            <div className="relative h-72 w-72 sm:h-80 sm:w-80 md:h-[420px] md:w-[420px] rounded-full border border-white/5 shadow-2xl flex items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm">
-              <motion.div
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                className="relative z-10 h-full w-full flex items-center justify-center"
-              >
-                <motion.img
-                  src={data.image}
-                  alt={data.imageAlt}
-                  variants={imageVariants}
-                  initial="initial"
-                  animate="animate"
-                  className="h-full w-full object-cover p-1 drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
-                  draggable={false}
-                />
-              </motion.div>
+            {/* El marco se ajusta a la foto: nunca recorta ni deja bordes sueltos */}
+            <div className="relative max-w-full overflow-hidden rounded-3xl border border-white/10 bg-black/30 shadow-2xl backdrop-blur-sm">
+              <motion.img
+                src={data.image}
+                alt={data.imageAlt}
+                variants={imageVariants}
+                initial="initial"
+                animate="animate"
+                className="relative z-10 block h-auto w-auto max-h-[420px] md:max-h-[480px] max-w-[min(80vw,400px)] object-contain"
+                draggable={false}
+              />
             </div>
             <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap">
               <div className="flex items-center gap-2 rounded-full border border-white/5 bg-zinc-950/80 px-4 py-2 text-xs uppercase tracking-widest text-zinc-400 backdrop-blur">
