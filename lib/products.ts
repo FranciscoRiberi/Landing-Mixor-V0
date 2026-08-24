@@ -757,7 +757,7 @@ export const products = [
       { icon: Shield, title: "Protección Integrada", description: "Certificado CE y RoHS. Protección contra sobrecorriente, sobretensión y sobrecalentamiento para una carga segura en todo momento." },
     ],
   },
-  { id: 34, name: "Micrófono Voz", category: "accesorios", price: "Próximamente", code: "MODM-00VO", kit: "Kit x 50 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  { id: 34, name: "Micrófono Voz", category: "accesorios", price: "Próximamente", code: "MODM-00VO", kit: "Kit x 50 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible", hidden: true },
   {
     id: 36,
     name: "Parlante Recuerdo",
@@ -778,7 +778,7 @@ export const products = [
       { icon: Lightbulb, title: "Ambiente Festivo", description: "Sistema de luces RGB que ilumina tus reuniones y crea la atmósfera perfecta." },
     ],
   },
-  { id: 37, name: "Lámpara Motivos", category: "accesorios", price: "Próximamente", code: "MODM-00MO", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  { id: 37, name: "Lámpara Motivos", category: "accesorios", price: "Próximamente", code: "MODM-00MO", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible", hidden: true },
   {
     id: 38,
     name: "Reloj Sueño",
@@ -800,6 +800,15 @@ export const products = [
 ];
 
 export type Product = typeof products[number];
+
+/**
+ * Productos que se muestran en el sitio. Los marcados con `hidden: true` se
+ * conservan con todos sus datos pero quedan fuera del catálogo y del sitemap
+ * (discontinuados o sin stock). Para volver a publicarlos, sacar el flag.
+ */
+export const visibleProducts = products.filter(
+  (p) => !(p as { hidden?: boolean }).hidden
+);
 
 /** Slug URL-safe a partir del nombre del producto (compartido por catálogo y specs). */
 export function toSlug(name: string): string {

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search, Sliders, ArrowRight, Sparkles, X } from "lucide-react";
 import {
-  products,
+  visibleProducts as products,
   categories,
   getProductAlt,
   toSlug,

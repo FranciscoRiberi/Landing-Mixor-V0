@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { products, toSlug } from '@/lib/products'
+import { visibleProducts, toSlug } from '@/lib/products'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const BASE_URL = 'https://mixor.com.ar'
@@ -54,12 +54,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     // Fichas de producto. Se derivan de lib/products para que agregar un
-    // producto no requiera acordarse de tocar el sitemap.
-    ...products.map((p) => ({
-      url: `${BASE_URL}/productos/${toSlug(p.name)}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    })),
+    // producto no requiera acordarse de tocar el sitemap. Solo entran las que
+    // realmente generan pagina: sin `features`, la ficha hace notFound().
+    ...visibleProducts
+      .filter((p) => 'features' in p)
+      .map((p) => ({
+        url: `${BASE_URL}/productos/${toSlug(p.name)}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+      })),
   ]
 }
