@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import { ArrowRight, FileText, MessageCircle } from "lucide-react";
 
 const salesAdvisors = [
-  // Desactivada temporalmente: descomentar para volver a habilitarla
-  // { name: "Alejandra", phone: "+5491137994825" },
+  { name: "Alejandra", phone: "+5491137994825" },
   { name: "Marcelo", phone: "+5493518698065" },
   { name: "German", phone: "+5491158979196" },
 ];
