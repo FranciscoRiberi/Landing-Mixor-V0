@@ -30,7 +30,8 @@ const secondarySocials = [
     label: "Seguinos en Facebook",
   },
   {
-    // Contacto general. Antes: +5491137994825 (Alejandra, desactivada)
+    // Contacto general del sitio (German), decidido aparte de los asesores
+    // que se eligen en los formularios.
     href: "https://wa.me/5491158979196",
     icon: MessageCircle,
     label: "Escribinos por WhatsApp",
