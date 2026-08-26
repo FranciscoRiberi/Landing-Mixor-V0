@@ -12,7 +12,7 @@ export const altMap: Record<string, string> = {
   "Parlante Caos":     "Parlante de Fiesta Mixor Caos 30W Karaoke RGB - Mayorista Argentina",
   "Parlante Alma":     "Parlante de Fiesta Mixor Alma 20W Doble Micrófono - Mayorista Argentina",
   "Parlante Recuerdo": "Parlante Portátil Mixor Recuerdo 5W Bluetooth RGB TWS - Mayorista Argentina",
-  "Smartwatch Pulso":    "Smartwatch Mixor Pulso Pantalla LED 1.52'' - Mayorista Argentina",
+  "Smartwatch Pulso":    "Smartwatch Mixor Pulso 2.09'' ECG Llamadas Bluetooth - Mayorista Argentina",
   "Smartwatch Momentos": "Smartwatch Mixor Momentos ECG Llamadas Bluetooth - Importador directo",
   "Smartwatch Activo":   "Smartwatch Mixor Activo ECG Bluetooth Correas 7en1 - Mayorista Argentina",
   "TWS Claridad":         "Auriculares TWS Mixor Claridad Pantalla Táctil - Mayorista Argentina",
@@ -118,7 +118,8 @@ export function getCompatibility(category: string, name: string): string[] {
     return ["Smartphones Android", "Tablets", "Cámaras digitales"];
   }
   if (category === "smartwatch") {
-    return ["Android 5.0+", "iOS 12.0+", "Sincronización en la nube", "Apps de salud populares"];
+    // iOS 13.4 es el minimo real de Wearfit Pro, la app que usan los tres.
+    return ["Android 5.0+", "iOS 13.4+", "App Wearfit Pro", "Apps de salud populares"];
   }
   if (category === "auriculares") {
     return ["Todos los Bluetooth 4.0+", "Android e iOS", "PC y notebooks", "Gaming consoles"];
@@ -359,12 +360,13 @@ export const products = [
     kit: "Kit x 100 unidades",
     image: "/images/smartwatch-mixor-pulso-pantalla-led-mayorista-argentina.webp",
     modalImage: "/images/smartwatch-mixor-pulso-modal-pantalla-led.webp",
-    description: "Smartwatch redondo con pantalla LED 1.52'', dos mallas y batería eficiente",
+    // Specs tomadas de la caja del producto (foto del packaging, 2026-08-25).
+    description: "Smartwatch redondo con pantalla LED 2.09'', ECG, llamadas y música por Bluetooth y correa intercambiable",
     features: [
-      { icon: Watch, title: "Pantalla LED 1.52''", description: "Interfaz 2.5D con efectos 3D y múltiples estilos de carátulas para imágenes nítidas." },
-      { icon: Activity, title: "Tres Anillos de Salud", description: "Monitoreo de frecuencia cardíaca, presión arterial y nivel de oxígeno en sangre en tiempo real." },
-      { icon: Battery, title: "Batería Eficiente", description: "200 mAh de bajo consumo con carga inalámbrica rápida y tecnología de carga a cero voltios." },
-      { icon: Sparkles, title: "Diseño Premium", description: "Acabado metalizado al vacío. Incluye dos mallas de silicona para mayor versatilidad." },
+      { icon: Watch, title: "Pantalla LED 2.09''", description: "Smartwatch redondo con resolución de 240 × 240 px, que brinda imágenes claras, colores definidos y excelente visibilidad diaria." },
+      { icon: Activity, title: "Tres Anillos de Salud y ECG", description: "Controlá frecuencia cardíaca, presión arterial y nivel de oxígeno en sangre en tiempo real, más monitoreo ECG para cuidar tu corazón con mayor precisión." },
+      { icon: Phone, title: "Llamadas y Música por Bluetooth", description: "Atendé directamente desde tu muñeca y escuchá tu música favorita sin sacar el teléfono. Suma control remoto de cámara y múltiples modos deportivos." },
+      { icon: Battery, title: "Batería 200mAh con Carga Inalámbrica", description: "Bajo consumo diseñado para una autonomía prolongada, con carga inalámbrica rápida. Incluye correa intercambiable de silicona." },
     ],
   },
   {

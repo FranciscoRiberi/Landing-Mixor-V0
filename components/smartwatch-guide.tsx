@@ -33,8 +33,8 @@ const MODELS: {
     name: "Pulso",
     slug: "smartwatch-pulso",
     code: "MODM-00GP",
-    shape: "Redondo",
-    audio: false,
+    shape: "Redondo · 2.09''",
+    audio: true,
   },
   {
     id: "momentos",
@@ -58,9 +58,10 @@ const COMPARISON: { label: string; pulso: boolean; momentos: boolean; activo: bo
   { label: "Contar pasos y distancia", pulso: true, momentos: true, activo: true },
   { label: "Medir el sueño", pulso: true, momentos: true, activo: true },
   { label: "Pulsaciones, presión y oxígeno", pulso: true, momentos: true, activo: true },
-  { label: "Hablar por teléfono desde el reloj", pulso: false, momentos: true, activo: true },
-  { label: "Escuchar música desde el reloj", pulso: false, momentos: true, activo: true },
-  { label: "Medición ECG", pulso: false, momentos: true, activo: true },
+  { label: "Medición ECG", pulso: true, momentos: true, activo: true },
+  { label: "Hablar por teléfono desde el reloj", pulso: true, momentos: true, activo: true },
+  { label: "Escuchar música desde el reloj", pulso: true, momentos: true, activo: true },
+  { label: "Control remoto de cámara", pulso: true, momentos: true, activo: true },
   { label: "Buscar el celular", pulso: false, momentos: false, activo: true },
   { label: "Clima del día", pulso: false, momentos: false, activo: true },
 ];
@@ -88,8 +89,9 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: "Veo los mensajes pero no puedo atender llamadas",
     a: (
       <p>
-        Falta la segunda conexión: volvé al <strong>Paso 4</strong>. Si tenés un
-        Pulso, ese modelo no incluye la función de llamadas.
+        Falta la segunda conexión: volvé al <strong>Paso 4</strong>. Los tres
+        modelos permiten atender llamadas, pero hace falta conectar el reloj
+        una segunda vez desde los ajustes de Bluetooth del celular.
       </p>
     ),
   },
@@ -295,6 +297,10 @@ export function SmartwatchGuide() {
               <li>Si pregunta si querés compartir los contactos, aceptá.</li>
             </ol>
           </div>
+          <p className="mt-3 text-sm text-zinc-500">
+            Si ese segundo nombre no aparece en la lista, revisá que el reloj
+            esté prendido y cerca. Si aun así no figura, escribinos y lo vemos.
+          </p>
         </>
       ),
     },
@@ -311,10 +317,10 @@ export function SmartwatchGuide() {
           ¿Cuál de los tres tenés?
         </p>
         <p className="mb-6 max-w-2xl text-[15px] leading-relaxed text-zinc-400">
-          Elegí tu modelo y la guía se ajusta sola. La diferencia importante es
-          que el <strong className="text-zinc-200">Pulso</strong> no permite
-          hablar por teléfono ni escuchar música desde el reloj, así que se
-          salta un paso.
+          Los tres se conectan igual y los cuatro pasos aplican a todos. Elegí
+          el tuyo para ver sus datos y que se resalte su columna en la tabla de
+          más abajo. El <strong className="text-zinc-200">Activo</strong> es el
+          único que suma buscar el celular y clima del día.
         </p>
 
         <div
@@ -346,9 +352,9 @@ export function SmartwatchGuide() {
                   {m.shape} · {m.code}
                 </span>
                 <span className="mt-2 block text-xs text-zinc-400">
-                  {m.audio
-                    ? "Llamadas y música desde el reloj"
-                    : "Sin llamadas ni música"}
+                  {m.id === "activo"
+                    ? "Suma buscar el celular y clima"
+                    : "Llamadas, música y ECG"}
                 </span>
               </button>
             );
@@ -439,7 +445,7 @@ export function SmartwatchGuide() {
                       <div className="mt-3 space-y-1 text-[15px] leading-relaxed text-zinc-300 [&_li]:ml-5 [&_li]:list-decimal [&_ol]:space-y-2 [&_strong]:font-semibold [&_strong]:text-white [&_ul_li]:list-disc">
                         {step.onlyAudio && (
                           <p className="mb-3 inline-flex rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-300">
-                            Solo Momentos y Activo
+                            Para los tres modelos
                           </p>
                         )}
                         {step.body}
