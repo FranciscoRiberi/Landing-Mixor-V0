@@ -135,6 +135,12 @@ export default async function ProductPage({
           care: getCareGuide(product.category),
           compatibility: getCompatibility(product.category, product.name),
           variants: (product as { variants?: string[] }).variants,
+          // Los tres smartwatches comparten la app Wearfit Pro y la misma guia
+          // de vinculacion, que es la consulta mas repetida sobre ellos.
+          guideHref:
+            product.category === "smartwatch"
+              ? "/guias/conectar-smartwatch"
+              : undefined,
           whyChoose,
           slug,
         }}

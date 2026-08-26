@@ -93,6 +93,10 @@ export default async function ProductSpecsPage({
         includes: getIncludes(product.name, product.category),
         care: getCareGuide(product.category),
         compatibility: getCompatibility(product.category, product.name),
+        guideHref:
+          product.category === "smartwatch"
+            ? "/guias/conectar-smartwatch"
+            : undefined,
         whyChoose,
         slug,
       }}

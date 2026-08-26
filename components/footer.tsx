@@ -42,6 +42,7 @@ const productLinks = [
   { href: "/productos", label: "Catálogo completo" },
   { href: "/#novedades", label: "Novedades" },
   { href: "/#productos", label: "Destacados" },
+  { href: "/guias/conectar-smartwatch", label: "Conectar tu smartwatch" },
 ];
 
 const companyLinks = [
