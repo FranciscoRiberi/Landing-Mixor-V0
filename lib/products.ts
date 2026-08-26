@@ -384,8 +384,8 @@ export const products = [
     features: [
       { icon: Heart, title: "Monitoreo ECG + Salud", description: "Tres anillos de salud con monitoreo ECG, frecuencia cardíaca, presión arterial y oxígeno en sangre." },
       { icon: Phone, title: "Llamadas y Música", description: "Atendé llamadas desde tu muñeca y escuchá tu música favorita por Bluetooth." },
-      { icon: Activity, title: "Múltiples Modos Deportivos", description: "Seguimiento del sueño, modos deportivos, giro de muñeca y control remoto de cámara." },
-      { icon: Sparkles, title: "Notificaciones Inteligentes", description: "Recordatorios de llamadas, SMS, redes sociales, alarma, sedentarismo y eventos importantes." },
+      { icon: Activity, title: "Múltiples Modos Deportivos", description: "Seguimiento del sueño, modos deportivos, giro de muñeca, control remoto de cámara y buscador para encontrar el reloj o el teléfono en segundos." },
+      { icon: Sparkles, title: "Notificaciones Inteligentes", description: "Recordatorios de llamadas, SMS, redes sociales, alarma, sedentarismo y eventos importantes. Suma modo No molestar, modo avión y contactos frecuentes." },
     ],
   },
   {

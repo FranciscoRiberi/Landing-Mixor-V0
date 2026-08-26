@@ -62,8 +62,12 @@ const COMPARISON: { label: string; pulso: boolean; momentos: boolean; activo: bo
   { label: "Hablar por teléfono desde el reloj", pulso: true, momentos: true, activo: true },
   { label: "Escuchar música desde el reloj", pulso: true, momentos: true, activo: true },
   { label: "Control remoto de cámara", pulso: true, momentos: true, activo: true },
-  { label: "Buscar el celular", pulso: false, momentos: false, activo: true },
-  { label: "Clima del día", pulso: false, momentos: false, activo: true },
+  { label: "Múltiples modos deportivos", pulso: true, momentos: true, activo: true },
+  { label: "Notificaciones de apps y recordatorios", pulso: false, momentos: true, activo: true },
+  { label: "Encender la pantalla girando la muñeca", pulso: false, momentos: true, activo: true },
+  { label: "Encontrar el reloj o el teléfono", pulso: false, momentos: true, activo: true },
+  { label: "Modo No molestar y modo avión", pulso: false, momentos: true, activo: true },
+  { label: "Clima del día", pulso: false, momentos: true, activo: true },
 ];
 
 const FAQ: { q: string; a: React.ReactNode }[] = [
@@ -319,8 +323,10 @@ export function SmartwatchGuide() {
         <p className="mb-6 max-w-2xl text-[15px] leading-relaxed text-zinc-400">
           Los tres se conectan igual y los cuatro pasos aplican a todos. Elegí
           el tuyo para ver sus datos y que se resalte su columna en la tabla de
-          más abajo. El <strong className="text-zinc-200">Activo</strong> es el
-          único que suma buscar el celular y clima del día.
+          más abajo. Los tres miden lo mismo y permiten llamadas, música y ECG;
+          el <strong className="text-zinc-200">Momentos</strong> y el{" "}
+          <strong className="text-zinc-200">Activo</strong> suman notificaciones
+          de apps, giro de muñeca y buscador de teléfono.
         </p>
 
         <div
@@ -352,9 +358,9 @@ export function SmartwatchGuide() {
                   {m.shape} · {m.code}
                 </span>
                 <span className="mt-2 block text-xs text-zinc-400">
-                  {m.id === "activo"
-                    ? "Suma buscar el celular y clima"
-                    : "Llamadas, música y ECG"}
+                  {m.id === "pulso"
+                    ? "Llamadas, música y ECG"
+                    : "Suma notificaciones y buscador"}
                 </span>
               </button>
             );
