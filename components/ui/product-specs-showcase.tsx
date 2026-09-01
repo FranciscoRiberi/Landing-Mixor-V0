@@ -229,6 +229,7 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
                     const colorMap: Record<string, string> = {
                       "Blanco/Gris": "#d4d4d8",
                       "Rojo": "#ef4444",
+                      "Negro": "#27272a",
                       "Violeta": "#8b5cf6",
                       "Azul": "#3b82f6",
                     };

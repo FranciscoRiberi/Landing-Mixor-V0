@@ -24,6 +24,7 @@ export const altMap: Record<string, string> = {
   "Cable Eternidad":  "Cable Mixor Eternidad USB-A a Tipo C 7.1A Carga Rápida Nylon Trenzado - Mayorista Argentina",
   "Cable Origen":     "Cable Mixor Origen USB-A a Micro USB V8 5.4A Nylon Trenzado Mayorista Argentina",
   "Cable Pleno":      "Cable Pleno Mixor 240W USB-C con holder para celular mayorista",
+  "Cable Núcleo":     "Cable Mixor Núcleo USB-A y Tipo C 1m Malla Reforzada Carga Rápida - Mayorista Argentina",
   "Cargador Leyenda":  "Cargador PD 65W Mixor Leyenda USB-C - Mayorista Argentina",
   "Cargador Somos":    "Cargador Rápido Mixor Somos 19W con Cable V8 - Importador directo",
   "Cargador Proton":   "Cargador Auto 12V Mixor Proton Doble USB - Mayorista Argentina",
@@ -109,7 +110,7 @@ export function getCareGuide(category: string): string[] {
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
   if (category === "cables") {
-    if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno") {
+    if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno" || name === "Cable Núcleo") {
       return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
     }
     if (name.includes("V8") || name === "Cable Origen") {
@@ -738,6 +739,26 @@ export const products = [
       { icon: Usb, title: "USB Tipo C a Tipo C", description: "Conector USB-C a USB-C (Ficha TC) con soporte Power Delivery, compatible con todos los dispositivos modernos de carga rápida." },
       { icon: Shield, title: "Malla Textil Reforzada", description: "Revestimiento de tela trenzada resistente al desgaste y a los dobleces, con conector en ángulo para mayor durabilidad y comodidad de uso." },
       { icon: Sparkles, title: "Holder Integrado", description: "Soporte plegable integrado en el cable para sostener el celular mientras cargás. 1,2 metros de longitud, color negro." },
+    ],
+  },
+  {
+    id: 41,
+    name: "Cable Núcleo",
+    category: "cables",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00L2",
+    kit: "Kit x 200 unidades",
+    image: "/images/cable-mixor-nucleo-usb-a-tipo-c-malla-reforzada-mayorista.webp",
+    modalImage: "/images/cable-mixor-nucleo-usb-a-tipo-c-malla-reforzada-mayorista.webp",
+    description: "Cable de carga rápida y transferencia de datos con malla reforzada, núcleo de cobre y puntas antidesgaste. 1 metro. Disponible en USB-A a Tipo C y Tipo C a Tipo C.",
+    variants: ["Rojo", "Negro"],
+    features: [
+      { icon: Zap, title: "Carga Rápida y Datos", description: "Sostiene la carga rápida y la transferencia de datos sin caídas de rendimiento, incluso después de meses de uso diario." },
+      { icon: Shield, title: "Núcleo de Cobre Ultra Resistente", description: "Interior de cobre que mantiene el rendimiento constante y da nombre a la línea. Un metro de longitud: la medida justa para usar el equipo mientras carga." },
+      { icon: Usb, title: "Malla y Puntas Reforzadas", description: "Malla reforzada contra el desgaste, los tirones y los dobleces. Las puntas —el punto donde la mayoría de los cables falla— resisten el movimiento constante de enchufar y desenchufar." },
+      { icon: Sparkles, title: "Dos Versiones y Dos Colores", description: "USB-A a Tipo C (MODM-00L2) y Tipo C a Tipo C (MODM-00L3), en rojo y negro, para cubrir la demanda de equipos nuevos y antiguos." },
     ],
   },
   {
