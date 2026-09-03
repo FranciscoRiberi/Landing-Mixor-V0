@@ -7,7 +7,7 @@ import {
   Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic,
   Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop,
   MapPin, Package, ShieldAlert, Zap as Plug, Star, CheckCircle2,
-  Smartphone, ArrowRight,
+  Smartphone,
 } from "lucide-react";
 
 // Registro de iconos: se resuelve por nombre (string) porque los componentes
@@ -251,46 +251,14 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
               </motion.div>
             )}
 
-            {/* Guia de uso: entra arriba de los CTAs porque la consulta mas
-                frecuente de los smartwatches es como vincularlos al celular. */}
-            {data.guideHref && (
-              <motion.div variants={item}>
-                <Link
-                  href={data.guideHref}
-                  className="group flex items-center gap-4 rounded-2xl border border-white/12 bg-white/[0.04] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.07]"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
-                    style={{ background: `rgba(${accent},0.15)` }}
-                  >
-                    <Smartphone size={20} style={{ color: `rgb(${accent})` }} />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-500">
-                      Guía de uso
-                    </span>
-                    <span className="block text-sm font-semibold text-white">
-                      Cómo conectarlo a un dispositivo
-                    </span>
-                  </span>
-                  <ArrowRight
-                    size={18}
-                    aria-hidden="true"
-                    className="shrink-0 text-zinc-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white"
-                  />
-                </Link>
-              </motion.div>
-            )}
-
             {/* CTAs */}
             <motion.div
               variants={item}
-              className="flex flex-col sm:flex-row gap-3"
+              className="flex flex-col sm:flex-row sm:flex-wrap gap-3"
             >
               <a
                 href="/#contacto"
-                className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
                 style={{
                   background: `rgb(${accent})`,
                   boxShadow: `0 10px 30px -8px rgba(${accent},0.6)`,
@@ -301,10 +269,21 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
               </a>
               <Link
                 href={`/productos/${data.slug}`}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-3.5 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/5"
+                className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/15 px-7 py-3.5 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/5"
               >
                 Ver producto
               </Link>
+              {/* La guia de vinculacion es la consulta mas frecuente de los
+                  smartwatches, asi que va como tercer CTA. */}
+              {data.guideHref && (
+                <Link
+                  href={data.guideHref}
+                  className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-zinc-900 transition-all hover:-translate-y-0.5 hover:bg-zinc-200"
+                >
+                  <Smartphone size={17} aria-hidden="true" />
+                  Cómo conectarlo
+                </Link>
+              )}
             </motion.div>
           </motion.div>
         </div>

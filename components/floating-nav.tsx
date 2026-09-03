@@ -12,7 +12,9 @@ const FloatingNav = () => {
   const [active, setActive] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
-  const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  // Cada item es un <Link>, o sea un <a>: solo se les mide el ancho y la
+  // posicion para mover el indicador.
+  const btnRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   const items = [
     {
@@ -80,7 +82,9 @@ const FloatingNav = () => {
           <Link
             key={item.id}
             href={item.href}
-            ref={(el) => (btnRefs.current[index] = el as HTMLButtonElement)}
+            ref={(el) => {
+              btnRefs.current[index] = el;
+            }}
             onClick={() => setActive(index)}
             className="relative flex flex-col items-center justify-center flex-1 px-2 py-2 text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
           >
