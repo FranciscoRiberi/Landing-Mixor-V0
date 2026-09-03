@@ -7,6 +7,7 @@ import {
   Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic,
   Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop,
   MapPin, Package, ShieldAlert, Zap as Plug, Star, CheckCircle2,
+  Smartphone, ArrowRight,
 } from "lucide-react";
 
 // Registro de iconos: se resuelve por nombre (string) porque los componentes
@@ -42,6 +43,8 @@ export interface ProductSpecsData {
   compatibility?: string[];
   whyChoose?: string[];
   variants?: string[];
+  /** Guia de uso opcional. Hoy la usan los smartwatches. */
+  guideHref?: string;
   slug: string;
 }
 
@@ -226,6 +229,7 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
                     const colorMap: Record<string, string> = {
                       "Blanco/Gris": "#d4d4d8",
                       "Rojo": "#ef4444",
+                      "Negro": "#27272a",
                       "Violeta": "#8b5cf6",
                       "Azul": "#3b82f6",
                     };
@@ -244,6 +248,38 @@ export function ProductSpecsShowcase({ data }: { data: ProductSpecsData }) {
                     );
                   })}
                 </div>
+              </motion.div>
+            )}
+
+            {/* Guia de uso: entra arriba de los CTAs porque la consulta mas
+                frecuente de los smartwatches es como vincularlos al celular. */}
+            {data.guideHref && (
+              <motion.div variants={item}>
+                <Link
+                  href={data.guideHref}
+                  className="group flex items-center gap-4 rounded-2xl border border-white/12 bg-white/[0.04] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.07]"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                    style={{ background: `rgba(${accent},0.15)` }}
+                  >
+                    <Smartphone size={20} style={{ color: `rgb(${accent})` }} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-500">
+                      Guía de uso
+                    </span>
+                    <span className="block text-sm font-semibold text-white">
+                      Cómo conectarlo a un dispositivo
+                    </span>
+                  </span>
+                  <ArrowRight
+                    size={18}
+                    aria-hidden="true"
+                    className="shrink-0 text-zinc-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white"
+                  />
+                </Link>
               </motion.div>
             )}
 

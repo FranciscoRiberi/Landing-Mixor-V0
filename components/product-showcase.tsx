@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { products, getProductAlt } from "@/lib/products";
+import { visibleProducts as products, getProductAlt } from "@/lib/products";
 
 function toSlug(name: string) {
   return name

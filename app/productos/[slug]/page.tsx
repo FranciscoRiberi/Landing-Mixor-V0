@@ -43,6 +43,10 @@ const productSeo: Record<string, { title: string; description: string }> = {
     title: "Cargador de Auto Sinergia 50W PD USB-C | Mayorista | Mixor",
     description: "Cargador para auto mayorista 50W con carga rápida PD. Doble puerto USB-A + USB-C, portátil. Importado directo, kit cerrado, envíos a todo el país.",
   },
+  "cable-nucleo": {
+    title: "Cable Núcleo Mixor | USB-A y Tipo C, 1M, Carga Rápida",
+    description: "Cable mayorista de carga rápida y datos con malla reforzada, núcleo de cobre y puntas antidesgaste. 1 metro, USB-A a Tipo C o Tipo C a Tipo C, en rojo y negro. Importado directo, envíos a todo el país.",
+  },
   "cable-pleno": {
     title: "Cable Pleno 240W USB-C con Holder | Mayorista | Mixor",
     description: "Cable de carga USB-C 240W mayorista con holder integrado para el celular. Malla textil, conector en ángulo, 1,2 m. Importado directo, kit cerrado, envíos a todo el país.",
@@ -135,6 +139,12 @@ export default async function ProductPage({
           care: getCareGuide(product.category),
           compatibility: getCompatibility(product.category, product.name),
           variants: (product as { variants?: string[] }).variants,
+          // Los tres smartwatches comparten la app Wearfit Pro y la misma guia
+          // de vinculacion, que es la consulta mas repetida sobre ellos.
+          guideHref:
+            product.category === "smartwatch"
+              ? "/guias/conectar-smartwatch"
+              : undefined,
           whyChoose,
           slug,
         }}

@@ -30,7 +30,8 @@ const secondarySocials = [
     label: "Seguinos en Facebook",
   },
   {
-    // Contacto general. Antes: +5491137994825 (Alejandra, desactivada)
+    // Contacto general del sitio (German), decidido aparte de los asesores
+    // que se eligen en los formularios.
     href: "https://wa.me/5491158979196",
     icon: MessageCircle,
     label: "Escribinos por WhatsApp",
@@ -41,6 +42,7 @@ const productLinks = [
   { href: "/productos", label: "Catálogo completo" },
   { href: "/#novedades", label: "Novedades" },
   { href: "/#productos", label: "Destacados" },
+  { href: "/guias/conectar-smartwatch", label: "Conectar tu smartwatch" },
 ];
 
 const companyLinks = [

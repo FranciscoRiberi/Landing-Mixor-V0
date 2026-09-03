@@ -12,7 +12,7 @@ export const altMap: Record<string, string> = {
   "Parlante Caos":     "Parlante de Fiesta Mixor Caos 30W Karaoke RGB - Mayorista Argentina",
   "Parlante Alma":     "Parlante de Fiesta Mixor Alma 20W Doble Micrófono - Mayorista Argentina",
   "Parlante Recuerdo": "Parlante Portátil Mixor Recuerdo 5W Bluetooth RGB TWS - Mayorista Argentina",
-  "Smartwatch Pulso":    "Smartwatch Mixor Pulso Pantalla LED 1.52'' - Mayorista Argentina",
+  "Smartwatch Pulso":    "Smartwatch Mixor Pulso 2.09'' ECG Llamadas Bluetooth - Mayorista Argentina",
   "Smartwatch Momentos": "Smartwatch Mixor Momentos ECG Llamadas Bluetooth - Importador directo",
   "Smartwatch Activo":   "Smartwatch Mixor Activo ECG Bluetooth Correas 7en1 - Mayorista Argentina",
   "TWS Claridad":         "Auriculares TWS Mixor Claridad Pantalla Táctil - Mayorista Argentina",
@@ -24,6 +24,7 @@ export const altMap: Record<string, string> = {
   "Cable Eternidad":  "Cable Mixor Eternidad USB-A a Tipo C 7.1A Carga Rápida Nylon Trenzado - Mayorista Argentina",
   "Cable Origen":     "Cable Mixor Origen USB-A a Micro USB V8 5.4A Nylon Trenzado Mayorista Argentina",
   "Cable Pleno":      "Cable Pleno Mixor 240W USB-C con holder para celular mayorista",
+  "Cable Núcleo":     "Cable Mixor Núcleo USB-A y Tipo C 1m Malla Reforzada Carga Rápida - Mayorista Argentina",
   "Cargador Leyenda":  "Cargador PD 65W Mixor Leyenda USB-C - Mayorista Argentina",
   "Cargador Somos":    "Cargador Rápido Mixor Somos 19W con Cable V8 - Importador directo",
   "Cargador Proton":   "Cargador Auto 12V Mixor Proton Doble USB - Mayorista Argentina",
@@ -109,7 +110,7 @@ export function getCareGuide(category: string): string[] {
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
   if (category === "cables") {
-    if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno") {
+    if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno" || name === "Cable Núcleo") {
       return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
     }
     if (name.includes("V8") || name === "Cable Origen") {
@@ -118,7 +119,8 @@ export function getCompatibility(category: string, name: string): string[] {
     return ["Smartphones Android", "Tablets", "Cámaras digitales"];
   }
   if (category === "smartwatch") {
-    return ["Android 5.0+", "iOS 12.0+", "Sincronización en la nube", "Apps de salud populares"];
+    // iOS 13.4 es el minimo real de Wearfit Pro, la app que usan los tres.
+    return ["Android 5.0+", "iOS 13.4+", "App Wearfit Pro", "Apps de salud populares"];
   }
   if (category === "auriculares") {
     return ["Todos los Bluetooth 4.0+", "Android e iOS", "PC y notebooks", "Gaming consoles"];
@@ -359,12 +361,13 @@ export const products = [
     kit: "Kit x 100 unidades",
     image: "/images/smartwatch-mixor-pulso-pantalla-led-mayorista-argentina.webp",
     modalImage: "/images/smartwatch-mixor-pulso-modal-pantalla-led.webp",
-    description: "Smartwatch redondo con pantalla LED 1.52'', dos mallas y batería eficiente",
+    // Specs tomadas de la caja del producto (foto del packaging, 2026-08-25).
+    description: "Smartwatch redondo con pantalla LED 2.09'', ECG, llamadas y música por Bluetooth y correa intercambiable",
     features: [
-      { icon: Watch, title: "Pantalla LED 1.52''", description: "Interfaz 2.5D con efectos 3D y múltiples estilos de carátulas para imágenes nítidas." },
-      { icon: Activity, title: "Tres Anillos de Salud", description: "Monitoreo de frecuencia cardíaca, presión arterial y nivel de oxígeno en sangre en tiempo real." },
-      { icon: Battery, title: "Batería Eficiente", description: "200 mAh de bajo consumo con carga inalámbrica rápida y tecnología de carga a cero voltios." },
-      { icon: Sparkles, title: "Diseño Premium", description: "Acabado metalizado al vacío. Incluye dos mallas de silicona para mayor versatilidad." },
+      { icon: Watch, title: "Pantalla LED 2.09''", description: "Smartwatch redondo con resolución de 240 × 240 px, que brinda imágenes claras, colores definidos y excelente visibilidad diaria." },
+      { icon: Activity, title: "Tres Anillos de Salud y ECG", description: "Controlá frecuencia cardíaca, presión arterial y nivel de oxígeno en sangre en tiempo real, más monitoreo ECG para cuidar tu corazón con mayor precisión." },
+      { icon: Phone, title: "Llamadas y Música por Bluetooth", description: "Atendé directamente desde tu muñeca y escuchá tu música favorita sin sacar el teléfono. Suma control remoto de cámara y múltiples modos deportivos." },
+      { icon: Battery, title: "Batería 200mAh con Carga Inalámbrica", description: "Bajo consumo diseñado para una autonomía prolongada, con carga inalámbrica rápida. Incluye correa intercambiable de silicona." },
     ],
   },
   {
@@ -382,8 +385,8 @@ export const products = [
     features: [
       { icon: Heart, title: "Monitoreo ECG + Salud", description: "Tres anillos de salud con monitoreo ECG, frecuencia cardíaca, presión arterial y oxígeno en sangre." },
       { icon: Phone, title: "Llamadas y Música", description: "Atendé llamadas desde tu muñeca y escuchá tu música favorita por Bluetooth." },
-      { icon: Activity, title: "Múltiples Modos Deportivos", description: "Seguimiento del sueño, modos deportivos, giro de muñeca y control remoto de cámara." },
-      { icon: Sparkles, title: "Notificaciones Inteligentes", description: "Recordatorios de llamadas, SMS, redes sociales, alarma, sedentarismo y eventos importantes." },
+      { icon: Activity, title: "Múltiples Modos Deportivos", description: "Seguimiento del sueño, modos deportivos, giro de muñeca, control remoto de cámara y buscador para encontrar el reloj o el teléfono en segundos." },
+      { icon: Sparkles, title: "Notificaciones Inteligentes", description: "Recordatorios de llamadas, SMS, redes sociales, alarma, sedentarismo y eventos importantes. Suma modo No molestar, modo avión y contactos frecuentes." },
     ],
   },
   {
@@ -739,6 +742,26 @@ export const products = [
     ],
   },
   {
+    id: 41,
+    name: "Cable Núcleo",
+    category: "cables",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00L2",
+    kit: "Kit x 200 unidades",
+    image: "/images/cable-mixor-nucleo-usb-a-tipo-c-malla-reforzada-mayorista.webp",
+    modalImage: "/images/cable-mixor-nucleo-usb-a-tipo-c-malla-reforzada-mayorista.webp",
+    description: "Cable de carga rápida y transferencia de datos con malla reforzada, núcleo de cobre y puntas antidesgaste. 1 metro. Disponible en USB-A a Tipo C y Tipo C a Tipo C.",
+    variants: ["Rojo", "Negro"],
+    features: [
+      { icon: Zap, title: "Carga Rápida y Datos", description: "Sostiene la carga rápida y la transferencia de datos sin caídas de rendimiento, incluso después de meses de uso diario." },
+      { icon: Shield, title: "Núcleo de Cobre Ultra Resistente", description: "Interior de cobre que mantiene el rendimiento constante y da nombre a la línea. Un metro de longitud: la medida justa para usar el equipo mientras carga." },
+      { icon: Usb, title: "Malla y Puntas Reforzadas", description: "Malla reforzada contra el desgaste, los tirones y los dobleces. Las puntas —el punto donde la mayoría de los cables falla— resisten el movimiento constante de enchufar y desenchufar." },
+      { icon: Sparkles, title: "Dos Versiones y Dos Colores", description: "USB-A a Tipo C (MODM-00L2) y Tipo C a Tipo C (MODM-00L3), en rojo y negro, para cubrir la demanda de equipos nuevos y antiguos." },
+    ],
+  },
+  {
     id: 33,
     name: "Cargador Sinergia",
     category: "cargadores",
@@ -757,7 +780,7 @@ export const products = [
       { icon: Shield, title: "Protección Integrada", description: "Certificado CE y RoHS. Protección contra sobrecorriente, sobretensión y sobrecalentamiento para una carga segura en todo momento." },
     ],
   },
-  { id: 34, name: "Micrófono Voz", category: "accesorios", price: "Próximamente", code: "MODM-00VO", kit: "Kit x 50 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  { id: 34, name: "Micrófono Voz", category: "accesorios", price: "Próximamente", code: "MODM-00VO", kit: "Kit x 50 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible", hidden: true },
   {
     id: 36,
     name: "Parlante Recuerdo",
@@ -778,7 +801,7 @@ export const products = [
       { icon: Lightbulb, title: "Ambiente Festivo", description: "Sistema de luces RGB que ilumina tus reuniones y crea la atmósfera perfecta." },
     ],
   },
-  { id: 37, name: "Lámpara Motivos", category: "accesorios", price: "Próximamente", code: "MODM-00MO", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible" },
+  { id: 37, name: "Lámpara Motivos", category: "accesorios", price: "Próximamente", code: "MODM-00MO", kit: "Kit x 80 unidades", image: "/images/proximo-lanzamiento-mixor-accesorios-tecnologicos.webp", description: "Próximamente disponible", hidden: true },
   {
     id: 38,
     name: "Reloj Sueño",
@@ -800,6 +823,15 @@ export const products = [
 ];
 
 export type Product = typeof products[number];
+
+/**
+ * Productos que se muestran en el sitio. Los marcados con `hidden: true` se
+ * conservan con todos sus datos pero quedan fuera del catálogo y del sitemap
+ * (discontinuados o sin stock). Para volver a publicarlos, sacar el flag.
+ */
+export const visibleProducts = products.filter(
+  (p) => !(p as { hidden?: boolean }).hidden
+);
 
 /** Slug URL-safe a partir del nombre del producto (compartido por catálogo y specs). */
 export function toSlug(name: string): string {
