@@ -862,12 +862,12 @@ export const products = [
     kit: "Kit x 200 unidades",
     image: "/images/auriculares-manos-libres-mixor-reencuentro-tipo-c-mayorista.webp",
     modalImage: "/images/auriculares-manos-libres-mixor-reencuentro-modal-tipo-c.webp",
-    description: "Auriculares manos libres in-ear con conexión Tipo C, micrófono incorporado y cable reforzado",
+    description: "Auriculares manos libres in-ear con conexión Tipo C, micrófono incorporado y cable reforzado de 1 metro",
     features: [
       { icon: Usb, title: "Conexión Tipo C", description: "Ficha USB Tipo C directa al celular: sin batería, sin emparejar y sin latencia. Listo para los equipos que ya no traen conector de audio." },
       { icon: Volume2, title: "Sonido Envolvente", description: "Sonido envolvente de alta calidad con cápsulas in-ear de cuerpo metálico que aíslan el ruido de afuera." },
       { icon: Mic, title: "Micrófono Incorporado", description: "Micrófono y control integrados en el cable para atender llamadas y manejar la reproducción sin sacar el celular." },
-      { icon: Shield, title: "Material Duradero y Liviano", description: "Cable con malla trenzada resistente a los dobleces y diseño liviano, cómodo para llevar puesto durante horas." },
+      { icon: Shield, title: "Material Duradero y Liviano", description: "Cable de 1 metro con malla trenzada resistente a los dobleces y diseño liviano, cómodo para llevar puesto durante horas." },
     ],
   },
 ];
