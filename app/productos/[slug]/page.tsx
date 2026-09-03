@@ -136,7 +136,7 @@ export default async function ProductPage({
           })),
           useCases: getUseCases(product.category),
           includes: getIncludes(product.name, product.category),
-          care: getCareGuide(product.category),
+          care: getCareGuide(product.category, product.name),
           compatibility: getCompatibility(product.category, product.name),
           variants: (product as { variants?: string[] }).variants,
           // Los tres smartwatches comparten la misma guia de vinculacion (cada

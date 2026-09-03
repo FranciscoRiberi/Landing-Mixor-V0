@@ -18,6 +18,7 @@ export const altMap: Record<string, string> = {
   "TWS Claridad":         "Auriculares TWS Mixor Claridad Pantalla Táctil - Mayorista Argentina",
   "Auriculares Fusión":   "Auriculares Inalámbricos Mixor Fusión 6hs - Importador directo Argentina",
   "Auriculares Sensación":"Auriculares Inalámbricos Mixor Sensación 6hs - Distribuidor mayorista",
+  "Manos Libres Reencuentro":"Auriculares Manos Libres Mixor Reencuentro Tipo C con Micrófono - Mayorista Argentina",
   "Cable Vinculo":    "Cable USB Tipo-C Mixor Vínculo 7.1A 1m - Mayorista Argentina",
   "Cable Impulso":    "Cable USB a Tipo-C Mixor Impulso 7.1A Carga Rápida - Importador directo",
   "Cable Vital":      "Cable USB Reforzado Mixor Vital 5.4A Cobre Puro - Mayorista Argentina",
@@ -59,7 +60,19 @@ export function getUseCases(category: string): string[] {
 }
 
 // Helper: Generar contenido de cuidados por categoría
-export function getCareGuide(category: string): string[] {
+export function getCareGuide(category: string, name?: string): string[] {
+  // Los auriculares con cable no tienen bateria ni estuche: los cuidados pasan
+  // por el cable y la ficha, no por la carga.
+  if (category === "auriculares" && name && isCableado(name)) {
+    return [
+      "No tirar del cable para desenchufar: sacar siempre desde la ficha",
+      "Evitar dobleces marcados cerca de la ficha y del micrófono",
+      "Guardar sin enrollar con fuerza",
+      "Limpiar las almohadillas con un paño seco",
+      "Mantener la ficha libre de pelusa y humedad",
+    ];
+  }
+
   const care: Record<string, string[]> = {
     parlantes: [
       "Proteger de agua directa y humedad excesiva",
@@ -107,6 +120,15 @@ export function getCareGuide(category: string): string[] {
   return care[category] || ["Mantener en buen estado", "Guardar correctamente"];
 }
 
+/**
+ * Auriculares con cable. Los helpers de esta seccion asumen que todo auricular
+ * es inalambrico (bateria, estuche, emparejado), y para estos no aplica nada de
+ * eso: se enchufan y listo.
+ */
+function isCableado(name: string): boolean {
+  return name === "Manos Libres Reencuentro";
+}
+
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
   if (category === "cables") {
@@ -127,6 +149,10 @@ export function getCompatibility(category: string, name: string): string[] {
     return ["Android 5.0+", "iPhone compatible", "App MyWatch+ o HiWatchPro", "Apps de salud populares"];
   }
   if (category === "auriculares") {
+    // El Reencuentro es con cable: no se empareja por Bluetooth, se enchufa.
+    if (isCableado(name)) {
+      return ["Celulares con puerto Tipo C", "Tablets USB-C", "Notebooks USB-C", "Sin necesidad de emparejar"];
+    }
     return ["Todos los Bluetooth 4.0+", "Android e iOS", "PC y notebooks", "Gaming consoles"];
   }
   if (category === "cargadores") {
@@ -142,8 +168,9 @@ export function getCompatibility(category: string, name: string): string[] {
 export function getIncludes(name: string, category: string): string[] {
   const includes: string[] = [name];
 
-  // Agregar cable de carga solo para productos que NO son cables ni cargadores
-  if (category !== "cables" && category !== "cargadores") {
+  // Agregar cable de carga solo para productos que NO son cables ni cargadores.
+  // Los auriculares con cable tampoco llevan: no tienen bateria que cargar.
+  if (category !== "cables" && category !== "cargadores" && !isCableado(name)) {
     includes.push("Cable de carga");
   }
 
@@ -822,6 +849,25 @@ export const products = [
       { icon: Lightbulb, title: "Luz Ambiental", description: "Tres intensidades de iluminación LED para crear el ambiente perfecto. Ideal para dormir relajado o leer antes de descansar." },
       { icon: Radio, title: "Múltiples Modos de Sonido", description: "Selecciona entre distintos modos de sonido diseñados especialmente para descanso y relajación nocturna." },
       { icon: Battery, title: "Batería Recargable", description: "Autonomía confiable con carga por USB-C. Ideal para uso portátil en tu mesita de noche." },
+    ],
+  },
+  {
+    id: 42,
+    name: "Manos Libres Reencuentro",
+    category: "auriculares",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-001X",
+    kit: "Kit x 200 unidades",
+    image: "/images/auriculares-manos-libres-mixor-reencuentro-tipo-c-mayorista.webp",
+    modalImage: "/images/auriculares-manos-libres-mixor-reencuentro-modal-tipo-c.webp",
+    description: "Auriculares manos libres in-ear con conexión Tipo C, micrófono incorporado y cable reforzado",
+    features: [
+      { icon: Usb, title: "Conexión Tipo C", description: "Ficha USB Tipo C directa al celular: sin batería, sin emparejar y sin latencia. Listo para los equipos que ya no traen conector de audio." },
+      { icon: Volume2, title: "Sonido Envolvente", description: "Sonido envolvente de alta calidad con cápsulas in-ear de cuerpo metálico que aíslan el ruido de afuera." },
+      { icon: Mic, title: "Micrófono Incorporado", description: "Micrófono y control integrados en el cable para atender llamadas y manejar la reproducción sin sacar el celular." },
+      { icon: Shield, title: "Material Duradero y Liviano", description: "Cable con malla trenzada resistente a los dobleces y diseño liviano, cómodo para llevar puesto durante horas." },
     ],
   },
 ];

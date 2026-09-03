@@ -91,7 +91,7 @@ export default async function ProductSpecsPage({
         })),
         useCases: getUseCases(product.category),
         includes: getIncludes(product.name, product.category),
-        care: getCareGuide(product.category),
+        care: getCareGuide(product.category, product.name),
         compatibility: getCompatibility(product.category, product.name),
         guideHref:
           product.category === "smartwatch"
