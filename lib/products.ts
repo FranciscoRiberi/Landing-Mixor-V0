@@ -119,8 +119,12 @@ export function getCompatibility(category: string, name: string): string[] {
     return ["Smartphones Android", "Tablets", "Cámaras digitales"];
   }
   if (category === "smartwatch") {
-    // iOS 13.4 es el minimo real de Wearfit Pro, la app que usan los tres.
-    return ["Android 5.0+", "iOS 13.4+", "App Wearfit Pro", "Apps de salud populares"];
+    // El Activo usa Wearfit Pro (minimo real iOS 13.4). El Pulso y el Momentos
+    // van con MyWatch+ o HiWatchPro, cualquiera de las dos.
+    if (name === "Smartwatch Activo") {
+      return ["Android 5.0+", "iOS 13.4+", "App Wearfit Pro", "Apps de salud populares"];
+    }
+    return ["Android 5.0+", "iPhone compatible", "App MyWatch+ o HiWatchPro", "Apps de salud populares"];
   }
   if (category === "auriculares") {
     return ["Todos los Bluetooth 4.0+", "Android e iOS", "PC y notebooks", "Gaming consoles"];

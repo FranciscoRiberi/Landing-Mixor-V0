@@ -9,12 +9,12 @@ const URL = "https://mixor.com.ar/guias/conectar-smartwatch";
 export const metadata: Metadata = {
   title: "Cómo conectar tu smartwatch Mixor al celular | Guía paso a paso",
   description:
-    "Guía para conectar los smartwatches Mixor Pulso, Momentos y Activo al celular con la app Wearfit Pro. Cuatro pasos, permisos, llamadas y música, y solución de problemas.",
+    "Guía para conectar los smartwatches Mixor al celular: el Pulso y el Momentos con MyWatch+ o HiWatchPro, y el Activo con Wearfit Pro. Cuatro pasos, permisos, llamadas y música, y solución de problemas.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Cómo conectar tu smartwatch Mixor al celular",
     description:
-      "Guía paso a paso para los modelos Pulso, Momentos y Activo con la app Wearfit Pro.",
+      "Guía paso a paso para los modelos Pulso, Momentos y Activo, con la aplicación que le corresponde a cada uno.",
     url: URL,
     type: "article",
   },
@@ -25,7 +25,6 @@ const TOC = [
   { id: "modelo", label: "Elegí tu modelo" },
   { id: "requisitos", label: "Antes de empezar" },
   { id: "pasos", label: "Paso a paso" },
-  { id: "modelos", label: "Qué hace cada uno" },
   { id: "configuracion", label: "Ajustes de la app" },
   { id: "problemas", label: "Si algo no funciona" },
   { id: "cuidados", label: "Salud y cuidados" },
@@ -37,14 +36,17 @@ const howToJsonLd = {
   "@type": "HowTo",
   name: "Cómo conectar un smartwatch Mixor al celular",
   description:
-    "Pasos para vincular los smartwatches Mixor Pulso, Momentos y Activo con un celular Android o iPhone usando la aplicación Wearfit Pro.",
+    "Pasos para vincular los smartwatches Mixor Pulso, Momentos y Activo con un celular Android o iPhone. El Pulso y el Momentos usan MyWatch+ o HiWatchPro; el Activo usa Wearfit Pro.",
   totalTime: "PT15M",
   supply: [
     { "@type": "HowToSupply", name: "Smartwatch Mixor" },
-    { "@type": "HowToSupply", name: "Celular Android 5.0+ o iPhone iOS 13.4+" },
+    { "@type": "HowToSupply", name: "Celular Android 5.0+ o iPhone compatible" },
     { "@type": "HowToSupply", name: "Cable de carga magnético" },
   ],
-  tool: [{ "@type": "HowToTool", name: "Aplicación Wearfit Pro" }],
+  tool: [
+    { "@type": "HowToTool", name: "Aplicación MyWatch+ o HiWatchPro (Pulso y Momentos)" },
+    { "@type": "HowToTool", name: "Aplicación Wearfit Pro (Activo)" },
+  ],
   step: [
     {
       "@type": "HowToStep",
@@ -56,15 +58,15 @@ const howToJsonLd = {
     {
       "@type": "HowToStep",
       position: 2,
-      name: "Descargá Wearfit Pro",
-      text: "Buscá Wearfit Pro en Play Store o App Store e instalala. Al abrirla, aceptá los permisos de Bluetooth, ubicación, notificaciones y contactos.",
+      name: "Descargá la aplicación del reloj",
+      text: "Buscá en Play Store o App Store la aplicación que le corresponde a tu modelo: MyWatch+ o HiWatchPro para el Pulso y el Momentos, Wearfit Pro para el Activo. Al abrirla, aceptá los permisos de Bluetooth, ubicación, notificaciones y contactos.",
       url: `${URL}#pasos`,
     },
     {
       "@type": "HowToStep",
       position: 3,
       name: "Conectá el reloj al celular",
-      text: "Con el Bluetooth activado, abrí Wearfit Pro, tocá Agregar dispositivo, elegí el nombre de tu reloj en la lista y aceptá la vinculación.",
+      text: "Con el Bluetooth activado, abrí la aplicación, tocá Agregar dispositivo, elegí el nombre de tu reloj en la lista y aceptá la vinculación.",
       url: `${URL}#pasos`,
     },
     {
@@ -106,9 +108,12 @@ export default function ConectarSmartwatchPage() {
             </h1>
             <p className="text-lg leading-relaxed text-zinc-400">
               Sirve para los tres relojes de Mixor: Pulso, Momentos y Activo.
-              Los tres usan la misma aplicación gratuita,{" "}
-              <strong className="text-zinc-200">Wearfit Pro</strong>. Seguí los
-              pasos en orden: no hace falta saber de tecnología.
+              Los pasos son los mismos, pero cada uno tiene su aplicación
+              gratuita: el Pulso y el Momentos usan{" "}
+              <strong className="text-zinc-200">MyWatch+</strong> o{" "}
+              <strong className="text-zinc-200">HiWatchPro</strong>, y el Activo
+              usa <strong className="text-zinc-200">Wearfit Pro</strong>. Elegí
+              tu modelo y seguí los pasos en orden.
             </p>
           </header>
 

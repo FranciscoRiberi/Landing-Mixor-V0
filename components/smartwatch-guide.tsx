@@ -8,7 +8,6 @@ import {
   Bluetooth,
   PhoneCall,
   Check,
-  X,
   ChevronDown,
   AlertTriangle,
   HeartPulse,
@@ -27,6 +26,8 @@ const MODELS: {
   shape: string;
   /** Los Momentos y Activo suman la segunda conexion para audio. */
   audio: boolean;
+  /** Cada modelo trae su propia app: el Activo no usa la misma que los otros dos. */
+  apps: string[];
 }[] = [
   {
     id: "pulso",
@@ -35,6 +36,7 @@ const MODELS: {
     code: "MODM-00GP",
     shape: "Redondo · 2.09''",
     audio: true,
+    apps: ["MyWatch+", "HiWatchPro"],
   },
   {
     id: "momentos",
@@ -43,6 +45,7 @@ const MODELS: {
     code: "MODM-00ED",
     shape: "Cuadrado",
     audio: true,
+    apps: ["MyWatch+", "HiWatchPro"],
   },
   {
     id: "activo",
@@ -51,24 +54,14 @@ const MODELS: {
     code: "MODM-00II",
     shape: "Cuadrado",
     audio: true,
+    apps: ["Wearfit Pro"],
   },
 ];
 
-const COMPARISON: { label: string; pulso: boolean; momentos: boolean; activo: boolean }[] = [
-  { label: "Contar pasos y distancia", pulso: true, momentos: true, activo: true },
-  { label: "Medir el sueño", pulso: true, momentos: true, activo: true },
-  { label: "Pulsaciones, presión y oxígeno", pulso: true, momentos: true, activo: true },
-  { label: "Medición ECG", pulso: true, momentos: true, activo: true },
-  { label: "Hablar por teléfono desde el reloj", pulso: true, momentos: true, activo: true },
-  { label: "Escuchar música desde el reloj", pulso: true, momentos: true, activo: true },
-  { label: "Control remoto de cámara", pulso: true, momentos: true, activo: true },
-  { label: "Múltiples modos deportivos", pulso: true, momentos: true, activo: true },
-  { label: "Notificaciones de apps y recordatorios", pulso: false, momentos: true, activo: true },
-  { label: "Encender la pantalla girando la muñeca", pulso: false, momentos: true, activo: true },
-  { label: "Encontrar el reloj o el teléfono", pulso: false, momentos: true, activo: true },
-  { label: "Modo No molestar y modo avión", pulso: false, momentos: true, activo: true },
-  { label: "Clima del día", pulso: false, momentos: true, activo: true },
-];
+/** "Wearfit Pro" o "MyWatch+ o HiWatchPro", segun cuantas apps acepte el modelo. */
+function appLabel(apps: string[]): string {
+  return apps.join(" o ");
+}
 
 const FAQ: { q: string; a: React.ReactNode }[] = [
   {
@@ -84,8 +77,10 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: "No puedo instalar la aplicación en el iPhone",
     a: (
       <p>
-        Wearfit Pro necesita iPhone con iOS 13.4 o más nuevo. En modelos
-        anteriores no se puede instalar y el reloj no va a poder conectarse.
+        <strong>Wearfit Pro</strong>, la del Activo, necesita iOS 13.4 o más
+        nuevo. Si la App Store te avisa que la aplicación no es compatible con
+        tu iPhone, el reloj no va a poder conectarse: es una limitación del
+        celular, no del reloj.
       </p>
     ),
   },
@@ -104,8 +99,8 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     a: (
       <p>
         Suele pasar en Android, porque el celular apaga la aplicación para
-        ahorrar batería. Entrá a los ajustes de batería, buscá Wearfit Pro y
-        permitile funcionar en segundo plano.
+        ahorrar batería. Entrá a los ajustes de batería, buscá la aplicación
+        del reloj y permitile funcionar en segundo plano.
       </p>
     ),
   },
@@ -148,19 +143,12 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
 ];
 
-function Cell({ ok }: { ok: boolean }) {
-  return ok ? (
-    <Check size={17} className="mx-auto text-emerald-400" aria-label="Sí" />
-  ) : (
-    <X size={17} className="mx-auto text-zinc-600" aria-label="No" />
-  );
-}
-
 export function SmartwatchGuide() {
   const [model, setModel] = useState<ModelId>("momentos");
   const [open, setOpen] = useState<number | null>(null);
 
   const active = MODELS.find((m) => m.id === model)!;
+  const app = appLabel(active.apps);
 
   const steps = [
     {
@@ -194,7 +182,7 @@ export function SmartwatchGuide() {
     },
     {
       icon: Download,
-      title: "Descargá Wearfit Pro",
+      title: `Descargá ${app}`,
       body: (
         <>
           <ol className="space-y-2">
@@ -204,7 +192,17 @@ export function SmartwatchGuide() {
               <strong>App Store</strong> si es iPhone.
             </li>
             <li>
-              Buscá <strong>Wearfit Pro</strong>.
+              {active.apps.length > 1 ? (
+                <>
+                  Buscá <strong>{active.apps[0]}</strong> o{" "}
+                  <strong>{active.apps[1]}</strong>. El {active.name} funciona
+                  con cualquiera de las dos: instalá una sola.
+                </>
+              ) : (
+                <>
+                  Buscá <strong>{active.apps[0]}</strong>.
+                </>
+              )}
             </li>
             <li>Tocá &ldquo;Instalar&rdquo;. La aplicación es gratuita.</li>
           </ol>
@@ -246,7 +244,8 @@ export function SmartwatchGuide() {
             <li>Prendé el reloj.</li>
             <li>Fijate que el Bluetooth del celular esté activado.</li>
             <li>
-              Abrí Wearfit Pro y tocá <strong>Agregar dispositivo</strong>.
+              Abrí {active.apps.length > 1 ? "la aplicación" : app} y tocá{" "}
+              <strong>Agregar dispositivo</strong>.
             </li>
             <li>Va a aparecer una lista. Elegí el nombre de tu reloj.</li>
             <li>
@@ -321,12 +320,15 @@ export function SmartwatchGuide() {
           ¿Cuál de los tres tenés?
         </p>
         <p className="mb-6 max-w-2xl text-[15px] leading-relaxed text-zinc-400">
-          Los tres se conectan igual y los cuatro pasos aplican a todos. Elegí
-          el tuyo para ver sus datos y que se resalte su columna en la tabla de
-          más abajo. Los tres miden lo mismo y permiten llamadas, música y ECG;
-          el <strong className="text-zinc-200">Momentos</strong> y el{" "}
-          <strong className="text-zinc-200">Activo</strong> suman notificaciones
-          de apps, giro de muñeca y buscador de teléfono.
+          Los cuatro pasos son los mismos para los tres, pero{" "}
+          <strong className="text-zinc-200">no todos usan la misma aplicación</strong>.
+          El <strong className="text-zinc-200">Pulso</strong> y el{" "}
+          <strong className="text-zinc-200">Momentos</strong> funcionan con{" "}
+          <strong className="text-zinc-200">MyWatch+</strong> o{" "}
+          <strong className="text-zinc-200">HiWatchPro</strong>; el{" "}
+          <strong className="text-zinc-200">Activo</strong> usa{" "}
+          <strong className="text-zinc-200">Wearfit Pro</strong>. Elegí el tuyo
+          y la guía se ajusta sola.
         </p>
 
         <div
@@ -358,14 +360,20 @@ export function SmartwatchGuide() {
                   {m.shape} · {m.code}
                 </span>
                 <span className="mt-2 block text-xs text-zinc-400">
-                  {m.id === "pulso"
-                    ? "Llamadas, música y ECG"
-                    : "Suma notificaciones y buscador"}
+                  App: {appLabel(m.apps)}
                 </span>
               </button>
             );
           })}
         </div>
+
+        <Link
+          href={`/productos/${active.slug}`}
+          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-red-400 transition-colors hover:text-red-300"
+        >
+          Ver la ficha del {active.name}
+          <ArrowRight size={15} aria-hidden="true" />
+        </Link>
       </section>
 
       {/* ===== Requisitos ===== */}
@@ -373,9 +381,9 @@ export function SmartwatchGuide() {
         <h2 className="mb-4 text-2xl font-bold text-white">Antes de empezar</h2>
         <div className="grid gap-3 sm:grid-cols-3">
           {[
-            ["Un celular compatible", "Android 5.0 o más nuevo, o iPhone con iOS 13.4 o más nuevo."],
-            ["Conexión a internet", "Preferentemente wifi, porque la app ocupa bastante."],
-            ["Unos 15 minutos", "No hace falta saber de tecnología."],
+            ["Un celular compatible", "Android 5.0 o más nuevo, o un iPhone donde se pueda instalar la aplicación del reloj."],
+            ["La app que le corresponde", `El ${active.name} usa ${app}. Es gratuita.`],
+            ["Unos 15 minutos", "No hace falta saber de tecnología. Conviene tener wifi."],
           ].map(([t, d]) => (
             <div
               key={t}
@@ -393,9 +401,10 @@ export function SmartwatchGuide() {
             aria-hidden="true"
           />
           <p className="text-sm leading-relaxed text-amber-100/80">
-            <strong className="text-amber-200">iPhone antiguos:</strong> la
-            aplicación no se puede instalar en versiones anteriores a iOS 13.4.
-            Si el celular es muy viejo, el reloj no va a poder conectarse.
+            <strong className="text-amber-200">iPhone antiguos:</strong> Wearfit
+            Pro, la aplicación del Activo, pide iOS 13.4 o más nuevo. Si la App
+            Store avisa que la aplicación no es compatible con tu iPhone, el
+            reloj no va a poder conectarse.
           </p>
         </div>
       </section>
@@ -463,61 +472,6 @@ export function SmartwatchGuide() {
             );
           })}
         </ol>
-      </section>
-
-      {/* ===== Comparativa ===== */}
-      <section id="modelos" className="scroll-mt-28">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Qué hace cada modelo
-        </h2>
-        <div className="overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.03]">
-          <table className="w-full min-w-[520px] text-sm">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="px-5 py-4 text-left font-semibold text-zinc-400">
-                  Función
-                </th>
-                {MODELS.map((m) => (
-                  <th
-                    key={m.id}
-                    className={`px-4 py-4 text-center font-bold ${
-                      m.id === model ? "text-red-400" : "text-white"
-                    }`}
-                  >
-                    {m.name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {COMPARISON.map((row) => (
-                <tr
-                  key={row.label}
-                  className="border-b border-white/5 last:border-0"
-                >
-                  <td className="px-5 py-3 text-zinc-300">{row.label}</td>
-                  <td className={`px-4 py-3 ${model === "pulso" ? "bg-white/[0.03]" : ""}`}>
-                    <Cell ok={row.pulso} />
-                  </td>
-                  <td className={`px-4 py-3 ${model === "momentos" ? "bg-white/[0.03]" : ""}`}>
-                    <Cell ok={row.momentos} />
-                  </td>
-                  <td className={`px-4 py-3 ${model === "activo" ? "bg-white/[0.03]" : ""}`}>
-                    <Cell ok={row.activo} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <Link
-          href={`/productos/${active.slug}`}
-          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-red-400 transition-colors hover:text-red-300"
-        >
-          Ver la ficha del {active.name}
-          <ArrowRight size={15} aria-hidden="true" />
-        </Link>
       </section>
 
       {/* ===== Configuracion desde la app ===== */}
