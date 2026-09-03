@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 import { ShoppingCart, Share2, Phone, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -50,26 +49,36 @@ const FloatingNav = () => {
     }
   }, [pathname]);
 
-  // Update indicator position when active changes or resize
+  // Update indicator position when active changes or resize.
+  // El ResizeObserver es necesario ademas del evento de resize: en el primer
+  // render la barra todavia no tiene su ancho final (fuentes, imagen del logo),
+  // asi que la medicion inicial sale en cero y nunca se corregia.
   useEffect(() => {
     const updateIndicator = () => {
-      if (btnRefs.current[active] && containerRef.current) {
-        const btn = btnRefs.current[active];
-        const container = containerRef.current;
-        if (!btn) return;
-        const btnRect = btn.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
+      const btn = btnRefs.current[active];
+      const container = containerRef.current;
+      if (!btn || !container) return;
 
-        setIndicatorStyle({
-          width: btnRect.width,
-          left: btnRect.left - containerRect.left,
-        });
-      }
+      const btnRect = btn.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      if (btnRect.width === 0) return;
+
+      setIndicatorStyle({
+        width: btnRect.width,
+        left: btnRect.left - containerRect.left,
+      });
     };
 
     updateIndicator();
+
+    const observer = new ResizeObserver(updateIndicator);
+    if (containerRef.current) observer.observe(containerRef.current);
     window.addEventListener("resize", updateIndicator);
-    return () => window.removeEventListener("resize", updateIndicator);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateIndicator);
+    };
   }, [active]);
 
   return (
@@ -94,11 +103,14 @@ const FloatingNav = () => {
           </Link>
         ))}
 
-        {/* Sliding Active Indicator */}
-        <motion.div
-          animate={indicatorStyle}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-          className="absolute top-1 bottom-1 rounded-full bg-primary/10"
+        {/* Sliding Active Indicator.
+            Va con transicion de CSS y no con framer-motion: al animar `width` y
+            `left` desde un estado que arranca en cero, framer no llegaba a
+            escribir los estilos y el indicador quedaba invisible. */}
+        <div
+          aria-hidden="true"
+          className="absolute top-1 bottom-1 rounded-full bg-primary/10 transition-[width,left] duration-300 ease-out"
+          style={{ width: indicatorStyle.width, left: indicatorStyle.left }}
         />
       </div>
     </div>
