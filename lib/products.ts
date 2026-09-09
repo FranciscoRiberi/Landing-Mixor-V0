@@ -40,6 +40,7 @@ export const altMap: Record<string, string> = {
   "Micrófono Voz":   "Próximo Micrófono Mixor Voz - Accesorios tecnológicos mayoristas",
   "Lámpara Motivos": "Próxima Lámpara Mixor Motivos - Accesorios tecnológicos mayoristas",
   "Reloj Sueño":     "Reloj Despertador Mixor Sueño Bluetooth LED Luz Ambiental - Mayorista Argentina",
+  "Mouse Ágil":      "Mouse Mixor Ágil USB-A con Cable Ergonómico - Mayorista Argentina",
 };
 
 export function getProductAlt(name: string): string {
@@ -47,7 +48,13 @@ export function getProductAlt(name: string): string {
 }
 
 // Helper: Generar datos de casos de uso por categoría
-export function getUseCases(category: string): string[] {
+export function getUseCases(category: string, name?: string): string[] {
+  // El mouse no comparte los usos del resto de los accesorios (soportes,
+  // infladores): es un periferico de computadora.
+  if (name === "Mouse Ágil") {
+    return ["Trabajo de oficina", "Estudio", "Uso hogareño", "Notebook y escritorio"];
+  }
+
   const cases: Record<string, string[]> = {
     parlantes: ["Fiestas y eventos", "Espacios al aire libre", "Uso diario en casa", "Viajes y campings"],
     smartwatch: ["Monitoreo de salud", "Entrenamiento deportivo", "Vida diaria", "Seguimiento de sueño"],
@@ -126,7 +133,7 @@ export function getCareGuide(category: string, name?: string): string[] {
  * eso: se enchufan y listo.
  */
 function isCableado(name: string): boolean {
-  return name === "Manos Libres Reencuentro";
+  return name === "Manos Libres Reencuentro" || name === "Mouse Ágil";
 }
 
 // Helper: Compatibilidades por tipo
@@ -160,6 +167,9 @@ export function getCompatibility(category: string, name: string): string[] {
     if (name === "Cargador Sinergia") return ["12V/24V vehículos", "Smartphones", "Tablets", "Dispositivos USB-C PD"];
     if (name.includes("Auto")) return ["12V/24V vehículos", "Smartphones", "Tablets", "Accesorios USB"];
     return ["Smartphones", "Tablets", "Smartwatch", "Auriculares"];
+  }
+  if (name === "Mouse Ágil") {
+    return ["PC de escritorio", "Notebooks", "Windows y macOS", "Puerto USB-A"];
   }
   return ["Múltiples dispositivos"];
 }
@@ -226,6 +236,27 @@ export const products = [
       { icon: Battery, title: "Batería de 1200mAh", description: "Autonomía para que la música no pare durante toda la jornada, sin depender del enchufe." },
       { icon: Wifi, title: "Bluetooth 5.3 y Multiformato", description: "Conexión inalámbrica de última generación, más Radio FM, entrada USB y lector de tarjeta TF para reproducir desde donde quieras." },
       { icon: Lightbulb, title: "Tela de Silicona con LED", description: "Revestimiento de tela de silicona resistente e iluminación LED integrada. Disponible en negro, beige, azul y rojo." },
+    ],
+  },
+  // Specs pendientes: DPI, largo del cable y cantidad exacta de botones. Las
+  // features describen solo lo verificable en la foto y el dato de conector.
+  {
+    id: 43,
+    name: "Mouse Ágil",
+    category: "accesorios",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00JW",
+    kit: "Kit x 100 unidades",
+    image: "/images/mouse-mixor-agil-usb-con-cable-mayorista.webp",
+    modalImage: "/images/mouse-mixor-agil-modal-usb-con-cable.webp",
+    description: "Mouse con cable y conexión USB-A, de diseño ergonómico y rueda de desplazamiento. Se enchufa y funciona, sin drivers ni pilas.",
+    features: [
+      { icon: Usb, title: "Conexión USB-A", description: "Se enchufa a cualquier puerto USB tipo A y queda listo para usar. No necesita drivers, pilas ni emparejamiento por Bluetooth." },
+      { icon: Laptop, title: "Para PC y Notebook", description: "Funciona en computadoras de escritorio y notebooks sin instalar programas, así que sirve para oficina, estudio y uso hogareño." },
+      { icon: Sparkles, title: "Diseño Ergonómico", description: "Cuerpo contorneado con apoyo lateral y textura antideslizante, pensado para un agarre cómodo durante jornadas largas." },
+      { icon: Settings, title: "Rueda de Desplazamiento", description: "Rueda central para moverte por documentos y páginas web sin soltar el mouse." },
     ],
   },
   {

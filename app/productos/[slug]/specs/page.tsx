@@ -89,7 +89,7 @@ export default async function ProductSpecsPage({
           title: f.title,
           description: f.description,
         })),
-        useCases: getUseCases(product.category),
+        useCases: getUseCases(product.category, product.name),
         includes: getIncludes(product.name, product.category),
         care: getCareGuide(product.category, product.name),
         compatibility: getCompatibility(product.category, product.name),
