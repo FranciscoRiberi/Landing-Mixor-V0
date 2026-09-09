@@ -249,8 +249,9 @@ export const products = [
     arrivedAt: "Recién llegado",
     code: "MODM-00JW",
     kit: "Kit x 100 unidades",
+    // La foto suelta va en el catalogo; la caja, en la ficha de caracteristicas.
     image: "/images/mouse-mixor-agil-usb-con-cable-mayorista.webp",
-    modalImage: "/images/mouse-mixor-agil-modal-usb-con-cable.webp",
+    modalImage: "/images/mouse-mixor-agil-modal-packaging-caja.webp",
     description: "Mouse con cable y conexión USB-A, de diseño ergonómico y rueda de desplazamiento. Se enchufa y funciona, sin drivers ni pilas.",
     features: [
       { icon: Usb, title: "Conexión USB-A", description: "Se enchufa a cualquier puerto USB tipo A y queda listo para usar. No necesita drivers, pilas ni emparejamiento por Bluetooth." },
