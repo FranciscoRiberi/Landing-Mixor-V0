@@ -1,6 +1,7 @@
 import { Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
 export const altMap: Record<string, string> = {
+  "Parlante Eco": "Parlante inalámbrico MIXOR ECO con luces LED, Bluetooth, Radio FM, USB y SD/TF - MODM-00N5 - Kit de 16 unidades",
   "Parlante Clave": "Parlante inalámbrico MIXOR CLAVE negro con luces LED, Bluetooth, FM, USB y SD/TF - Kit mayorista de 8 unidades",
   "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto 10W 3'' LED 4 colores - Mayorista Argentina",
   "Parlante Impetu":    "Parlante Bluetooth Mixor Ímpetu 20W RGB - Mayorista Argentina",
@@ -50,6 +51,9 @@ export function getProductAlt(name: string): string {
 
 // Helper: Generar datos de casos de uso por categoría
 export function getUseCases(category: string, name?: string): string[] {
+  if (name === "Parlante Eco") {
+    return ["Reproducción inalámbrica por Bluetooth", "Radio FM", "Reproducción por USB", "Reproducción desde tarjeta SD/TF"];
+  }
   // El mouse no comparte los usos del resto de los accesorios (soportes,
   // infladores): es un periferico de computadora.
   if (name === "Mouse Ágil") {
@@ -69,6 +73,9 @@ export function getUseCases(category: string, name?: string): string[] {
 
 // Helper: Generar contenido de cuidados por categoría
 export function getCareGuide(category: string, name?: string): string[] {
+  if (name === "Parlante Eco") {
+    return ["Para indicaciones de uso y cuidado de este modelo, consultá a Mixor."];
+  }
   // Los auriculares con cable no tienen bateria ni estuche: los cuidados pasan
   // por el cable y la ficha, no por la carga.
   if (category === "auriculares" && name && isCableado(name)) {
@@ -139,6 +146,7 @@ function isCableado(name: string): boolean {
 
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
+  if (name === "Parlante Eco") return ["Bluetooth", "Puerto USB", "Tarjeta SD/TF"];
   if (category === "cables") {
     if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno" || name === "Cable Núcleo") {
       return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
@@ -177,8 +185,8 @@ export function getCompatibility(category: string, name: string): string[] {
 
 // Helper: Qué incluye (basado en foto/info - SIN INVENTAR)
 export function getIncludes(name: string, category: string): string[] {
-  // CLAVE: incluir únicamente lo confirmado para este modelo.
-  if (name === "Parlante Clave") return [name, "Cable de carga"];
+  // Incluir únicamente los accesorios confirmados para estos modelos.
+  if (name === "Parlante Clave" || name === "Parlante Eco") return [name, "Cable de carga"];
   const includes: string[] = [name];
 
   // Agregar cable de carga solo para productos que NO son cables ni cargadores.
@@ -220,6 +228,33 @@ export const categories = [
 ];
 
 export const products = [
+  {
+    id: 45,
+    name: "Parlante Eco",
+    category: "parlantes",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00N5",
+    kit: "Kit x 16 unidades",
+    image: "/images/parlante-mixor-eco-blanco.webp",
+    modalImage: "/images/parlante-mixor-eco-packaging-blanco.webp",
+    description: "Parlante inalámbrico con conexión Bluetooth, luces LED, Radio FM, puerto USB y puerto SD/TF. Batería de alto rendimiento y cable de carga incluido. Unidad de altavoz: 6 × 5 pulgadas, según el empaque. Kit mayorista de 16 unidades.",
+    // Transcripción del empaque: no inferir potencia, autonomía, capacidad de
+    // batería ni versión Bluetooth. Conservar «6x5″» sin interpretarlo como
+    // cantidad de parlantes. El código comercial fue confirmado por el usuario.
+    features: [
+      { icon: Wifi, title: "Conexión inalámbrica BT", description: "Conexión inalámbrica Bluetooth." },
+      { icon: Battery, title: "Batería de alto rendimiento", description: "Batería de alto rendimiento, según la información del empaque." },
+      { icon: Usb, title: "Puerto SD/TF", description: "Puerto para tarjeta SD/TF." },
+      { icon: Zap, title: "Cable de carga", description: "Cable de carga incluido." },
+      { icon: Usb, title: "Puerto USB", description: "Puerto USB para reproducción multimedia." },
+      { icon: Lightbulb, title: "Luces LED", description: "Luces LED integradas." },
+      { icon: Radio, title: "Radio FM", description: "Radio FM integrada." },
+      { icon: Volume2, title: "Unidad de altavoz: 6 × 5 pulgadas", description: "Dato impreso en el empaque: 6x5″." },
+      { icon: Shield, title: "Origen", description: "Hecho en China." },
+    ],
+  },
   {
     id: 44,
     name: "Parlante Clave",
