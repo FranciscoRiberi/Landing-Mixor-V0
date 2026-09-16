@@ -1,6 +1,7 @@
 import { Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
 export const altMap: Record<string, string> = {
+  "Parlante Clave": "Parlante inalámbrico MIXOR CLAVE negro con luces LED, Bluetooth, FM, USB y SD/TF - Kit mayorista de 8 unidades",
   "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto 10W 3'' LED 4 colores - Mayorista Argentina",
   "Parlante Impetu":    "Parlante Bluetooth Mixor Ímpetu 20W RGB - Mayorista Argentina",
   "Parlante Latido":   "Parlante Portátil Mixor Latido Bluetooth 5.1 - Importador directo",
@@ -176,6 +177,8 @@ export function getCompatibility(category: string, name: string): string[] {
 
 // Helper: Qué incluye (basado en foto/info - SIN INVENTAR)
 export function getIncludes(name: string, category: string): string[] {
+  // CLAVE: incluir únicamente lo confirmado para este modelo.
+  if (name === "Parlante Clave") return [name, "Cable de carga"];
   const includes: string[] = [name];
 
   // Agregar cable de carga solo para productos que NO son cables ni cargadores.
@@ -217,6 +220,29 @@ export const categories = [
 ];
 
 export const products = [
+  {
+    id: 44,
+    name: "Parlante Clave",
+    category: "parlantes",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00N4",
+    kit: "Kit x 8 unidades",
+    image: "/images/parlante-mixor-clave-led-mayorista.webp",
+    modalImage: "/images/parlante-mixor-clave-packaging.webp",
+    description: "Parlante portátil inalámbrico con Bluetooth, luces LED, Radio FM, puerto USB y lector SD/TF. Batería recargable de alto rendimiento y cable de carga incluido. Color negro. Kit mayorista de 8 unidades.",
+    variants: ["Negro"],
+    // No se informan potencia, autonomía, versión de Bluetooth ni capacidad
+    // de batería: esos datos no están confirmados para este modelo.
+    features: [
+      { icon: Wifi, title: "Conexión Bluetooth", description: "Reproducción inalámbrica para disfrutar de tu música sin conectar un cable de audio." },
+      { icon: Lightbulb, title: "Luces LED integradas", description: "Diseño negro con rejilla frontal doble, barra LED central y detalles laterales iluminados." },
+      { icon: Radio, title: "Radio FM, USB y SD/TF", description: "Opciones de reproducción multimedia con Radio FM, puerto USB y lector de tarjeta SD/TF." },
+      { icon: Battery, title: "Batería recargable", description: "Batería de alto rendimiento para uso portátil. Incluye cable de carga." },
+      { icon: Volume2, title: "Unidad de altavoz: 3 × 4 pulgadas", description: "Unidad de altavoz de 3 × 4 pulgadas, según la información suministrada del producto." },
+    ],
+  },
   {
     id: 39,
     name: "Parlante Impacto",

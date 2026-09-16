@@ -141,7 +141,7 @@ export function ProductsCatalog({ isMundial = false }: { isMundial?: boolean }) 
               return (
                 <div
                   key={product.id}
-                  className={`fx-spotlight group relative flex flex-col rounded-2xl bg-zinc-900/40 border border-white/10 overflow-hidden transition-all duration-500 ${accent.cardHover} hover-lift`}
+                  className={`fx-spotlight group relative flex flex-col rounded-2xl bg-zinc-900/40 border border-white/10 overflow-hidden transition-all duration-500 ${accent.cardHover} hover-lift focus-within:ring-2 focus-within:ring-inset focus-within:ring-white`}
                 >
                   {/* Image */}
                   <div className="relative aspect-square block overflow-hidden">
@@ -185,7 +185,8 @@ export function ProductsCatalog({ isMundial = false }: { isMundial?: boolean }) 
                       {!isComingSoon ? (
                         <Link
                           href={`/productos/${slug}`}
-                          className={`inline-flex items-center gap-1.5 text-xs font-semibold text-white ${accent.linkHover} transition-colors`}
+                          aria-label={`Conocer más sobre ${product.name}`}
+                          className={`inline-flex items-center gap-1.5 text-xs font-semibold text-white ${accent.linkHover} transition-colors after:absolute after:inset-0 after:z-10 after:content-['']`}
                         >
                           <Sliders size={13} />
                           Conocer más
