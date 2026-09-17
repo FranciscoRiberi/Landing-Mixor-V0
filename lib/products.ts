@@ -1,7 +1,7 @@
 import { Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
 export const altMap: Record<string, string> = {
-  "Parlante Eco": "Parlante inalámbrico MIXOR ECO con luces LED, Bluetooth, Radio FM, USB y SD/TF - MODM-00N5 - Kit de 16 unidades",
+  "Parlante Eco":      "Parlante Inalámbrico Mixor Eco Luces LED Bluetooth Radio FM USB y SD/TF - Mayorista Argentina",
   "Parlante Clave": "Parlante inalámbrico MIXOR CLAVE negro con luces LED, Bluetooth, FM, USB y SD/TF - Kit mayorista de 8 unidades",
   "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto 10W 3'' LED 4 colores - Mayorista Argentina",
   "Parlante Impetu":    "Parlante Bluetooth Mixor Ímpetu 20W RGB - Mayorista Argentina",
@@ -239,7 +239,7 @@ export const products = [
     kit: "Kit x 16 unidades",
     image: "/images/parlante-mixor-eco-blanco.webp",
     modalImage: "/images/parlante-mixor-eco-packaging-blanco.webp",
-    description: "Parlante inalámbrico con conexión Bluetooth, luces LED, Radio FM, puerto USB y puerto SD/TF. Batería de alto rendimiento y cable de carga incluido. Unidad de altavoz: 6 × 5 pulgadas, según el empaque. Kit mayorista de 16 unidades.",
+    description: "Parlante inalámbrico con conexión Bluetooth, luces LED, Radio FM, puerto USB y puerto SD/TF. Batería de alto rendimiento y cable de carga incluido. Unidad de altavoz: 6 × 5 pulgadas, según el empaque.",
     // Transcripción del empaque: no inferir potencia, autonomía, capacidad de
     // batería ni versión Bluetooth. Conservar «6x5″» sin interpretarlo como
     // cantidad de parlantes. El código comercial fue confirmado por el usuario.
