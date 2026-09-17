@@ -30,7 +30,7 @@ const secondarySocials = [
     label: "Seguinos en Facebook",
   },
   {
-    // Contacto general del sitio (German), decidido aparte de los asesores
+    // Contacto general del sitio (Cynthia), decidido aparte de los asesores
     // que se eligen en los formularios.
     href: "https://wa.me/5491158979196",
     icon: MessageCircle,
