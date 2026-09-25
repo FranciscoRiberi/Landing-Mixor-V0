@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight, ShoppingBag, MessageCircle } from "lucide-react";
 import { MundialConfetti, ArgentinaFlag } from "./mundial-confetti";
 
+// El primero queda fijo al tope de la lista y preseleccionado; el resto se
+// baraja en cada carga para repartir los contactos. Para que vuelvan a rotar
+// todos por igual, mover a Nicolas abajo y barajar el array entero.
 const salesAdvisors = [
+  { name: "Nicolas", phone: "+5493513243572" },
   { name: "Alejandra", phone: "+5491137994825" },
   { name: "Marcelo", phone: "+5493518698065" },
   { name: "Cynthia", phone: "+5491158979196" },
@@ -131,9 +135,10 @@ export function OrderSection({ isMundial = false }: { isMundial?: boolean }) {
   });
 
   useEffect(() => {
-    const shuffled = [...salesAdvisors].sort(() => Math.random() - 0.5);
-    setAsesoresAleatorios(shuffled);
-    setFormData(prev => ({ ...prev, advisor: shuffled[0].name }));
+    const [fijo, ...rotativos] = salesAdvisors;
+    const orden = [fijo, ...rotativos.slice().sort(() => Math.random() - 0.5)];
+    setAsesoresAleatorios(orden);
+    setFormData(prev => ({ ...prev, advisor: orden[0].name }));
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
