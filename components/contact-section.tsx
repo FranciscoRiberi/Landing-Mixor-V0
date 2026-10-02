@@ -5,11 +5,9 @@ import React from "react"
 import { useState, useEffect } from "react";
 import { ArrowRight, FileText, MessageCircle } from "lucide-react";
 
-// El primero queda fijo al tope de la lista y preseleccionado; el resto se
-// baraja en cada carga para repartir los contactos. Para que vuelvan a rotar
-// todos por igual, mover a Nicolas abajo y barajar el array entero.
+// Los tres rotan por igual: el orden se baraja en cada carga y el primero del
+// sorteo queda preseleccionado, para repartir los contactos de forma pareja.
 const salesAdvisors = [
-  { name: "Nicolas", phone: "+5493513243572" },
   { name: "Alejandra", phone: "+5491137994825" },
   { name: "Marcelo", phone: "+5493518698065" },
   { name: "Cynthia", phone: "+5491158979196" },
@@ -55,8 +53,7 @@ export function ContactSection() {
   });
 
   useEffect(() => {
-    const [fijo, ...rotativos] = salesAdvisors;
-    const orden = [fijo, ...rotativos.slice().sort(() => Math.random() - 0.5)];
+    const orden = [...salesAdvisors].sort(() => Math.random() - 0.5);
     setAsesoresAleatorios(orden);
     setFormData(prev => ({ ...prev, advisor: orden[0].name }));
   }, []);
