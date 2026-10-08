@@ -32,7 +32,8 @@ const secondarySocials = [
   {
     // Contacto general del sitio (Cynthia), decidido aparte de los asesores
     // que se eligen en los formularios.
-    href: "https://wa.me/5491158979196",
+    // anterior: https://wa.me/5491158979196
+    href: "https://wa.me/5493518127368",
     icon: MessageCircle,
     label: "Escribinos por WhatsApp",
   },
