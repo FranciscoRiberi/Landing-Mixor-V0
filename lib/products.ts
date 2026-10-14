@@ -236,7 +236,7 @@ export const products = [
     isNew: true,
     arrivedAt: "Recién llegado",
     code: "MODM-00N5",
-    kit: "Kit x 16 unidades",
+    kit: "Kit x 12 unidades",
     image: "/images/parlante-mixor-eco-blanco.webp",
     modalImage: "/images/parlante-mixor-eco-packaging-blanco.webp",
     description: "Parlante inalámbrico con conexión Bluetooth, luces LED, Radio FM, puerto USB y puerto SD/TF. Batería de alto rendimiento y cable de carga incluido. Unidad de altavoz: 6 × 5 pulgadas, según el empaque.",
