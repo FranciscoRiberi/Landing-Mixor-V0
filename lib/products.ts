@@ -39,6 +39,7 @@ export const altMap: Record<string, string> = {
   "Inflador Ruta":   "Inflador Portátil Mixor Ruta 4000mAh Digital - Mayorista Argentina",
   "Holder Atrae":    "Soporte Magnético Mixor Atrae 360° Universal - Importador directo Argentina",
   "Cargador Nexo":   "Cargador Universal Notebook Mixor Nexo 9 Pines - Mayorista Argentina",
+  "Cargador Fuente": "Cargador Notebook Mixor Fuente 90W Automático 8 Conectores Universales - Mayorista Argentina",
   "Micrófono Voz":   "Próximo Micrófono Mixor Voz - Accesorios tecnológicos mayoristas",
   "Lámpara Motivos": "Próxima Lámpara Mixor Motivos - Accesorios tecnológicos mayoristas",
   "Reloj Sueño":     "Reloj Despertador Mixor Sueño Bluetooth LED Luz Ambiental - Mayorista Argentina",
@@ -58,6 +59,9 @@ export function getUseCases(category: string, name?: string): string[] {
   // infladores): es un periferico de computadora.
   if (name === "Mouse Ágil") {
     return ["Trabajo de oficina", "Estudio", "Uso hogareño", "Notebook y escritorio"];
+  }
+  if (name && isCargadorNotebook(name)) {
+    return ["Reemplazo del cargador original", "Hogar", "Oficina", "Reventa para servicio técnico"];
   }
 
   const cases: Record<string, string[]> = {
@@ -144,6 +148,11 @@ function isCableado(name: string): boolean {
   return name === "Manos Libres Reencuentro" || name === "Mouse Ágil";
 }
 
+// Los textos genericos de "cargadores" hablan de celulares y autos.
+function isCargadorNotebook(name: string): boolean {
+  return name === "Cargador Nexo" || name === "Cargador Fuente";
+}
+
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
   if (name === "Parlante Eco") return ["Bluetooth", "Puerto USB", "Tarjeta SD/TF"];
@@ -172,6 +181,8 @@ export function getCompatibility(category: string, name: string): string[] {
     return ["Todos los Bluetooth 4.0+", "Android e iOS", "PC y notebooks", "Gaming consoles"];
   }
   if (category === "cargadores") {
+    if (name === "Cargador Fuente") return ["Notebooks con conector de punta (8 medidas)", "Red eléctrica 100-240V"];
+    if (isCargadorNotebook(name)) return ["Notebooks de distintas marcas", "Red eléctrica 220V"];
     if (name.includes("PD")) return ["Laptops USB-C", "Tablets", "Smartphones", "Otros dispositivos PD"];
     if (name === "Cargador Sinergia") return ["12V/24V vehículos", "Smartphones", "Tablets", "Dispositivos USB-C PD"];
     if (name.includes("Auto")) return ["12V/24V vehículos", "Smartphones", "Tablets", "Accesorios USB"];
@@ -211,6 +222,9 @@ export function getIncludes(name: string, category: string): string[] {
   if (name === "Cargador Quiero") {
     includes.push("Cable Tipo-C");
   }
+  if (name === "Cargador Fuente") {
+    includes.push("Cable de alimentación", "8 conectores intercambiables");
+  }
 
   // Agregar garantía (todos 90 días)
   includes.push("Garantía 90 días");
@@ -228,6 +242,29 @@ export const categories = [
 ];
 
 export const products = [
+  {
+    id: 46,
+    name: "Cargador Fuente",
+    category: "cargadores",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00KZ",
+    kit: "Kit x 50 unidades",
+    image: "/images/cargador-notebook-mixor-fuente-90w-8-conectores-mayorista.webp",
+    modalImage: "/images/cargador-notebook-mixor-fuente-90w-8-conectores-mayorista.webp",
+    description: "Cargador automático universal para notebook, con 8 conectores intercambiables. Funciona con entrada de 100-240V y tiene carcasa de plástico ignífugo.",
+    // El sistema dice salida 5/10/18V pero 18V x 4A no da los 90W de la caja:
+    // no publicar voltajes de salida hasta que se confirmen.
+    features: [
+      { icon: Laptop, title: "Universal para Notebooks", description: "Carga automática compatible con la mayoría de las notebooks." },
+      { icon: Sparkles, title: "8 Conectores Universales", description: "Incluye 8 puntas intercambiables con organizador para adaptarse a distintos modelos." },
+      { icon: Settings, title: "Cargador Automático", description: "Ajusta el voltaje automáticamente, sin selector manual." },
+      { icon: Zap, title: "Potencia 90W", description: "90W de potencia y 4A de corriente de salida." },
+      { icon: Gauge, title: "Entrada 100-240V", description: "Funciona con cualquier red eléctrica de 100-240V, 50-60Hz." },
+      { icon: Shield, title: "Plástico Ignífugo", description: "Carcasa de material resistente al fuego." },
+    ],
+  },
   {
     id: 45,
     name: "Parlante Eco",
@@ -771,7 +808,7 @@ export const products = [
   {
     id: 30,
     name: "Cargador Nexo",
-    category: "accesorios",
+    category: "cargadores",
     price: "Consultar",
     code: "MODM-300",
     kit: "Kit x 50 unidades",
