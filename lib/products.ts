@@ -1,6 +1,7 @@
 import { Volume2, Sparkles, Wifi, Battery, Radio, Zap, Usb, Lightbulb, Mic, Settings, Watch, Activity, Heart, Phone, Shield, Car, Gauge, Laptop } from "lucide-react";
 
 export const altMap: Record<string, string> = {
+  "Parlante Óptimo":   "Parlante Portátil Mixor Óptimo 8'' 10W LED Bluetooth con Micrófono para Karaoke - Mayorista Argentina",
   "Parlante Eco":      "Parlante Inalámbrico Mixor Eco Luces LED Bluetooth Radio FM USB y SD/TF - Mayorista Argentina",
   "Parlante Clave": "Parlante inalámbrico MIXOR CLAVE negro con luces LED, Bluetooth, FM, USB y SD/TF - Kit mayorista de 8 unidades",
   "Parlante Impacto":  "Parlante Bluetooth Mixor Impacto 10W 3'' LED 4 colores - Mayorista Argentina",
@@ -62,6 +63,9 @@ export function getUseCases(category: string, name?: string): string[] {
   }
   if (name && isCargadorNotebook(name)) {
     return ["Reemplazo del cargador original", "Hogar", "Oficina", "Reventa para servicio técnico"];
+  }
+  if (name === "Parlante Óptimo") {
+    return ["Reuniones", "Fiestas", "Karaoke en casa", "Perifoneo"];
   }
 
   const cases: Record<string, string[]> = {
@@ -156,6 +160,7 @@ function isCargadorNotebook(name: string): boolean {
 // Helper: Compatibilidades por tipo
 export function getCompatibility(category: string, name: string): string[] {
   if (name === "Parlante Eco") return ["Bluetooth", "Puerto USB", "Tarjeta SD/TF"];
+  if (name === "Parlante Óptimo") return ["Bluetooth", "Radio FM", "USB y tarjeta TF", "Entrada auxiliar (AUX)", "Micrófono"];
   if (category === "cables") {
     if (name.includes("Tipo-C") || name.includes("USB-C") || name === "Cable Pleno" || name === "Cable Núcleo") {
       return ["Android (todos los modelos)", "iPad y tablets USB-C", "Notebooks USB-C", "Cámaras digitales"];
@@ -198,6 +203,8 @@ export function getCompatibility(category: string, name: string): string[] {
 export function getIncludes(name: string, category: string): string[] {
   // Incluir únicamente los accesorios confirmados para estos modelos.
   if (name === "Parlante Clave" || name === "Parlante Eco") return [name, "Cable de carga"];
+  // Segun el sistema la caja no trae cable de carga.
+  if (name === "Parlante Óptimo") return [name, "Micrófono con cable", "Manual de usuario", "Garantía 90 días"];
   const includes: string[] = [name];
 
   // Agregar cable de carga solo para productos que NO son cables ni cargadores.
@@ -242,6 +249,28 @@ export const categories = [
 ];
 
 export const products = [
+  {
+    id: 47,
+    name: "Parlante Óptimo",
+    category: "parlantes",
+    price: "Consultar",
+    isNew: true,
+    arrivedAt: "Recién llegado",
+    code: "MODM-00U7",
+    kit: "Kit x 10 unidades",
+    image: "/images/parlante-mixor-optimo-8-pulgadas-10w-microfono-mayorista.webp",
+    modalImage: "/images/parlante-mixor-optimo-8-pulgadas-10w-microfono-mayorista.webp",
+    description: "Parlante portátil de 8'' con 10W RMS, luces LED y micrófono con cable incluido. Bluetooth, radio FM, USB, tarjeta TF y entrada auxiliar, ideal para reuniones, fiestas y karaoke.",
+    features: [
+      { icon: Volume2, title: "Woofer 8'' y 10W RMS", description: "Woofer de 8 pulgadas y 10W RMS para un audio claro y con buena definición." },
+      { icon: Mic, title: "Micrófono Incluido", description: "Micrófono con cable, ideal para karaoke o perifoneo." },
+      { icon: Lightbulb, title: "Luces LED", description: "El woofer tiene efectos de luces LED dinámicas." },
+      { icon: Wifi, title: "Bluetooth y Radio FM", description: "Música inalámbrica por Bluetooth y radio FM integrada." },
+      { icon: Usb, title: "USB, TF y AUX", description: "Reproduce desde pendrive o tarjeta TF, y tiene entrada auxiliar." },
+      { icon: Battery, title: "Batería Recargable", description: "Batería de litio de 3.7V y 1200mAh." },
+      { icon: Sparkles, title: "Portátil", description: "Diseño compacto con manija, sin trolley ni ruedas." },
+    ],
+  },
   {
     id: 46,
     name: "Cargador Fuente",
