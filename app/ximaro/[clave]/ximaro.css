@@ -1,0 +1,249 @@
+/* Página privada Mixor × Ximaro. Línea gráfica del evento: rojo profundo con
+   luz desde la izquierda, grotesca pesada y franja blanca al pie.
+   Todo vive bajo .xm para no tocar el resto del sitio. */
+
+.xm {
+  --xm-red: #c11f29;
+  --xm-red-ink: #a3171f;
+  --xm-red-deep: #7f131b;
+  --xm-band: #f8f8f6;
+  --xm-white: #ffffff;
+  --xm-ink: #141414;
+  --xm-ink-2: #3f3d3b;
+  --xm-mute: #7b7774;
+  --xm-line: rgba(20, 20, 20, 0.1);
+  --xm-line-strong: rgba(20, 20, 20, 0.2);
+  --xm-wa: #25d366;
+  --xm-gutter: 20px;
+
+  font-family: var(--xm-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--xm-ink);
+  background: var(--xm-red-deep);
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 768px) {
+  .xm {
+    --xm-gutter: 40px;
+  }
+}
+@media (min-width: 1280px) {
+  .xm {
+    --xm-gutter: calc((100vw - 1200px) / 2 + 40px);
+  }
+}
+
+/* El fondo de la pieza: rojo con luz cálida a la izquierda y viñeta oscura. */
+.xm-rojo {
+  color: #fff;
+  background:
+    radial-gradient(55% 38% at 12% 46%, rgba(222, 92, 72, 0.55), transparent 72%),
+    radial-gradient(70% 50% at 85% 70%, rgba(205, 34, 44, 0.55), transparent 70%),
+    radial-gradient(120% 70% at 50% 0%, transparent 40%, rgba(90, 10, 16, 0.55) 100%),
+    linear-gradient(172deg, #86141c 0%, #a3171f 20%, #c11f29 52%, #b21c25 78%, #8e151c 100%);
+}
+/* Luz cálida que sigue al mouse en la portada. */
+.xm-pointer-glow {
+  background: radial-gradient(520px circle at var(--x, 22%) var(--y, 46%), rgba(255, 160, 140, 0.16), transparent 62%);
+}
+
+/* Haz de luz diagonal, como el de la pieza. */
+.xm-haz {
+  background: linear-gradient(
+    152deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.07) 46%,
+    rgba(255, 255, 255, 0.02) 54%,
+    transparent 62%
+  );
+}
+
+.xm-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) {
+  .xm-container {
+    padding-inline: 40px;
+  }
+}
+
+/* La palabra gigante: grotesca negrísima. */
+.xm-display {
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+/* Blanco con el degradé y la sombra de «CARGA». */
+.xm-chrome {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 42%, #ece6e4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.xm-chrome-shadow {
+  filter: drop-shadow(0 8px 18px rgba(70, 6, 10, 0.35));
+}
+
+/* Línea chica bien espaciada: «ESTACIÓN DE», «LEYENDA». */
+.xm-tracked {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+/* Etiquetas: «ACCESORIOS TECNOLÓGICOS», «CARGADOR PD · 65 W». */
+.xm-caps {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+@keyframes xm-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.xm-spin {
+  animation: xm-spin 24s linear infinite;
+}
+
+/* Vale troquelado: las muescas se recortan con máscara, así se ve el fondo que haya. */
+.xm-vale {
+  --stub: 62px;
+  position: relative;
+  color: var(--xm-ink);
+  background: var(--xm-white);
+  border-radius: 20px;
+  -webkit-mask:
+    radial-gradient(circle 11px at var(--stub) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle 11px at var(--stub) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+  mask:
+    radial-gradient(circle 11px at var(--stub) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle 11px at var(--stub) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+}
+@media (min-width: 640px) {
+  .xm-vale {
+    --stub: 78px;
+  }
+}
+.xm-vale-sombra {
+  filter: drop-shadow(0 30px 40px rgba(60, 4, 8, 0.45));
+}
+.xm-vale-perf {
+  border-left: 2px dashed var(--xm-line-strong);
+}
+.xm-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* La tarjeta del pase: blanca, como el cargador de la pieza. */
+.xm-pass {
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(193, 31, 41, 0.1), transparent 55%),
+    linear-gradient(165deg, #ffffff 0%, #f6f4f2 60%, #ebe7e4 100%);
+  transform-style: preserve-3d;
+}
+.xm-holo-idle {
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.55) 47%, transparent 58%);
+  background-size: 260% 100%;
+  animation: xm-holo 6s ease-in-out infinite;
+}
+@keyframes xm-holo {
+  0%,
+  100% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0% 0;
+  }
+}
+/* Sombra que «apoya» el objeto, como debajo del cargador. */
+.xm-piso {
+  background: radial-gradient(closest-side, rgba(60, 4, 8, 0.55), transparent);
+}
+
+/* Shimmer — un reflejo que cruza el botón cada tanto (Magic UI, vía 21st.dev). */
+.xm-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: xm-shine 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.xm-shine-red::after {
+  background: linear-gradient(110deg, transparent 30%, rgba(193, 31, 41, 0.14) 50%, transparent 70%);
+}
+@keyframes xm-shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  85%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* Código de barras del talón. */
+.xm-barcode-v {
+  background: repeating-linear-gradient(
+    0deg,
+    var(--xm-ink) 0 2px,
+    transparent 2px 4px,
+    var(--xm-ink) 4px 5px,
+    transparent 5px 8px,
+    var(--xm-ink) 8px 11px,
+    transparent 11px 12px,
+    var(--xm-ink) 12px 13px,
+    transparent 13px 16px
+  );
+}
+
+/* Franja con texto que corre. */
+.xm-tape-track {
+  display: flex;
+  width: max-content;
+  animation: xm-marquee 36s linear infinite;
+}
+@keyframes xm-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.xm-rail {
+  scrollbar-width: none;
+}
+.xm-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes xm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.xm-rise {
+  animation: xm-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xm-rise,
+  .xm-spin,
+  .xm-holo-idle,
+  .xm-shine::after,
+  .xm-tape-track {
+    animation: none;
+  }
+}
