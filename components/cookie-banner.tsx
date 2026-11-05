@@ -1,7 +1,9 @@
 "use client"
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 
 export function CookieBanner() {
+  const pathname = usePathname()
   const [visible, setVisible] = useState(false)
   const [marketing, setMarketing] = useState(true)
   const [feedback, setFeedback] = useState<"accepted" | "rejected" | null>(null)
@@ -52,7 +54,8 @@ export function CookieBanner() {
     setTimeout(() => setVisible(false), 3500)
   }
 
-  if (!visible) return null
+  // En la encuesta del evento taparía el botón de votar y las pantallas del salón.
+  if (!visible || pathname.startsWith("/elegi")) return null
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6">

@@ -1,0 +1,51 @@
+/* Encuesta del cable: la línea del evento con identidad tucumana.
+   Usa las variables y clases de ximaro.css. */
+
+/* La letra a mano de la tarjeta del evento. */
+.xm-mano {
+  font-family: var(--xm-mano), cursive;
+  font-weight: 700;
+}
+
+/* Letra con degradé: el espacio extra evita que se corten los acentos de AZÚCAR. */
+.xm-letra {
+  padding-top: 0.24em;
+  margin-top: -0.24em;
+}
+
+/* Guarda inspirada en la randa, el encaje tradicional tucumano. */
+.xm-randa {
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='white' stroke-opacity='.6'%3E%3Cpath d='M0 12 12 0l12 12-12 12zM24 12 36 0l12 12-12 12z'/%3E%3Cpath d='M6 12l6-6 6 6-6 6zM30 12l6-6 6 6-6 6z'/%3E%3C/g%3E%3Cg fill='white' fill-opacity='.8'%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3Ccircle cx='36' cy='12' r='2'/%3E%3Ccircle cx='24' cy='2' r='1.2'/%3E%3Ccircle cx='24' cy='22' r='1.2'/%3E%3C/g%3E%3C/svg%3E")
+    repeat-x center / 48px 24px;
+}
+.xm-randa-roja {
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23c11f29' stroke-opacity='.65'%3E%3Cpath d='M0 12 12 0l12 12-12 12zM24 12 36 0l12 12-12 12z'/%3E%3Cpath d='M6 12l6-6 6 6-6 6zM30 12l6-6 6 6-6 6z'/%3E%3C/g%3E%3Cg fill='%23c11f29' fill-opacity='.8'%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3Ccircle cx='36' cy='12' r='2'/%3E%3Ccircle cx='24' cy='2' r='1.2'/%3E%3Ccircle cx='24' cy='22' r='1.2'/%3E%3C/g%3E%3C/svg%3E")
+    repeat-x center / 48px 24px;
+}
+
+/* Flores de lapacho que caen. */
+.xm-petalo {
+  position: absolute;
+  top: -5%;
+  opacity: 0.9;
+  animation: xm-petalo linear infinite;
+}
+@keyframes xm-petalo {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(26px, 60vh, 0) rotate(180deg);
+  }
+  100% {
+    transform: translate3d(-10px, 120vh, 0) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xm-petalo {
+    display: none;
+  }
+}
