@@ -18,10 +18,10 @@ export const EVENTO = {
 // Todo contacto termina en Ximaro: en esta página Mixor no muestra su número.
 export const XIMARO = {
   nombre: "Ximaro",
-  /** Usuario de Instagram sin @. Pendiente. */
-  instagram: null as string | null,
-  /** WhatsApp con código de país, sin + ni espacios (ej. 5493811234567). Pendiente. */
-  whatsapp: null as string | null,
+  /** Usuario de Instagram sin @. */
+  instagram: "ximaromayorista" as string | null,
+  /** WhatsApp con código de país, sin + ni espacios. Es el de «clientes nuevos» de ximaro.com.ar (el otro, 5493816368026, es para clientes activos). */
+  whatsapp: "5493816292066" as string | null,
 };
 
 export const MENSAJE_BASE = "Hola Ximaro! Vengo del evento de Mixor en Tucumán";
@@ -42,50 +42,109 @@ export type Promo = {
   etiqueta: string;
   titulo: string;
   detalle: string;
-  /** Slugs de lib/products.ts que entran en la promo. */
+  /** Lo que trae el combo, tal como lo lee el cliente. */
+  items: string[];
+  /** Slugs de lib/products.ts que entran en la promo (para las fotos). */
   incluye: string[];
+  /** Precio del combo para el evento, ya con el descuento. */
+  precio: number;
+  /** Precio de lista del combo, sin descuento. */
+  precioLista: number;
   condicion: string;
   /** Mientras sea un ejemplo, el vale lo dice. Sacarlo cuando la promo esté confirmada. */
   borrador?: boolean;
 };
 
-// Ejemplos para armar la estructura: las promos reales las define Mixor.
+export const DESCUENTO_EVENTO = 0.05;
+const conDescuento = (lista: number) => Math.round(lista * (1 - DESCUENTO_EVENTO) * 100) / 100;
+
+export const formatoPrecio = (n: number) =>
+  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(n);
+
+// Combos de la planilla «Combos MIXOR Ximaro» (12/11/2026), con el 5 % menos para el evento.
 export const promos: Promo[] = [
   {
-    id: "combo",
-    etiqueta: "Combo",
-    titulo: "Combo del evento",
-    detalle: "Parlante, manos libres y cable en un solo pedido, con precio especial para los que vinieron.",
-    incluye: ["parlante-impacto", "manos-libres-reencuentro", "cable-nucleo"],
-    condicion: "Precio y vigencia a confirmar",
-    borrador: true,
+    id: "primer-contacto",
+    etiqueta: "Combo 1",
+    titulo: "Mixor primer contacto",
+    detalle: "Para empezar con lo que más sale: cargadores, cables y un auricular. Cinco productos.",
+    items: [
+      "Cargador Quiero 2 USB + cable V8",
+      "Cargador Somos 1 USB + cable Tipo C",
+      "Cable Intenso USB a V8",
+      "Cable Impulso Tipo C",
+      "Auricular Alegría",
+    ],
+    incluye: ["cargador-quiero", "cargador-somos", "cable-impulso"],
+    precioLista: 8436.69,
+    precio: conDescuento(8436.69),
+    condicion: "Inversión económica · 5 productos",
   },
   {
-    id: "parlantes",
-    etiqueta: "Audio",
-    titulo: "La familia de parlantes",
-    detalle: "Clave, Eco y Óptimo juntos para armar la góndola de audio de tu local.",
-    incluye: ["parlante-clave", "parlante-eco", "parlante-optimo"],
-    condicion: "Precio y vigencia a confirmar",
-    borrador: true,
+    id: "explora-mas",
+    etiqueta: "Combo 2",
+    titulo: "Mixor explorá más",
+    detalle: "Carga, cables y accesorios para armar un surtido completo de mostrador. Diez productos.",
+    items: [
+      "Cargador Verdad 45W Tipo C + cable",
+      "Cargador Realidad 2 USB + cable Tipo C",
+      "Cargador Realidad 45W 2 USB + cable V8",
+      "Cable Impulso Tipo C",
+      "Cable Intenso USB a V8",
+      "Auricular Emoción 3,5 mm",
+      "Soporte Atrae magnético",
+      "Mouse Ágil",
+      "Cable Eternidad Tipo C",
+      "Cable Vínculo Tipo C a Tipo C",
+    ],
+    incluye: ["cargador-verdad", "cargador-realidad", "holder-atrae", "mouse-agil"],
+    precioLista: 24567.41,
+    precio: conDescuento(24567.41),
+    condicion: "Inversión económica · 10 productos",
   },
   {
-    id: "carga",
-    etiqueta: "Carga",
-    titulo: "Kit carga rápida",
-    detalle: "Cargador de 45W y cables reforzados: lo que todo cliente pide en el mostrador.",
-    incluye: ["cargador-verdad", "cable-nucleo", "cable-pleno"],
-    condicion: "Precio y vigencia a confirmar",
-    borrador: true,
+    id: "experiencia-total",
+    etiqueta: "Combo 3",
+    titulo: "Mixor experiencia total",
+    detalle: "Lo más vendido de cada categoría: carga rápida, audio Bluetooth, parlante y smartwatch. Diez productos.",
+    items: [
+      "Cargador Cumbre 65W USB + Tipo C + cable",
+      "Cargador Verdad 45W Tipo C + cable",
+      "Cable Vínculo Tipo C a Tipo C",
+      "Cable Eternidad Tipo C",
+      "Auricular Reencuentro Tipo C",
+      "Auricular Bluetooth Fusión",
+      "Soporte Atrae magnético",
+      "Parlante Ímpetu",
+      "Smartwatch Momentos",
+      "Mouse Ágil",
+    ],
+    incluye: ["cargador-cumbre", "auriculares-fusion", "parlante-impetu", "smartwatch-momentos"],
+    precioLista: 59035.27,
+    precio: conDescuento(59035.27),
+    condicion: "Inversión media · 10 productos",
   },
   {
-    id: "primera-compra",
-    etiqueta: "Bonus",
-    titulo: "Tu primer pedido",
-    detalle: "Si es tu primera compra de Mixor con Ximaro, tenés un beneficio extra.",
-    incluye: ["smartwatch-pulso"],
-    condicion: "Beneficio a confirmar",
-    borrador: true,
+    id: "descubri",
+    etiqueta: "Combo 4",
+    titulo: "Mixor descubrí",
+    detalle: "La línea premium: Sensación, Pulso, Recuerdo, Nexo y Cumbre, más cables y memoria. Diez productos.",
+    items: [
+      "Cable Núcleo USB a Tipo C",
+      "Cable Eternidad Tipo C",
+      "Auricular Reencuentro Tipo C",
+      "Auricular Bluetooth Sensación",
+      "Memoria 64 GB Clase 10",
+      "Cargador notebook Nexo 9 pines",
+      "Smartwatch Pulso",
+      "Parlante Recuerdo",
+      "Cargador Cumbre 65W USB + Tipo C + cable",
+      "Cargador Verdad 45W Tipo C + cable",
+    ],
+    incluye: ["auriculares-sensacion", "smartwatch-pulso", "parlante-recuerdo", "cargador-nexo"],
+    precioLista: 69820.22,
+    precio: conDescuento(69820.22),
+    condicion: "Inversión alta · 10 productos",
   },
 ];
 

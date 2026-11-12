@@ -4,6 +4,7 @@ import { ContactoLink, WhatsAppIcon } from "@/components/eventos/contacto";
 import {
   EVENTO,
   MENSAJE_BASE,
+  formatoPrecio,
   productoEvento,
   whatsappHref,
   type ProductoEvento,
@@ -66,25 +67,42 @@ export function Vale({ promo, numero, total }: { promo: Promo; numero: number; t
               </span>
             )}
           </div>
-          <p className="xm-display mt-4 text-[54px] text-[var(--xm-red)] sm:text-[72px]">{promo.etiqueta}</p>
-          <h3 className="xm-tracked mt-4 text-[15px] font-bold sm:text-[16px]">{promo.titulo}</h3>
-          <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--xm-ink-2)]">{promo.detalle}</p>
+          <p className="xm-display mt-4 text-[44px] text-[var(--xm-red)] sm:text-[56px]">{promo.etiqueta}</p>
+          <h3 className="xm-tracked mt-3 text-[15px] font-bold sm:text-[16px]">{promo.titulo}</h3>
+          <p className="mt-2 text-[14px] leading-relaxed text-[var(--xm-ink-2)]">{promo.detalle}</p>
+
+          <div className="mt-5 flex flex-wrap items-end gap-x-4 gap-y-1">
+            <p className="text-[34px] font-black leading-none tracking-[-0.03em] text-[var(--xm-ink)] sm:text-[40px]">
+              {formatoPrecio(promo.precio)}
+            </p>
+            <p className="pb-1 text-[13px] text-[var(--xm-mute)]">
+              <span className="line-through">{formatoPrecio(promo.precioLista)}</span>
+              <span className="ml-2 font-bold text-[var(--xm-red)]">−5% en el evento</span>
+            </p>
+          </div>
 
           {productos.length > 0 && (
-            <div className="mt-6 flex items-center gap-3">
-              <div className="flex shrink-0 -space-x-3">
-                {productos.map((p) => (
-                  <span key={p.slug} className="relative h-11 w-11 overflow-hidden rounded-full bg-white ring-[3px] ring-[var(--xm-band)]">
-                    <Image src={p.imagen} alt="" fill sizes="44px" className="object-contain p-1" />
+            <div className="mt-5 grid grid-cols-4 gap-2">
+              {productos.slice(0, 4).map((p) => (
+                <figure key={p.slug} className="min-w-0">
+                  <span className="relative block aspect-square overflow-hidden rounded-xl bg-white ring-1 ring-[var(--xm-line)]">
+                    <Image src={p.imagen} alt={p.completo} fill sizes="120px" className="object-contain p-1.5" />
                   </span>
-                ))}
-              </div>
-              <p className="min-w-0 text-[13px] font-semibold leading-snug">
-                <span className="xm-caps block text-[8.5px] font-medium text-[var(--xm-mute)]">Incluye</span>
-                {productos.map((p) => p.nombre).join(" + ")}
-              </p>
+                  <figcaption className="mt-1.5 truncate text-center text-[11px] font-semibold leading-tight">{p.nombre}</figcaption>
+                </figure>
+              ))}
             </div>
           )}
+
+          <p className="xm-caps mt-4 text-[8.5px] font-medium text-[var(--xm-mute)]">Incluye</p>
+          <ul className="mt-1.5 grid gap-x-4 gap-y-1 text-[12.5px] font-medium leading-snug sm:grid-cols-2">
+            {promo.items.map((item) => (
+              <li key={item} className="flex gap-1.5">
+                <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-[var(--xm-red)]" />
+                {item}
+              </li>
+            ))}
+          </ul>
 
           <div className="mt-6 flex flex-1 items-end">
             <div className="flex w-full flex-wrap items-center justify-between gap-3 border-t border-[var(--xm-line)] pt-4">
