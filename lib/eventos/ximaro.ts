@@ -20,8 +20,8 @@ export const XIMARO = {
   nombre: "Ximaro",
   /** Usuario de Instagram sin @. */
   instagram: "ximaromayorista" as string | null,
-  /** WhatsApp con código de país, sin + ni espacios. Es el de «clientes nuevos» de ximaro.com.ar (el otro, 5493816368026, es para clientes activos). */
-  whatsapp: "5493816292066" as string | null,
+  /** WhatsApp con código de país, sin + ni espacios. Confirmado por Francisco el 12/11/2026. */
+  whatsapp: "5493816368026" as string | null,
 };
 
 export const MENSAJE_BASE = "Hola Ximaro! Vengo del evento de Mixor en Tucumán";
